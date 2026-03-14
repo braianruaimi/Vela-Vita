@@ -7,9 +7,11 @@ const APP_SHELL = [
     "./js/firebase-config.js",
     "./manifest.webmanifest",
     "./images/app-icon.svg",
-    "./images/vela-aromatica.svg",
-    "./images/vela-decorativa.svg",
-    "./images/vela-eventos.svg"
+    "./images/beige.jpeg",
+    "./images/ramo%20lila.jpeg",
+    "./images/Ramo%20rojo.jpeg",
+    "./images/Ramo%20rosa.jpeg",
+    "./images/WhatsApp%20Image%202026-03-14%20at%2018.15.07.jpeg"
 ];
 
 self.addEventListener("install", (event) => {
