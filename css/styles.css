@@ -555,6 +555,33 @@ section {
     padding: 22px;
 }
 
+.product-actions-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.cart-add-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    border-radius: 18px;
+    background: rgba(255, 242, 221, 0.98);
+    border: 1px solid rgba(201, 74, 16, 0.18);
+    color: #b14b12;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: transform var(--transition), background var(--transition);
+}
+
+.cart-add-button:hover,
+.cart-add-button:focus-visible {
+    transform: translateY(-2px);
+    background: rgba(255, 232, 199, 0.98);
+}
+
 .product-content h3,
 .testimonial-card footer {
     margin: 0;
@@ -751,7 +778,8 @@ section {
 .footer-links a,
 .floating-whatsapp,
 .chat-toggle,
-.floating-install {
+.floating-install,
+.floating-cart {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -765,10 +793,43 @@ section {
 
 .floating-whatsapp,
 .chat-widget,
-.floating-install {
+.floating-install,
+.floating-cart {
     position: fixed;
     bottom: 20px;
     z-index: 40;
+}
+
+.floating-cart {
+    right: 88px;
+    background: linear-gradient(135deg, #fff4de 0%, #ffd89f 100%);
+}
+
+.floating-cart-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a84a15' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='20' r='1.4'/%3E%3Ccircle cx='18' cy='20' r='1.4'/%3E%3Cpath d='M3 4h2l2.2 10.3a1 1 0 0 0 1 .7h8.9a1 1 0 0 0 1-.8L20 7H7.4'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.floating-cart-count {
+    position: absolute;
+    top: -6px;
+    right: -3px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #c94a10;
+    color: #fff8f0;
+    font-size: 0.75rem;
+    font-weight: 800;
 }
 
 .floating-install {
@@ -820,6 +881,117 @@ section {
     padding: 20px;
     background: rgba(47, 31, 22, 0.32);
     backdrop-filter: blur(10px);
+}
+
+.cart-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(47, 31, 22, 0.22);
+    backdrop-filter: blur(10px);
+}
+
+.cart-card {
+    width: min(560px, 100%);
+    max-height: min(88vh, 900px);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 18px;
+    overflow: hidden;
+    padding: 24px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(255, 240, 219, 0.96));
+    border: 1px solid rgba(201, 117, 34, 0.16);
+    box-shadow: 0 26px 60px rgba(61, 41, 24, 0.22);
+}
+
+.cart-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cart-header h2 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.cart-items {
+    display: grid;
+    gap: 12px;
+    overflow-y: auto;
+    min-height: 120px;
+}
+
+.cart-empty {
+    margin: 0;
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(255, 247, 236, 0.92);
+    color: var(--muted);
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    padding: 16px 18px;
+    border-radius: 20px;
+    background: rgba(255, 247, 236, 0.92);
+    border: 1px solid var(--line);
+}
+
+.cart-item strong,
+.cart-total strong {
+    color: #8f3e12;
+}
+
+.cart-item p,
+.cart-total {
+    margin: 0;
+    color: var(--muted);
+}
+
+.cart-item-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cart-qty-button {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 232, 199, 0.98);
+    border: 1px solid rgba(201, 74, 16, 0.16);
+    color: #a84a15;
+    font-weight: 800;
+}
+
+.cart-qty-value {
+    min-width: 26px;
+    text-align: center;
+    font-weight: 700;
+    color: #8f3e12;
+}
+
+.cart-footer {
+    display: grid;
+    gap: 14px;
+}
+
+.cart-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .ceo-card {
@@ -1094,6 +1266,10 @@ section {
         left: auto;
         right: 92px;
         transform: none;
+    }
+
+    .floating-cart {
+        right: 160px;
     }
 
     .floating-install:hover,

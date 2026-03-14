@@ -1,6 +1,7 @@
 const form = document.getElementById("reservation-form");
 const successMessage = document.getElementById("form-success");
 const productButtons = document.querySelectorAll("[data-producto]");
+const productAddButtons = document.querySelectorAll("[data-add-product]");
 const whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
 const eventSelect = form?.querySelector("select[name='evento']");
 const notesField = form?.querySelector("textarea[name='notas']");
@@ -13,6 +14,15 @@ const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 const chatMessages = document.getElementById("chat-messages");
 const installAppButton = document.getElementById("install-app-button");
+const floatingCartButton = document.getElementById("floating-cart-button");
+const floatingCartCount = document.getElementById("floating-cart-count");
+const cartPanel = document.getElementById("cart-panel");
+const cartClose = document.getElementById("cart-close");
+const cartItems = document.getElementById("cart-items");
+const cartEmpty = document.getElementById("cart-empty");
+const cartTotalCount = document.getElementById("cart-total-count");
+const cartClear = document.getElementById("cart-clear");
+const cartSend = document.getElementById("cart-send");
 
 const ceoAccessButton = document.getElementById("ceo-access-button");
 const ceoPanel = document.getElementById("ceo-panel");
@@ -69,6 +79,7 @@ const defaultMetrics = {
 let formStarted = false;
 let ceoUnlocked = false;
 let deferredInstallPrompt = null;
+let cart = [];
 
 const loadMetrics = () => {
     try {
@@ -310,6 +321,138 @@ const buildReservationMessage = (formData) => {
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
 };
 
+const buildProductInquiryMessage = (productName) => {
+    const lines = [
+        "Hola, quiero consultar esta vela de Vela-Vita.",
+        "",
+        `Producto: ${productName}`
+    ];
+
+    return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
+};
+
+const buildCartMessage = () => {
+    const lines = ["Hola, quiero enviar este pedido de velas Vela-Vita.", ""];
+
+    cart.forEach((item, index) => {
+        lines.push(`${index + 1}. ${item.name} x ${item.quantity}`);
+    });
+
+    lines.push("");
+    lines.push(`Total de unidades: ${cart.reduce((total, item) => total + item.quantity, 0)}`);
+
+    return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
+};
+
+const openCartPanel = () => {
+    if (!cartPanel) {
+        return;
+    }
+
+    cartPanel.hidden = false;
+};
+
+const closeCartPanel = () => {
+    if (!cartPanel) {
+        return;
+    }
+
+    cartPanel.hidden = true;
+};
+
+const updateCartCount = () => {
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    if (floatingCartCount) {
+        floatingCartCount.textContent = String(total);
+    }
+
+    if (cartTotalCount) {
+        cartTotalCount.textContent = String(total);
+    }
+};
+
+const renderCart = () => {
+    if (!cartItems || !cartEmpty) {
+        return;
+    }
+
+    const previousItems = cartItems.querySelectorAll(".cart-item");
+    previousItems.forEach((item) => item.remove());
+
+    if (!cart.length) {
+        cartEmpty.hidden = false;
+        updateCartCount();
+        return;
+    }
+
+    cartEmpty.hidden = true;
+
+    cart.forEach((item) => {
+        const row = document.createElement("article");
+        row.className = "cart-item";
+
+        const content = document.createElement("div");
+        const name = document.createElement("strong");
+        name.textContent = item.name;
+        const detail = document.createElement("p");
+        detail.textContent = "Puedes seguir sumando unidades o enviar el pedido por WhatsApp.";
+        content.append(name, detail);
+
+        const actions = document.createElement("div");
+        actions.className = "cart-item-actions";
+
+        const subtractButton = document.createElement("button");
+        subtractButton.className = "cart-qty-button";
+        subtractButton.type = "button";
+        subtractButton.textContent = "-";
+        subtractButton.addEventListener("click", () => {
+            item.quantity -= 1;
+
+            if (item.quantity <= 0) {
+                cart = cart.filter((cartItem) => cartItem.name !== item.name);
+            }
+
+            renderCart();
+        });
+
+        const value = document.createElement("span");
+        value.className = "cart-qty-value";
+        value.textContent = String(item.quantity);
+
+        const addButton = document.createElement("button");
+        addButton.className = "cart-qty-button";
+        addButton.type = "button";
+        addButton.textContent = "+";
+        addButton.addEventListener("click", () => {
+            item.quantity += 1;
+            renderCart();
+        });
+
+        actions.append(subtractButton, value, addButton);
+        row.append(content, actions);
+        cartItems.appendChild(row);
+    });
+
+    updateCartCount();
+};
+
+const addToCart = (productName) => {
+    const existingItem = cart.find((item) => item.name === productName);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            name: productName,
+            quantity: 1
+        });
+    }
+
+    renderCart();
+    openCartPanel();
+};
+
 const openCeoPanel = () => {
     if (!ceoPanel) {
         return;
@@ -415,13 +558,16 @@ const setupTestimonialsCarousel = () => {
 productButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const productName = button.getAttribute("data-producto");
+        const whatsappInquiryUrl = buildProductInquiryMessage(productName);
+        void incrementFirebaseMetric("whatsappClicks");
+        window.open(whatsappInquiryUrl, "_blank", "noopener,noreferrer");
+    });
+});
 
-        if (notesField) {
-            const prefix = notesField.value.trim() ? `${notesField.value.trim()}\n` : "";
-            notesField.value = `${prefix}Me interesa consultar disponibilidad para: ${productName}.`;
-        }
-
-        document.getElementById("reserva")?.scrollIntoView({ behavior: "smooth", block: "start" });
+productAddButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const productName = button.getAttribute("data-add-product");
+        addToCart(productName);
     });
 });
 
@@ -498,6 +644,21 @@ chatClose?.addEventListener("click", closeChat);
 
 ceoAccessButton?.addEventListener("click", openCeoPanel);
 ceoClose?.addEventListener("click", closeCeoPanel);
+floatingCartButton?.addEventListener("click", openCartPanel);
+cartClose?.addEventListener("click", closeCartPanel);
+cartClear?.addEventListener("click", () => {
+    cart = [];
+    renderCart();
+});
+cartSend?.addEventListener("click", () => {
+    if (!cart.length) {
+        window.alert("Agrega al menos una vela al carrito.");
+        return;
+    }
+
+    void incrementFirebaseMetric("whatsappClicks");
+    window.open(buildCartMessage(), "_blank", "noopener,noreferrer");
+});
 
 ceoLogin?.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -587,6 +748,10 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && ceoPanel && !ceoPanel.hidden) {
         closeCeoPanel();
     }
+
+    if (event.key === "Escape" && cartPanel && !cartPanel.hidden) {
+        closeCartPanel();
+    }
 });
 
 window.addEventListener("beforeinstallprompt", (event) => {
@@ -612,4 +777,5 @@ window.addEventListener("load", async () => {
     await refreshMetrics();
     await incrementFirebaseMetric("views");
     setupTestimonialsCarousel();
+    renderCart();
 });

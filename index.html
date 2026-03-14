@@ -103,7 +103,10 @@
                     <div class="product-content">
                         <h3>Vela Decorativa</h3>
                         <p>Un toque elegante para cualquier espacio.</p>
-                        <button class="card-button" type="button" data-producto="Vela Decorativa">Consultar disponibilidad</button>
+                        <div class="product-actions-row">
+                            <button class="card-button" type="button" data-producto="Vela Decorativa">Consultar disponibilidad</button>
+                            <button class="cart-add-button" type="button" data-add-product="Vela Decorativa" aria-label="Sumar Vela Decorativa al carrito">+</button>
+                        </div>
                     </div>
                 </article>
                 <article class="product-card reveal-up delay-1">
@@ -111,7 +114,10 @@
                     <div class="product-content">
                         <h3>Vela Aromatica</h3>
                         <p>Aromas suaves que crean ambientes relajantes.</p>
-                        <button class="card-button" type="button" data-producto="Vela Aromatica">Consultar disponibilidad</button>
+                        <div class="product-actions-row">
+                            <button class="card-button" type="button" data-producto="Vela Aromatica">Consultar disponibilidad</button>
+                            <button class="cart-add-button" type="button" data-add-product="Vela Aromatica" aria-label="Sumar Vela Aromatica al carrito">+</button>
+                        </div>
                     </div>
                 </article>
                 <article class="product-card reveal-up delay-2">
@@ -119,7 +125,10 @@
                     <div class="product-content">
                         <h3>Vela para Eventos</h3>
                         <p>Ideal para cumpleanos, bodas y celebraciones.</p>
-                        <button class="card-button" type="button" data-producto="Vela para Eventos">Consultar disponibilidad</button>
+                        <div class="product-actions-row">
+                            <button class="card-button" type="button" data-producto="Vela para Eventos">Consultar disponibilidad</button>
+                            <button class="cart-add-button" type="button" data-add-product="Vela para Eventos" aria-label="Sumar Vela para Eventos al carrito">+</button>
+                        </div>
                     </div>
                 </article>
             </div>
@@ -262,9 +271,36 @@
         Instalar app
     </button>
 
+    <button class="floating-cart" id="floating-cart-button" type="button" aria-label="Abrir carrito">
+        <span class="floating-cart-icon"></span>
+        <span class="floating-cart-count" id="floating-cart-count">0</span>
+    </button>
+
     <a class="floating-whatsapp" data-whatsapp-link href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer" aria-label="Contactar por WhatsApp">
         <span class="whatsapp-icon"></span>
     </a>
+
+    <section class="cart-panel" id="cart-panel" hidden>
+        <div class="cart-card">
+            <div class="cart-header">
+                <div>
+                    <p class="ceo-kicker">Carrito</p>
+                    <h2>Tu pedido</h2>
+                </div>
+                <button class="ceo-close" id="cart-close" type="button" aria-label="Cerrar carrito">×</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <p class="cart-empty" id="cart-empty">Todavia no agregaste velas al pedido.</p>
+            </div>
+            <div class="cart-footer">
+                <p class="cart-total">Total de unidades: <strong id="cart-total-count">0</strong></p>
+                <div class="cart-actions">
+                    <button class="secondary-button" id="cart-clear" type="button">Vaciar carrito</button>
+                    <button class="primary-button" id="cart-send" type="button">Enviar pedido</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="chat-widget">
         <button class="chat-toggle" id="chat-toggle" type="button" aria-expanded="false" aria-controls="chat-panel">
