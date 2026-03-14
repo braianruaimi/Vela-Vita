@@ -22,6 +22,8 @@ const ceoPassword = document.getElementById("ceo-password");
 const ceoContent = document.getElementById("ceo-content");
 const ceoRefresh = document.getElementById("ceo-refresh");
 const ceoReset = document.getElementById("ceo-reset");
+const testimonialSlides = Array.from(document.querySelectorAll(".testimonial-slide"));
+const testimonialsDots = document.getElementById("testimonials-dots");
 
 const metricsElements = {
     views: document.getElementById("metric-views"),
@@ -386,6 +388,30 @@ const getBotReply = (input) => {
     return match ? match.answer : defaultResponse;
 };
 
+const setupTestimonialsCarousel = () => {
+    if (!testimonialSlides.length || !testimonialsDots) {
+        return;
+    }
+
+    let activeIndex = 0;
+    const dots = testimonialSlides.map((_slide, index) => {
+        const dot = document.createElement("span");
+        dot.className = `testimonial-dot${index === 0 ? " is-active" : ""}`;
+        testimonialsDots.appendChild(dot);
+        return dot;
+    });
+
+    window.setInterval(() => {
+        testimonialSlides[activeIndex].classList.remove("is-active");
+        dots[activeIndex].classList.remove("is-active");
+
+        activeIndex = (activeIndex + 1) % testimonialSlides.length;
+
+        testimonialSlides[activeIndex].classList.add("is-active");
+        dots[activeIndex].classList.add("is-active");
+    }, 1000);
+};
+
 productButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const productName = button.getAttribute("data-producto");
@@ -585,4 +611,5 @@ if ("serviceWorker" in navigator) {
 window.addEventListener("load", async () => {
     await refreshMetrics();
     await incrementFirebaseMetric("views");
+    setupTestimonialsCarousel();
 });

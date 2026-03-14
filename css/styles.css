@@ -506,6 +506,23 @@ section {
     gap: 18px;
 }
 
+.testimonials-carousel {
+    position: relative;
+    display: grid;
+    gap: 16px;
+}
+
+.testimonials-viewport {
+    position: relative;
+    min-height: 230px;
+    overflow: hidden;
+}
+
+.testimonials-track {
+    position: relative;
+    min-height: 230px;
+}
+
 .product-card,
 .testimonial-card {
     background: rgba(255, 247, 236, 0.92);
@@ -633,6 +650,23 @@ section {
     padding: 24px;
 }
 
+.testimonial-slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    opacity: 0;
+    transform: translateX(30px) scale(0.98);
+    transition: opacity 420ms ease, transform 420ms ease;
+    pointer-events: none;
+}
+
+.testimonial-slide.is-active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
 .testimonial-card p {
     font-size: 1.02rem;
 }
@@ -640,6 +674,25 @@ section {
 .testimonial-card footer {
     margin-top: 18px;
     color: var(--accent-deep);
+}
+
+.testimonials-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.testimonial-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(197, 90, 17, 0.22);
+    transition: transform var(--transition), background var(--transition);
+}
+
+.testimonial-dot.is-active {
+    background: linear-gradient(135deg, #ff9b2f 0%, #c94a10 100%);
+    transform: scale(1.25);
 }
 
 .final-cta-section {
