@@ -75,7 +75,7 @@
                 <article class="highlight-card">
                     <span class="highlight-number">01</span>
                     <h3>Diseno con identidad</h3>
-                    <p>Piezas pensadas para decorar con elegancia, desde un rincón de casa hasta una celebracion completa.</p>
+                    <p>Piezas pensadas para decorar con elegancia, desde un rincon de casa hasta una celebracion completa.</p>
                 </article>
                 <article class="highlight-card">
                     <span class="highlight-number">02</span>
@@ -201,7 +201,7 @@
                 <h2>Haz de cada momento algo especial</h2>
                 <p>Reserva tus velas Vela-Vita y crea un ambiente unico.</p>
             </div>
-            <a class="primary-button" href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer">Contactar por WhatsApp</a>
+            <a class="primary-button" data-whatsapp-link href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer">Contactar por WhatsApp</a>
         </section>
     </main>
 
@@ -214,13 +214,17 @@
             <a href="https://www.instagram.com/vela__vita?utm_source=qr&igsh=NDNndmRha3pibHZo" target="_blank" rel="noreferrer" aria-label="Instagram">
                 <span class="social-icon social-icon-instagram"></span>
             </a>
-            <a href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer" aria-label="WhatsApp">
+            <a data-whatsapp-link href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer" aria-label="WhatsApp">
                 <span class="social-icon social-icon-whatsapp"></span>
             </a>
         </div>
     </footer>
 
-    <a class="floating-whatsapp" href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer" aria-label="Contactar por WhatsApp">
+    <div class="ceo-access-wrap">
+        <button class="ceo-access-button" id="ceo-access-button" type="button">CEO</button>
+    </div>
+
+    <a class="floating-whatsapp" data-whatsapp-link href="https://wa.me/5492215047962?text=Hola,%20quiero%20consultar%20por%20velas%20Vela-Vita." target="_blank" rel="noreferrer" aria-label="Contactar por WhatsApp">
         <span class="whatsapp-icon"></span>
     </a>
 
@@ -245,6 +249,71 @@
             </form>
         </section>
     </div>
+
+    <section class="ceo-panel" id="ceo-panel" hidden>
+        <div class="ceo-card">
+            <div class="ceo-header">
+                <div>
+                    <p class="ceo-kicker">Panel CEO</p>
+                    <h2>Metricas de crecimiento</h2>
+                </div>
+                <button class="ceo-close" id="ceo-close" type="button" aria-label="Cerrar panel CEO">×</button>
+            </div>
+
+            <form class="ceo-login" id="ceo-login">
+                <label>
+                    Clave de acceso
+                    <input type="password" id="ceo-password" placeholder="Ingresa la clave" required>
+                </label>
+                <button class="primary-button" type="submit">Ingresar</button>
+            </form>
+
+            <div class="ceo-content" id="ceo-content" hidden>
+                <div class="ceo-metrics-grid">
+                    <article class="ceo-metric-card">
+                        <span>Views</span>
+                        <strong id="metric-views">0</strong>
+                    </article>
+                    <article class="ceo-metric-card">
+                        <span>Clicks a WSP</span>
+                        <strong id="metric-whatsapp">0</strong>
+                    </article>
+                    <article class="ceo-metric-card">
+                        <span>Formularios enviados</span>
+                        <strong id="metric-forms">0</strong>
+                    </article>
+                    <article class="ceo-metric-card">
+                        <span>Formularios iniciados</span>
+                        <strong id="metric-form-starts">0</strong>
+                    </article>
+                </div>
+
+                <div class="ceo-growth-grid">
+                    <article class="ceo-growth-card">
+                        <span>Conversion a WSP</span>
+                        <strong id="metric-whatsapp-rate">0%</strong>
+                    </article>
+                    <article class="ceo-growth-card">
+                        <span>Conversion de formularios</span>
+                        <strong id="metric-form-rate">0%</strong>
+                    </article>
+                    <article class="ceo-growth-card">
+                        <span>Promedio diario de views</span>
+                        <strong id="metric-daily-views">0</strong>
+                    </article>
+                    <article class="ceo-growth-card">
+                        <span>Dias activos</span>
+                        <strong id="metric-active-days">1</strong>
+                    </article>
+                </div>
+
+                <div class="ceo-actions">
+                    <button class="secondary-button" id="ceo-refresh" type="button">Actualizar metricas</button>
+                    <button class="ceo-reset-button" id="ceo-reset" type="button">Limpiar metricas</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="js/app.js"></script>
 </body>
