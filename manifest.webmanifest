@@ -1,0 +1,19 @@
+{
+  "name": "Vela-Vita",
+  "short_name": "Vela-Vita",
+  "description": "Velas que iluminan tus momentos especiales.",
+  "start_url": "/Vela-Vita/",
+  "scope": "/Vela-Vita/",
+  "display": "standalone",
+  "background_color": "#fff6eb",
+  "theme_color": "#ff8f2c",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "images/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

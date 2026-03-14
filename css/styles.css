@@ -689,7 +689,8 @@ section {
 
 .footer-links a,
 .floating-whatsapp,
-.chat-toggle {
+.chat-toggle,
+.floating-install {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -702,10 +703,27 @@ section {
 }
 
 .floating-whatsapp,
-.chat-widget {
+.chat-widget,
+.floating-install {
     position: fixed;
     bottom: 20px;
     z-index: 40;
+}
+
+.floating-install {
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 146px;
+    padding: 0 18px;
+    color: #fff9f2;
+    background: linear-gradient(135deg, #ffb24e 0%, #ff8b2d 48%, #d5550f 100%);
+    box-shadow: 0 16px 30px rgba(201, 74, 16, 0.24);
+}
+
+.floating-install:hover,
+.floating-install:focus-visible {
+    transform: translateX(-50%) translateY(-2px);
 }
 
 .floating-whatsapp {
@@ -1009,6 +1027,17 @@ section {
 
     .site-footer {
         margin-bottom: 34px;
+    }
+
+    .floating-install {
+        left: auto;
+        right: 92px;
+        transform: none;
+    }
+
+    .floating-install:hover,
+    .floating-install:focus-visible {
+        transform: translateY(-2px);
     }
 
     .ceo-metrics-grid,

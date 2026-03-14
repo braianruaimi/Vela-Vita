@@ -12,6 +12,7 @@ const chatPanel = document.getElementById("chat-panel");
 const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 const chatMessages = document.getElementById("chat-messages");
+const installAppButton = document.getElementById("install-app-button");
 
 const ceoAccessButton = document.getElementById("ceo-access-button");
 const ceoPanel = document.getElementById("ceo-panel");
@@ -47,6 +48,7 @@ const defaultMetrics = {
 
 let formStarted = false;
 let ceoUnlocked = false;
+let deferredInstallPrompt = null;
 
 const loadMetrics = () => {
     try {
@@ -140,6 +142,22 @@ const closeCeoPanel = () => {
     }
 
     ceoPanel.hidden = true;
+};
+
+const hideInstallButton = () => {
+    if (!installAppButton) {
+        return;
+    }
+
+    installAppButton.hidden = true;
+};
+
+const showInstallButton = () => {
+    if (!installAppButton) {
+        return;
+    }
+
+    installAppButton.hidden = false;
 };
 
 metrics.views += 1;
@@ -313,6 +331,21 @@ ceoReset?.addEventListener("click", () => {
     window.alert("Metricas reiniciadas.");
 });
 
+installAppButton?.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) {
+        return;
+    }
+
+    deferredInstallPrompt.prompt();
+    const { outcome } = await deferredInstallPrompt.userChoice;
+
+    if (outcome === "accepted") {
+        hideInstallButton();
+    }
+
+    deferredInstallPrompt = null;
+});
+
 chatForm?.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -343,3 +376,22 @@ document.addEventListener("keydown", (event) => {
         closeCeoPanel();
     }
 });
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showInstallButton();
+});
+
+window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    hideInstallButton();
+});
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/Vela-Vita/service-worker.js").catch(() => {
+            hideInstallButton();
+        });
+    });
+}
