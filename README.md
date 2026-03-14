@@ -1,6 +1,6 @@
 # Vela-Vita
 
-Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript.
+Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript, con backend local en Node.js para reservas y metricas.
 
 ## Demo
 
@@ -22,6 +22,8 @@ Incluye:
 - CTA final con enlace a WhatsApp
 - Boton flotante de WhatsApp
 - Chatbot flotante con respuestas basicas
+- Panel CEO con metricas
+- Backend local para reservas y metricas
 - Despliegue automatico con GitHub Pages
 
 ## Tecnologias
@@ -29,6 +31,8 @@ Incluye:
 - HTML5
 - CSS3
 - JavaScript
+- Node.js
+- Express
 - GitHub Actions
 - GitHub Pages
 
@@ -39,15 +43,23 @@ Vela-Vita/
 |- .github/
 |  \- workflows/
 |     \- deploy-pages.yml
+|- data/
+|  |- metrics.json
+|  \- reservations.json
 |- css/
 |  \- styles.css
 |- images/
+|  |- app-icon.svg
 |  |- vela-aromatica.svg
 |  |- vela-decorativa.svg
 |  \- vela-eventos.svg
 |- js/
 |  \- app.js
 |- index.html
+|- manifest.webmanifest
+|- package.json
+|- server.js
+|- service-worker.js
 \- README.md
 ```
 
@@ -72,9 +84,48 @@ Vela-Vita/
 
 ## Uso local
 
-Como es un sitio estatico, puedes abrir index.html directamente en el navegador o usar un servidor local simple.
+### Solo frontend
+
+Puedes abrir index.html directamente en el navegador o usar un servidor local simple.
 
 Ejemplo con VS Code Live Server o cualquier servidor estatico.
+
+### Frontend + backend
+
+Para usar reservas y metricas reales compartidas entre dispositivos locales, ejecuta el backend:
+
+```bash
+npm install
+npm run dev
+```
+
+Luego abre:
+
+http://localhost:3000
+
+## Backend local
+
+El backend sirve la web y expone endpoints REST simples para reservas y metricas.
+
+Endpoints principales:
+
+- GET /api/health
+- GET /api/metrics
+- POST /api/metrics/view
+- POST /api/metrics/whatsapp-click
+- POST /api/metrics/form-start
+- POST /api/reservations
+- POST /api/metrics/reset
+
+Persistencia local:
+
+- data/metrics.json
+- data/reservations.json
+
+Variables opcionales:
+
+- CEO_PANEL_PASSWORD
+- WHATSAPP_NUMBER
 
 ## Despliegue
 
@@ -89,6 +140,11 @@ Publicacion:
 - Cada push a main dispara el workflow.
 - El artefacto publicado es el contenido del repositorio.
 - La URL final es la de GitHub Pages del repositorio.
+
+Importante:
+
+- GitHub Pages no ejecuta el backend Node.js.
+- El backend esta pensado para uso local o para desplegarse luego en otro hosting como Render, Railway, Fly.io o VPS.
 
 ## Contacto configurado
 

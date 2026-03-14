@@ -1,14 +1,14 @@
 const CACHE_NAME = "vela-vita-v1";
 const APP_SHELL = [
-    "/Vela-Vita/",
-    "/Vela-Vita/index.html",
-    "/Vela-Vita/css/styles.css",
-    "/Vela-Vita/js/app.js",
-    "/Vela-Vita/manifest.webmanifest",
-    "/Vela-Vita/images/app-icon.svg",
-    "/Vela-Vita/images/vela-aromatica.svg",
-    "/Vela-Vita/images/vela-decorativa.svg",
-    "/Vela-Vita/images/vela-eventos.svg"
+    "./",
+    "./index.html",
+    "./css/styles.css",
+    "./js/app.js",
+    "./manifest.webmanifest",
+    "./images/app-icon.svg",
+    "./images/vela-aromatica.svg",
+    "./images/vela-decorativa.svg",
+    "./images/vela-eventos.svg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -44,7 +44,7 @@ self.addEventListener("fetch", (event) => {
                 const responseClone = networkResponse.clone();
                 caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
                 return networkResponse;
-            }).catch(() => caches.match("/Vela-Vita/index.html"));
+            }).catch(() => caches.match("./index.html"));
         })
     );
 });

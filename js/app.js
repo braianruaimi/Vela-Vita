@@ -35,6 +35,15 @@ const metricsElements = {
 };
 
 const whatsappBaseUrl = "https://wa.me/5492215047962?text=";
+const apiEndpoints = {
+    health: "/api/health",
+    metrics: "/api/metrics",
+    view: "/api/metrics/view",
+    whatsappClick: "/api/metrics/whatsapp-click",
+    formStart: "/api/metrics/form-start",
+    resetMetrics: "/api/metrics/reset",
+    reservations: "/api/reservations"
+};
 const metricsStorageKey = "velaVitaMetrics";
 const ceoAccessKey = "1234";
 const defaultMetrics = {
@@ -49,6 +58,7 @@ const defaultMetrics = {
 let formStarted = false;
 let ceoUnlocked = false;
 let deferredInstallPrompt = null;
+let backendAvailable = false;
 
 const loadMetrics = () => {
     try {
@@ -69,6 +79,38 @@ const loadMetrics = () => {
 
 let metrics = loadMetrics();
 
+const apiRequest = async (url, options = {}) => {
+    const requestOptions = {
+        method: "GET",
+        headers: {},
+        ...options
+    };
+
+    if (requestOptions.body) {
+        requestOptions.headers = {
+            "Content-Type": "application/json",
+            ...requestOptions.headers
+        };
+    }
+
+    const response = await window.fetch(url, requestOptions);
+
+    if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    return response.json();
+};
+
+const syncMetrics = (nextMetrics) => {
+    metrics = {
+        ...defaultMetrics,
+        ...nextMetrics
+    };
+    saveMetrics();
+    renderMetrics();
+};
+
 const saveMetrics = () => {
     metrics.lastUpdatedAt = new Date().toISOString();
     window.localStorage.setItem(metricsStorageKey, JSON.stringify(metrics));
@@ -78,6 +120,43 @@ const incrementMetric = (key) => {
     metrics[key] += 1;
     saveMetrics();
     renderMetrics();
+};
+
+const incrementMetricRemote = async (metricKey) => {
+    const endpointMap = {
+        views: apiEndpoints.view,
+        whatsappClicks: apiEndpoints.whatsappClick,
+        formStarts: apiEndpoints.formStart
+    };
+
+    if (!backendAvailable || !endpointMap[metricKey]) {
+        incrementMetric(metricKey);
+        return;
+    }
+
+    try {
+        const nextMetrics = await apiRequest(endpointMap[metricKey], {
+            method: "POST",
+            keepalive: metricKey === "whatsappClicks"
+        });
+        syncMetrics(nextMetrics);
+    } catch {
+        incrementMetric(metricKey);
+    }
+};
+
+const refreshMetrics = async () => {
+    if (!backendAvailable) {
+        renderMetrics();
+        return;
+    }
+
+    try {
+        const nextMetrics = await apiRequest(apiEndpoints.metrics);
+        syncMetrics(nextMetrics);
+    } catch {
+        renderMetrics();
+    }
 };
 
 const getActiveDays = () => {
@@ -127,6 +206,17 @@ const buildReservationMessage = (formData) => {
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
 };
 
+const checkBackendAvailability = async () => {
+    try {
+        const result = await apiRequest(apiEndpoints.health, {
+            cache: "no-store"
+        });
+        backendAvailable = Boolean(result.ok);
+    } catch {
+        backendAvailable = false;
+    }
+};
+
 const openCeoPanel = () => {
     if (!ceoPanel) {
         return;
@@ -160,8 +250,6 @@ const showInstallButton = () => {
     installAppButton.hidden = false;
 };
 
-metrics.views += 1;
-saveMetrics();
 renderMetrics();
 
 const botResponses = [
@@ -222,7 +310,7 @@ productButtons.forEach((button) => {
 
 whatsappLinks.forEach((link) => {
     link.addEventListener("click", () => {
-        incrementMetric("whatsappClicks");
+        void incrementMetricRemote("whatsappClicks");
     });
 });
 
@@ -233,25 +321,41 @@ formInputs.forEach((input) => {
         }
 
         formStarted = true;
-        incrementMetric("formStarts");
+        void incrementMetricRemote("formStarts");
     });
 });
 
-form?.addEventListener("submit", (event) => {
+form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
-    const whatsappReservationUrl = buildReservationMessage(formData);
+    const payload = Object.fromEntries(formData.entries());
+    let whatsappReservationUrl = buildReservationMessage(formData);
 
-    incrementMetric("formSubmissions");
-    successMessage?.removeAttribute("hidden");
-    form.reset();
-    formStarted = false;
+    try {
+        if (backendAvailable) {
+            const result = await apiRequest(apiEndpoints.reservations, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
 
-    if (eventSelect) {
-        eventSelect.selectedIndex = 0;
+            whatsappReservationUrl = result.whatsappUrl;
+            syncMetrics(result.metrics);
+        } else {
+            incrementMetric("formSubmissions");
+        }
+
+        successMessage?.removeAttribute("hidden");
+        form.reset();
+        formStarted = false;
+
+        if (eventSelect) {
+            eventSelect.selectedIndex = 0;
+        }
+
+        window.open(whatsappReservationUrl, "_blank", "noopener,noreferrer");
+    } catch {
+        window.alert("No se pudo enviar la reserva en este momento.");
     }
-
-    window.open(whatsappReservationUrl, "_blank", "noopener,noreferrer");
 });
 
 const openChat = () => {
@@ -303,12 +407,14 @@ ceoLogin?.addEventListener("submit", (event) => {
     ceoUnlocked = true;
     ceoLogin.hidden = true;
     ceoContent.hidden = false;
-    renderMetrics();
+    void refreshMetrics();
 });
 
-ceoRefresh?.addEventListener("click", renderMetrics);
+ceoRefresh?.addEventListener("click", () => {
+    void refreshMetrics();
+});
 
-ceoReset?.addEventListener("click", () => {
+ceoReset?.addEventListener("click", async () => {
     if (!ceoUnlocked) {
         window.alert("Primero debes ingresar al panel CEO.");
         return;
@@ -321,14 +427,29 @@ ceoReset?.addEventListener("click", () => {
         return;
     }
 
-    metrics = {
-        ...defaultMetrics,
-        createdAt: new Date().toISOString(),
-        lastUpdatedAt: new Date().toISOString()
-    };
-    saveMetrics();
-    renderMetrics();
-    window.alert("Metricas reiniciadas.");
+    try {
+        if (backendAvailable) {
+            const result = await apiRequest(apiEndpoints.resetMetrics, {
+                method: "POST",
+                body: JSON.stringify({
+                    password: confirmationPassword
+                })
+            });
+            syncMetrics(result.metrics);
+        } else {
+            metrics = {
+                ...defaultMetrics,
+                createdAt: new Date().toISOString(),
+                lastUpdatedAt: new Date().toISOString()
+            };
+            saveMetrics();
+            renderMetrics();
+        }
+
+        window.alert("Metricas reiniciadas.");
+    } catch {
+        window.alert("No se pudieron limpiar las metricas.");
+    }
 });
 
 installAppButton?.addEventListener("click", async () => {
@@ -390,8 +511,13 @@ window.addEventListener("appinstalled", () => {
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/Vela-Vita/service-worker.js").catch(() => {
+        navigator.serviceWorker.register("service-worker.js").catch(() => {
             hideInstallButton();
         });
     });
 }
+
+window.addEventListener("load", async () => {
+    await checkBackendAvailability();
+    await incrementMetricRemote("views");
+});
