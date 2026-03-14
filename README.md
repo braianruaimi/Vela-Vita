@@ -1,6 +1,6 @@
 # Vela-Vita
 
-Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript, con integracion opcional a Supabase para reservas y metricas.
+Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript, con integracion opcional a Firebase Firestore para reservas y metricas.
 
 ## Demo
 
@@ -23,7 +23,7 @@ Incluye:
 - Boton flotante de WhatsApp
 - Chatbot flotante con respuestas basicas
 - Panel CEO con metricas
-- Integracion opcional con Supabase para reservas y metricas
+- Integracion opcional con Firebase Firestore para reservas y metricas
 - Despliegue automatico con GitHub Pages
 
 ## Tecnologias
@@ -31,7 +31,7 @@ Incluye:
 - HTML5
 - CSS3
 - JavaScript
-- Supabase
+- Firebase Firestore
 - GitHub Actions
 - GitHub Pages
 
@@ -51,12 +51,12 @@ Vela-Vita/
 |  \- vela-eventos.svg
 |- js/
 |  |- app.js
-|  \- supabase-config.js
+|  \- firebase-config.js
 |- index.html
 |- manifest.webmanifest
 |- service-worker.js
-|- supabase/
-|  \- schema.sql
+|- firebase/
+|  \- firestore.rules
 \- README.md
 ```
 
@@ -79,11 +79,11 @@ Vela-Vita/
 - La logica del asistente esta en js/app.js.
 - Las respuestas se pueden ampliar modificando el arreglo botResponses.
 
-### Supabase
+### Firebase
 
-- La configuracion publica se completa en js/supabase-config.js.
+- La configuracion publica se completa en js/firebase-config.js.
 - Si enabled queda en false, la web sigue funcionando con fallback local para metricas y reservas por WhatsApp.
-- Para activar Supabase debes completar url y anonKey.
+- Para activar Firebase debes completar la config del proyecto.
 
 ## Uso local
 
@@ -93,26 +93,35 @@ Puedes abrir index.html directamente en el navegador o usar un servidor local si
 
 Ejemplo con VS Code Live Server o cualquier servidor estatico.
 
-## Configuracion de Supabase
+## Configuracion de Firebase
 
-1. Crea un proyecto en Supabase.
-2. Abre el SQL editor y ejecuta el contenido de supabase/schema.sql.
-3. Copia tu Project URL y tu anon public key.
-4. Completa js/supabase-config.js:
+1. Crea un proyecto en Firebase.
+2. Activa Firestore Database en modo Native.
+3. Crea una Web App dentro del proyecto.
+4. Copia la configuracion de Firebase.
+5. Completa js/firebase-config.js:
 
 ```javascript
-window.VELA_VITA_SUPABASE = {
+window.VELA_VITA_FIREBASE = {
 	enabled: true,
-	url: "https://TU-PROYECTO.supabase.co",
-	anonKey: "TU_ANON_KEY",
-	metricsTable: "site_metrics",
-	reservationsTable: "reservations"
+	config: {
+		apiKey: "TU_API_KEY",
+		authDomain: "TU_PROYECTO.firebaseapp.com",
+		projectId: "TU_PROJECT_ID",
+		storageBucket: "TU_PROYECTO.firebasestorage.app",
+		messagingSenderId: "TU_MESSAGING_SENDER_ID",
+		appId: "TU_APP_ID"
+	},
+	metricsCollection: "siteMetrics",
+	metricsDocId: "global",
+	reservationsCollection: "reservations"
 };
 ```
 
-5. Publica nuevamente la web.
+6. En Firestore Rules pega el contenido de firebase/firestore.rules.
+7. Publica nuevamente la web.
 
-Con eso quedaran persistidas en Supabase:
+Con eso quedaran persistidas en Firebase:
 
 - Views
 - Clicks a WhatsApp
@@ -136,9 +145,9 @@ Publicacion:
 
 Importante:
 
-- GitHub Pages funciona bien con Supabase porque no necesita ejecutar backend propio.
+- GitHub Pages funciona bien con Firebase porque no necesita ejecutar backend propio.
 - La clave 1234 del panel CEO sigue siendo una barrera visual local en el frontend, no una seguridad real de servidor.
-- Si quieres un panel CEO realmente seguro, el siguiente paso correcto es usar Supabase Auth y politicas mas cerradas, o una Edge Function.
+- Si quieres un panel CEO realmente seguro, el siguiente paso correcto es usar Firebase Authentication y reglas mas cerradas, o una Cloud Function.
 
 ## Contacto configurado
 
@@ -149,6 +158,6 @@ Importante:
 
 - Reemplazar ilustraciones SVG por fotos reales del producto
 - Agregar testimonios reales
-- Activar Supabase con tus credenciales reales
+- Activar Firebase con tus credenciales reales
 - Agregar autenticacion real al panel CEO
 - Configurar un dominio propio

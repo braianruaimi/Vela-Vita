@@ -4,7 +4,7 @@ const APP_SHELL = [
     "./index.html",
     "./css/styles.css",
     "./js/app.js",
-    "./js/supabase-config.js",
+    "./js/firebase-config.js",
     "./manifest.webmanifest",
     "./images/app-icon.svg",
     "./images/vela-aromatica.svg",

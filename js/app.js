@@ -37,20 +37,23 @@ const metricsElements = {
 const whatsappBaseUrl = "https://wa.me/5492215047962?text=";
 const metricsStorageKey = "velaVitaMetrics";
 const ceoAccessKey = "1234";
-const supabaseSettings = window.VELA_VITA_SUPABASE ?? {};
-const canUseSupabase = Boolean(
-    supabaseSettings.enabled &&
-    supabaseSettings.url &&
-    supabaseSettings.anonKey &&
-    window.supabase?.createClient
+const firebaseSettings = window.VELA_VITA_FIREBASE ?? {};
+const canUseFirebase = Boolean(
+    firebaseSettings.enabled &&
+    firebaseSettings.config?.apiKey &&
+    firebaseSettings.config?.projectId &&
+    window.firebase?.initializeApp &&
+    window.firebase?.firestore
 );
 
-const supabaseClient = canUseSupabase
-    ? window.supabase.createClient(supabaseSettings.url, supabaseSettings.anonKey)
+const firebaseApp = canUseFirebase
+    ? (window.firebase.apps.length ? window.firebase.app() : window.firebase.initializeApp(firebaseSettings.config))
     : null;
 
-const metricsTable = supabaseSettings.metricsTable || "site_metrics";
-const reservationsTable = supabaseSettings.reservationsTable || "reservations";
+const firestore = firebaseApp ? window.firebase.firestore(firebaseApp) : null;
+const metricsCollection = firebaseSettings.metricsCollection || "siteMetrics";
+const metricsDocId = firebaseSettings.metricsDocId || "global";
+const reservationsCollection = firebaseSettings.reservationsCollection || "reservations";
 
 const defaultMetrics = {
     views: 0,
@@ -104,128 +107,114 @@ const incrementMetric = (key) => {
     renderMetrics();
 };
 
-const normalizeMetricsRow = (row) => ({
-    views: Number(row?.views ?? 0),
-    whatsappClicks: Number(row?.whatsapp_clicks ?? 0),
-    formSubmissions: Number(row?.form_submissions ?? 0),
-    formStarts: Number(row?.form_starts ?? 0),
-    createdAt: row?.created_at ?? defaultMetrics.createdAt,
-    lastUpdatedAt: row?.last_updated_at ?? defaultMetrics.lastUpdatedAt
+const normalizeTimestamp = (value) => {
+    if (value?.toDate) {
+        return value.toDate().toISOString();
+    }
+
+    if (typeof value === "string") {
+        return value;
+    }
+
+    return new Date().toISOString();
+};
+
+const normalizeMetricsDoc = (data) => ({
+    views: Number(data?.views ?? 0),
+    whatsappClicks: Number(data?.whatsappClicks ?? 0),
+    formSubmissions: Number(data?.formSubmissions ?? 0),
+    formStarts: Number(data?.formStarts ?? 0),
+    createdAt: normalizeTimestamp(data?.createdAt ?? defaultMetrics.createdAt),
+    lastUpdatedAt: normalizeTimestamp(data?.lastUpdatedAt ?? defaultMetrics.lastUpdatedAt)
 });
 
-const normalizeRpcMetricsResponse = (data) => normalizeMetricsRow(Array.isArray(data) ? data[0] : data);
+const getMetricsDocRef = () => firestore?.collection(metricsCollection).doc(metricsDocId);
 
-const createMetricsRowPayload = () => ({
-    id: 1,
-    views: 0,
-    whatsapp_clicks: 0,
-    form_submissions: 0,
-    form_starts: 0,
-    created_at: new Date().toISOString(),
-    last_updated_at: new Date().toISOString()
-});
-
-const ensureSupabaseMetricsRow = async () => {
-    if (!supabaseClient) {
+const ensureFirebaseMetricsDoc = async () => {
+    if (!firestore) {
         return;
     }
 
-    const { data, error } = await supabaseClient
-        .from(metricsTable)
-        .select("id")
-        .eq("id", 1)
-        .maybeSingle();
+    const metricsRef = getMetricsDocRef();
+    const snapshot = await metricsRef.get();
 
-    if (error) {
-        throw error;
+    if (!snapshot.exists) {
+        const now = window.firebase.firestore.Timestamp.now();
+        await metricsRef.set({
+            views: 0,
+            whatsappClicks: 0,
+            formSubmissions: 0,
+            formStarts: 0,
+            createdAt: now,
+            lastUpdatedAt: now
+        });
     }
-
-    if (!data) {
-        const { error: insertError } = await supabaseClient
-            .from(metricsTable)
-            .insert(createMetricsRowPayload());
-
-        if (insertError) {
-            throw insertError;
-        }
-    }
-};
-
-const pullSupabaseMetrics = async () => {
-    if (!supabaseClient) {
-        return null;
-    }
-
-    await ensureSupabaseMetricsRow();
-
-    const { data, error } = await supabaseClient
-        .from(metricsTable)
-        .select("*")
-        .eq("id", 1)
-        .single();
-
-    if (error) {
-        throw error;
-    }
-
-    return normalizeMetricsRow(data);
 };
 
 const refreshMetrics = async () => {
-    if (!supabaseClient) {
+    if (!firestore) {
         renderMetrics();
         return;
     }
 
     try {
-        const nextMetrics = await pullSupabaseMetrics();
-        if (nextMetrics) {
-            syncMetrics(nextMetrics);
+        await ensureFirebaseMetricsDoc();
+        const metricsRef = getMetricsDocRef();
+        const snapshot = await metricsRef.get();
+
+        if (snapshot.exists) {
+            syncMetrics(normalizeMetricsDoc(snapshot.data()));
+            return;
         }
     } catch {
         renderMetrics();
+        return;
     }
+
+    renderMetrics();
 };
 
-const incrementSupabaseMetric = async (metricKey) => {
-    if (!supabaseClient) {
+const incrementFirebaseMetric = async (metricKey) => {
+    if (!firestore) {
         incrementMetric(metricKey);
         return;
     }
 
-    const metricMap = {
-        views: "views",
-        whatsappClicks: "whatsapp_clicks",
-        formSubmissions: "form_submissions",
-        formStarts: "form_starts"
-    };
-
     try {
-        const { data, error } = await supabaseClient.rpc("increment_site_metric", {
-            metric_name: metricMap[metricKey]
+        const metricsRef = getMetricsDocRef();
+        const nextDoc = await firestore.runTransaction(async (transaction) => {
+            const snapshot = await transaction.get(metricsRef);
+            const now = window.firebase.firestore.Timestamp.now();
+            const currentDoc = snapshot.exists
+                ? normalizeMetricsDoc(snapshot.data())
+                : {
+                    ...defaultMetrics,
+                    createdAt: now.toDate().toISOString(),
+                    lastUpdatedAt: now.toDate().toISOString()
+                };
+
+            const updatedDoc = {
+                views: currentDoc.views,
+                whatsappClicks: currentDoc.whatsappClicks,
+                formSubmissions: currentDoc.formSubmissions,
+                formStarts: currentDoc.formStarts,
+                createdAt: snapshot.exists ? snapshot.data().createdAt : now,
+                lastUpdatedAt: now
+            };
+
+            updatedDoc[metricKey] += 1;
+            transaction.set(metricsRef, updatedDoc, { merge: true });
+            return updatedDoc;
         });
 
-        if (error) {
-            throw error;
-        }
-
-        if (data) {
-            syncMetrics(normalizeRpcMetricsResponse(data));
-            return;
-        }
-
-        const nextMetrics = await pullSupabaseMetrics();
-        if (nextMetrics) {
-            syncMetrics(nextMetrics);
-            return;
-        }
+        syncMetrics(normalizeMetricsDoc(nextDoc));
     } catch {
         incrementMetric(metricKey);
     }
 };
 
-const resetSupabaseMetrics = async () => {
-    if (!supabaseClient) {
+const resetFirebaseMetrics = async () => {
+    if (!firestore) {
         metrics = {
             ...defaultMetrics,
             createdAt: new Date().toISOString(),
@@ -236,44 +225,41 @@ const resetSupabaseMetrics = async () => {
         return;
     }
 
-    const payload = createMetricsRowPayload();
-    await ensureSupabaseMetricsRow();
-    const { data, error } = await supabaseClient
-        .from(metricsTable)
-        .update(payload)
-        .eq("id", 1)
-        .select("*")
-        .single();
+    const now = window.firebase.firestore.Timestamp.now();
+    await getMetricsDocRef().set({
+        views: 0,
+        whatsappClicks: 0,
+        formSubmissions: 0,
+        formStarts: 0,
+        createdAt: now,
+        lastUpdatedAt: now
+    });
 
-    if (error) {
-        throw error;
-    }
-
-    syncMetrics(normalizeMetricsRow(data));
+    syncMetrics({
+        views: 0,
+        whatsappClicks: 0,
+        formSubmissions: 0,
+        formStarts: 0,
+        createdAt: now.toDate().toISOString(),
+        lastUpdatedAt: now.toDate().toISOString()
+    });
 };
 
-const saveReservationToSupabase = async (payload) => {
-    if (!supabaseClient) {
+const saveReservationToFirebase = async (payload) => {
+    if (!firestore) {
         return;
     }
 
-    const normalizedPayload = {
+    await firestore.collection(reservationsCollection).add({
         nombre: String(payload.nombre || "").trim(),
         apellido: String(payload.apellido || "").trim(),
         email: String(payload.email || "").trim(),
         telefono: String(payload.telefono || "").trim(),
         evento: String(payload.evento || "").trim(),
         cantidad: Number(payload.cantidad || 0),
-        notas: String(payload.notas || "").trim()
-    };
-
-    const { error } = await supabaseClient
-        .from(reservationsTable)
-        .insert(normalizedPayload);
-
-    if (error) {
-        throw error;
-    }
+        notas: String(payload.notas || "").trim(),
+        createdAt: window.firebase.firestore.Timestamp.now()
+    });
 };
 
 const getActiveDays = () => {
@@ -415,7 +401,7 @@ productButtons.forEach((button) => {
 
 whatsappLinks.forEach((link) => {
     link.addEventListener("click", () => {
-        void incrementSupabaseMetric("whatsappClicks");
+        void incrementFirebaseMetric("whatsappClicks");
     });
 });
 
@@ -426,7 +412,7 @@ formInputs.forEach((input) => {
         }
 
         formStarted = true;
-        void incrementSupabaseMetric("formStarts");
+        void incrementFirebaseMetric("formStarts");
     });
 });
 
@@ -437,8 +423,8 @@ form?.addEventListener("submit", async (event) => {
     const whatsappReservationUrl = buildReservationMessage(formData);
 
     try {
-        await saveReservationToSupabase(payload);
-        await incrementSupabaseMetric("formSubmissions");
+        await saveReservationToFirebase(payload);
+        await incrementFirebaseMetric("formSubmissions");
     } catch {
         incrementMetric("formSubmissions");
     }
@@ -524,7 +510,7 @@ ceoReset?.addEventListener("click", async () => {
     }
 
     try {
-        await resetSupabaseMetrics();
+        await resetFirebaseMetrics();
         window.alert("Metricas reiniciadas.");
     } catch {
         window.alert("No se pudieron limpiar las metricas.");
@@ -598,5 +584,5 @@ if ("serviceWorker" in navigator) {
 
 window.addEventListener("load", async () => {
     await refreshMetrics();
-    await incrementSupabaseMetric("views");
+    await incrementFirebaseMetric("views");
 });
