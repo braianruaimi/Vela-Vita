@@ -22,8 +22,7 @@
         <a class="brand" href="#inicio">Vela-Vita</a>
         <nav class="site-nav" aria-label="Principal">
             <a href="#nosotros">Nosotros</a>
-            <a href="#productos">Coleccion</a>
-            <a href="#mis-productos">Linea exclusiva</a>
+            <a href="#productos">Productos</a>
             <a href="#reserva">Pedidos</a>
             <a href="#testimonios">Historias</a>
         </nav>
@@ -86,8 +85,9 @@
 
         <section class="products-section" id="productos">
             <div class="section-heading reveal-up">
-                <p class="section-kicker">Coleccion esencial</p>
-                <h2>Piezas insignia de Vela-Vita</h2>
+                <p class="section-kicker">Mas vendidas</p>
+                <h2>Las 3 favoritas de Vela-Vita</h2>
+                <p class="section-copy">En la portada destacamos nuestras piezas mas elegidas para que encuentres rapido las favoritas de la coleccion.</p>
             </div>
             <div class="products-grid">
                 <article class="product-card reveal-up">
@@ -126,13 +126,23 @@
             </div>
         </section>
 
-        <section class="products-section products-showcase-section" id="mis-productos">
-            <div class="section-heading reveal-up">
-                <p class="section-kicker">Linea exclusiva</p>
-                <h2>Modelos especiales para pedidos con identidad propia</h2>
-                <p class="section-copy">Explora una seleccion ampliada de piezas Vela-Vita y suma tus favoritas al carrito o consulta disponibilidad en el momento.</p>
-            </div>
-            <div class="products-grid products-grid-expanded">
+        <details class="products-dropdown-section reveal-up" id="productos-menu">
+            <summary class="products-dropdown-summary">
+                <div>
+                    <p class="section-kicker">Productos</p>
+                    <h2>Ver toda la coleccion</h2>
+                    <p class="section-copy">Abre este menu desplegable para descubrir el resto de los modelos y sumar tus favoritos al carrito.</p>
+                </div>
+                <span class="products-dropdown-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="products-dropdown-panel">
+                <div class="product-subsection">
+                    <div class="section-heading">
+                        <p class="section-kicker">Linea exclusiva</p>
+                        <h3>Modelos especiales</h3>
+                        <p class="section-copy">Explora una seleccion ampliada de piezas Vela-Vita y suma tus favoritas al carrito o consulta disponibilidad en el momento.</p>
+                    </div>
+                    <div class="products-grid products-grid-expanded">
                 <article class="product-card reveal-up">
                     <img src="images/imag%20productos/florcis.jpeg" alt="Bouquet Delicado" class="product-image">
                     <div class="product-content">
@@ -254,8 +264,10 @@
                         </div>
                     </div>
                 </article>
+                    </div>
+                </div>
             </div>
-        </section>
+        </details>
 
         <section class="reservation-section" id="reserva">
             <div class="reservation-copy reveal-up">
