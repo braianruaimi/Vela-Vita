@@ -495,7 +495,23 @@ const botResponses = [
     },
     {
         keywords: ["evento", "eventos", "casamiento", "boda", "cumpleanos", "cumpleanos"],
-        answer: "Si, realizamos pedidos especiales para cumpleanos, casamientos, bautismos y celebraciones con una propuesta a medida."
+        answer: "Si, realizamos pedidos especiales para cumpleanos, casamientos, bautismos y celebraciones con una propuesta a medida. Podemos ayudarte a crear una ambientacion delicada, memorable y alineada con el estilo de tu evento."
+    },
+    {
+        keywords: ["souvenir", "souvenirs", "recuerdo", "recuerdos"],
+        answer: "Si buscas souvenirs, en Vela-Vita podemos preparar piezas delicadas y personalizadas que dejen un recuerdo especial en tus invitados. Son ideales para celebraciones elegantes y detalles con identidad propia."
+    },
+    {
+        keywords: ["decoracion", "deco", "ambientacion", "hogar"],
+        answer: "Nuestras velas tambien estan pensadas para decoracion y ambientacion. Podemos ayudarte a elegir piezas que aporten calidez, estilo y una presencia sutil pero inolvidable en cualquier espacio."
+    },
+    {
+        keywords: ["centro de mesa", "centros de mesa", "mesa dulce", "mesas"],
+        answer: "Trabajamos propuestas para centros de mesa y mesas dulces con velas que elevan la presentacion de cada evento. Si quieres, puedes contarnos tu idea y te orientamos con una seleccion armoniosa y elegante."
+    },
+    {
+        keywords: ["regalo", "regalos", "obsequio", "detalle"],
+        answer: "Si estas buscando un regalo especial, nuestras velas son una opcion delicada, elegante y con mucha personalidad. Podemos recomendarte modelos ideales para obsequios, fechas especiales o detalles unicos."
     },
     {
         keywords: ["reserva", "reservar", "pedido", "personalizadas"],
@@ -507,11 +523,11 @@ const botResponses = [
     },
     {
         keywords: ["producto", "productos", "vela", "velas", "aromatica", "decorativa"],
-        answer: "Contamos con piezas decorativas, aromaticas y colecciones pensadas para eventos. Si buscas algo puntual, cuentanos tu idea y te orientamos."
+        answer: "Contamos con piezas decorativas, aromaticas y colecciones pensadas para eventos, regalos y ambientaciones especiales. Si buscas algo puntual, cuentanos tu idea y te orientamos con una recomendacion acorde a tu necesidad."
     }
 ];
 
-const defaultResponse = "Puedo ayudarte con colecciones, pedidos personalizados, reservas y entregas. Si quieres una propuesta, tambien puedes escribirnos por WhatsApp.";
+const defaultResponse = "Puedo ayudarte con velas para cumpleanos, casamientos, souvenirs, decoracion, centros de mesa, regalos y pedidos personalizados. Si quieres, cuentame para que ocasion estas buscando y te recomiendo una propuesta ideal.";
 
 const appendMessage = (text, type) => {
     if (!chatMessages) {

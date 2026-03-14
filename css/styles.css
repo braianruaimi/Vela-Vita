@@ -952,7 +952,8 @@ section {
 }
 
 .floating-cart {
-    right: 88px;
+    left: 88px;
+    right: auto;
     background: linear-gradient(135deg, #fff4de 0%, #ffd89f 100%);
 }
 
@@ -1010,7 +1011,27 @@ section {
 }
 
 .chat-toggle {
+    position: relative;
     background: linear-gradient(135deg, #ffd88f 0%, #ffb25a 55%, #ff8440 100%);
+}
+
+.chat-toggle-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #8f3e12 0%, #c94a10 100%);
+    color: #fff9f2;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    box-shadow: 0 10px 18px rgba(92, 34, 6, 0.22);
 }
 
 .chat-panel {
@@ -1451,7 +1472,8 @@ section {
     }
 
     .floating-cart {
-        right: 160px;
+        left: 92px;
+        right: auto;
     }
 
     .floating-install:hover,
