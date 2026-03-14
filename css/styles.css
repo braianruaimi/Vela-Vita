@@ -952,7 +952,8 @@ section {
 }
 
 .floating-cart {
-    left: 88px;
+    left: 20px;
+    bottom: 88px;
     right: auto;
     background: linear-gradient(135deg, #fff4de 0%, #ffd89f 100%);
 }
@@ -1472,7 +1473,8 @@ section {
     }
 
     .floating-cart {
-        left: 92px;
+        left: 20px;
+        bottom: 92px;
         right: auto;
     }
 

@@ -494,24 +494,36 @@ const botResponses = [
         answer: "Los valores dependen del modelo, la cantidad y el tipo de pedido. Puedes completar el formulario o escribirnos por WhatsApp para recibir una propuesta personalizada."
     },
     {
-        keywords: ["evento", "eventos", "casamiento", "boda", "cumpleanos", "cumpleanos"],
-        answer: "Si, realizamos pedidos especiales para cumpleanos, casamientos, bautismos y celebraciones con una propuesta a medida. Podemos ayudarte a crear una ambientacion delicada, memorable y alineada con el estilo de tu evento."
+        keywords: ["cumpleanos", "cumple", "cumpleanero"],
+        answer: "Si es para un cumpleanos, podemos prepararte velas delicadas y cancheras para decorar, regalar o sumar a la mesa principal. Es una opcion linda y especial para que el festejo tenga mas personalidad."
+    },
+    {
+        keywords: ["casamiento", "casamiento", "boda", "novios"],
+        answer: "Si es para un casamiento, podemos ayudarte con una propuesta elegante para souvenirs, ambientacion o centros de mesa. La idea es que cada detalle acompane el estilo de la celebracion."
+    },
+    {
+        keywords: ["bautismo", "comunion", "baby shower"],
+        answer: "Si es para una celebracion especial como bautismo o baby shower, podemos armar piezas delicadas y personalizadas para souvenirs o decoracion con una estetica suave y cuidada."
     },
     {
         keywords: ["souvenir", "souvenirs", "recuerdo", "recuerdos"],
-        answer: "Si buscas souvenirs, en Vela-Vita podemos preparar piezas delicadas y personalizadas que dejen un recuerdo especial en tus invitados. Son ideales para celebraciones elegantes y detalles con identidad propia."
+        answer: "Si buscas souvenirs, podemos preparar velas delicadas y personalizadas para que tus invitados se lleven un recuerdo lindo, util y con mucha identidad."
     },
     {
         keywords: ["decoracion", "deco", "ambientacion", "hogar"],
-        answer: "Nuestras velas tambien estan pensadas para decoracion y ambientacion. Podemos ayudarte a elegir piezas que aporten calidez, estilo y una presencia sutil pero inolvidable en cualquier espacio."
+        answer: "Si las quieres para decoracion, podemos recomendarte piezas que aporten calidez, estilo y una presencia delicada en cualquier espacio."
     },
     {
         keywords: ["centro de mesa", "centros de mesa", "mesa dulce", "mesas"],
-        answer: "Trabajamos propuestas para centros de mesa y mesas dulces con velas que elevan la presentacion de cada evento. Si quieres, puedes contarnos tu idea y te orientamos con una seleccion armoniosa y elegante."
+        answer: "Si las quieres para centros de mesa o mesas dulces, podemos ayudarte a elegir modelos que vistan la presentacion del evento de forma armoniosa y elegante."
     },
     {
         keywords: ["regalo", "regalos", "obsequio", "detalle"],
-        answer: "Si estas buscando un regalo especial, nuestras velas son una opcion delicada, elegante y con mucha personalidad. Podemos recomendarte modelos ideales para obsequios, fechas especiales o detalles unicos."
+        answer: "Si buscas un regalo, nuestras velas son una opcion delicada, elegante y con mucha personalidad. Podemos orientarte segun la ocasion para que elijas una pieza especial."
+    },
+    {
+        keywords: ["evento", "eventos", "celebracion", "celebraciones"],
+        answer: "Si es para un evento, podemos ayudarte con velas para decoracion, souvenirs, centros de mesa o regalos. Si me dices la ocasion, te recomiendo una opcion mas puntual."
     },
     {
         keywords: ["reserva", "reservar", "pedido", "personalizadas"],
@@ -529,6 +541,11 @@ const botResponses = [
 
 const defaultResponse = "Puedo ayudarte con velas para cumpleanos, casamientos, souvenirs, decoracion, centros de mesa, regalos y pedidos personalizados. Si quieres, cuentame para que ocasion estas buscando y te recomiendo una propuesta ideal.";
 
+const normalizeChatText = (value) => value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 const appendMessage = (text, type) => {
     if (!chatMessages) {
         return;
@@ -542,8 +559,8 @@ const appendMessage = (text, type) => {
 };
 
 const getBotReply = (input) => {
-    const normalizedInput = input.toLowerCase();
-    const match = botResponses.find(({ keywords }) => keywords.some((keyword) => normalizedInput.includes(keyword)));
+    const normalizedInput = normalizeChatText(input);
+    const match = botResponses.find(({ keywords }) => keywords.some((keyword) => normalizedInput.includes(normalizeChatText(keyword))));
     return match ? match.answer : defaultResponse;
 };
 
