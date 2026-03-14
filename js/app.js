@@ -307,7 +307,7 @@ const renderMetrics = () => {
 
 const buildReservationMessage = (formData) => {
     const lines = [
-        "Hola, quiero reservar velas Vela-Vita.",
+        "Hola, quiero solicitar una propuesta para velas Vela-Vita.",
         "",
         `Nombre: ${formData.get("nombre")}`,
         `Apellido: ${formData.get("apellido")}`,
@@ -323,7 +323,7 @@ const buildReservationMessage = (formData) => {
 
 const buildProductInquiryMessage = (productName) => {
     const lines = [
-        "Hola, quiero consultar esta vela de Vela-Vita.",
+        "Hola, quiero consultar la disponibilidad de esta pieza de Vela-Vita.",
         "",
         `Producto: ${productName}`
     ];
@@ -332,14 +332,14 @@ const buildProductInquiryMessage = (productName) => {
 };
 
 const buildCartMessage = () => {
-    const lines = ["Hola, quiero enviar este pedido de velas Vela-Vita.", ""];
+    const lines = ["Hola, quiero confirmar esta seleccion de Vela-Vita.", ""];
 
     cart.forEach((item, index) => {
         lines.push(`${index + 1}. ${item.name} x ${item.quantity}`);
     });
 
     lines.push("");
-    lines.push(`Total de unidades: ${cart.reduce((total, item) => total + item.quantity, 0)}`);
+    lines.push(`Total de piezas: ${cart.reduce((total, item) => total + item.quantity, 0)}`);
 
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
 };
@@ -396,7 +396,7 @@ const renderCart = () => {
         const name = document.createElement("strong");
         name.textContent = item.name;
         const detail = document.createElement("p");
-        detail.textContent = "Puedes seguir sumando unidades o enviar el pedido por WhatsApp.";
+        detail.textContent = "Puedes seguir sumando piezas o enviar tu pedido por WhatsApp.";
         content.append(name, detail);
 
         const actions = document.createElement("div");
@@ -491,27 +491,27 @@ renderMetrics();
 const botResponses = [
     {
         keywords: ["precio", "precios", "costo", "costos", "cotizacion"],
-        answer: "Los precios dependen del tipo de vela y la cantidad. Puedes completar el formulario de reserva o escribirnos por WhatsApp para recibir una cotizacion."
+        answer: "Los valores dependen del modelo, la cantidad y el tipo de pedido. Puedes completar el formulario o escribirnos por WhatsApp para recibir una propuesta personalizada."
     },
     {
         keywords: ["evento", "eventos", "casamiento", "boda", "cumpleanos", "cumpleanos"],
-        answer: "Si, realizamos pedidos especiales para cumpleanos, casamientos y celebraciones."
+        answer: "Si, realizamos pedidos especiales para cumpleanos, casamientos, bautismos y celebraciones con una propuesta a medida."
     },
     {
         keywords: ["reserva", "reservar", "pedido", "personalizadas"],
-        answer: "Puedes reservar desde el formulario de esta pagina. Indicanos tipo de evento, cantidad estimada y detalles para preparar tu propuesta."
+        answer: "Puedes solicitar tu pedido desde el formulario de esta pagina. Indicanos tipo de evento, cantidad estimada y detalles para preparar una propuesta personalizada."
     },
     {
         keywords: ["entrega", "envio", "zona", "retirar"],
-        answer: "Consulta disponibilidad de entrega segun tu zona. Tambien podemos coordinar retiro segun el tipo de pedido."
+        answer: "La disponibilidad de entrega depende de la zona y del volumen del pedido. Tambien podemos coordinar retiro segun cada propuesta."
     },
     {
         keywords: ["producto", "productos", "vela", "velas", "aromatica", "decorativa"],
-        answer: "Tenemos velas decorativas, aromaticas y opciones para eventos. Si buscas algo puntual, cuentanos tu idea y te orientamos."
+        answer: "Contamos con piezas decorativas, aromaticas y colecciones pensadas para eventos. Si buscas algo puntual, cuentanos tu idea y te orientamos."
     }
 ];
 
-const defaultResponse = "Puedo ayudarte con consultas sobre productos, eventos, reservas y entregas. Si quieres una cotizacion, tambien puedes escribirnos por WhatsApp.";
+const defaultResponse = "Puedo ayudarte con colecciones, pedidos personalizados, reservas y entregas. Si quieres una propuesta, tambien puedes escribirnos por WhatsApp.";
 
 const appendMessage = (text, type) => {
     if (!chatMessages) {
@@ -652,7 +652,7 @@ cartClear?.addEventListener("click", () => {
 });
 cartSend?.addEventListener("click", () => {
     if (!cart.length) {
-        window.alert("Agrega al menos una vela al carrito.");
+        window.alert("Agrega al menos una pieza a tu seleccion.");
         return;
     }
 
@@ -668,7 +668,7 @@ ceoLogin?.addEventListener("submit", (event) => {
     }
 
     if (ceoPassword.value !== ceoAccessKey) {
-        window.alert("Clave incorrecta.");
+        window.alert("Clave incorrecta. Intenta nuevamente.");
         ceoPassword.select();
         return;
     }
@@ -685,22 +685,22 @@ ceoRefresh?.addEventListener("click", () => {
 
 ceoReset?.addEventListener("click", async () => {
     if (!ceoUnlocked) {
-        window.alert("Primero debes ingresar al panel CEO.");
+        window.alert("Primero debes abrir el panel de gestion.");
         return;
     }
 
-    const confirmationPassword = window.prompt("Ingresa la clave para confirmar la limpieza de metricas:");
+    const confirmationPassword = window.prompt("Ingresa la clave para confirmar el reinicio de metricas:");
 
     if (confirmationPassword !== ceoAccessKey) {
-        window.alert("Clave incorrecta. No se limpiaron las metricas.");
+        window.alert("Clave incorrecta. Las metricas no fueron reiniciadas.");
         return;
     }
 
     try {
         await resetFirebaseMetrics();
-        window.alert("Metricas reiniciadas.");
+        window.alert("Metricas reiniciadas correctamente.");
     } catch {
-        window.alert("No se pudieron limpiar las metricas.");
+        window.alert("No fue posible reiniciar las metricas.");
     }
 });
 

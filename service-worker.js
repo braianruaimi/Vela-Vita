@@ -1,4 +1,4 @@
-const CACHE_NAME = "vela-vita-v1";
+const CACHE_NAME = "vela-vita-v3";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -11,7 +11,18 @@ const APP_SHELL = [
     "./images/ramo%20lila.jpeg",
     "./images/Ramo%20rojo.jpeg",
     "./images/Ramo%20rosa.jpeg",
-    "./images/WhatsApp%20Image%202026-03-14%20at%2018.15.07.jpeg"
+    "./images/WhatsApp%20Image%202026-03-14%20at%2018.15.07.jpeg",
+    "./images/imag%20productos/florcis.jpeg",
+    "./images/imag%20productos/florcitas.jpeg",
+    "./images/imag%20productos/florrr.jpeg",
+    "./images/imag%20productos/lil.jpeg",
+    "./images/imag%20productos/vaso%20flor%20.jpeg",
+    "./images/imag%20productos/vel%20don.jpeg",
+    "./images/imag%20productos/vel%20frut.jpeg",
+    "./images/imag%20productos/vel%20nan.jpeg",
+    "./images/imag%20productos/vel%20pos.jpeg",
+    "./images/imag%20productos/vela%20postre.jpeg",
+    "./images/imag%20productos/vell.jpeg"
 ];
 
 self.addEventListener("install", (event) => {

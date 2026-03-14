@@ -183,12 +183,17 @@ h3,
 }
 
 .site-nav a {
+    position: relative;
+    padding: 8px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
     transition: color var(--transition);
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible {
     color: var(--accent-deep);
+    background: rgba(255, 241, 219, 0.78);
 }
 
 main {
@@ -234,6 +239,7 @@ section {
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: #c84f14;
+    opacity: 0.9;
 }
 
 .hero-copy h1 {
@@ -248,7 +254,7 @@ section {
 .final-cta-section h2 {
     margin: 10px 0 0;
     font-size: clamp(2rem, 7vw, 3.6rem);
-    line-height: 1;
+    line-height: 0.95;
 }
 
 .hero-description,
@@ -259,6 +265,13 @@ section {
 .product-content p {
     color: var(--muted);
     line-height: 1.75;
+}
+
+.hero-description,
+.section-copy,
+.reservation-copy p,
+.final-cta-section p {
+    max-width: 62ch;
 }
 
 .hero-copy {
@@ -318,20 +331,17 @@ section {
 .hero-details {
     display: grid;
     gap: 14px;
+    align-content: start;
 }
 
 .candle-scene {
     position: relative;
     min-height: 360px;
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    gap: 18px;
-    padding: 30px 20px;
+    display: grid;
+    overflow: hidden;
+    align-items: stretch;
     border-radius: calc(var(--radius-lg) - 6px);
     background:
-        radial-gradient(circle at 50% 18%, rgba(255, 200, 82, 0.72), transparent 18%),
-        radial-gradient(circle at 20% 30%, rgba(255, 145, 54, 0.16), transparent 22%),
         linear-gradient(180deg, rgba(59, 39, 23, 0.03) 0%, rgba(86, 57, 30, 0.1) 100%),
         linear-gradient(180deg, #fff7eb 0%, #ffd9ab 100%);
 }
@@ -339,11 +349,28 @@ section {
 .candle-scene::after {
     content: "";
     position: absolute;
-    inset: auto 12% 20px;
-    height: 26px;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 241, 220, 0.08), rgba(74, 39, 14, 0.18));
+}
+
+.hero-photo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+    object-fit: cover;
+    object-position: center 34%;
+}
+
+.hero-photo-glow {
+    position: absolute;
+    inset: auto 8% 18px;
+    z-index: 2;
+    height: 30px;
     border-radius: 999px;
-    background: rgba(132, 90, 47, 0.12);
-    filter: blur(8px);
+    background: rgba(132, 90, 47, 0.18);
+    filter: blur(10px);
 }
 
 .scene-orbit {
@@ -460,6 +487,7 @@ section {
 
 .section-heading {
     margin-bottom: 16px;
+    max-width: 760px;
 }
 
 .about-highlights {
@@ -506,6 +534,22 @@ section {
     gap: 18px;
 }
 
+.products-showcase-section {
+    display: grid;
+    gap: 22px;
+}
+
+.products-grid-expanded {
+    gap: 20px;
+}
+
+.section-copy {
+    max-width: 680px;
+    margin: 12px 0 0;
+    color: var(--muted);
+    line-height: 1.75;
+}
+
 .testimonials-carousel {
     position: relative;
     display: grid;
@@ -533,7 +577,16 @@ section {
 }
 
 .product-card {
+    position: relative;
     transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.product-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 30%, rgba(255, 243, 223, 0.16) 100%);
+    pointer-events: none;
 }
 
 .product-card:hover,
@@ -551,7 +604,7 @@ section {
 
 .product-content {
     display: grid;
-    gap: 10px;
+    gap: 12px;
     padding: 22px;
 }
 
@@ -586,6 +639,10 @@ section {
 .testimonial-card footer {
     margin: 0;
     font-size: 1.8rem;
+}
+
+.product-content h3 {
+    line-height: 0.95;
 }
 
 .reservation-section {
@@ -637,6 +694,7 @@ section {
     gap: 8px;
     font-size: 0.95rem;
     font-weight: 600;
+    color: #5e4334;
 }
 
 .reservation-form input,
@@ -671,6 +729,7 @@ section {
     border-radius: 16px;
     background: rgba(255, 223, 184, 0.8);
     color: #8a420d;
+    border: 1px solid rgba(201, 117, 34, 0.14);
 }
 
 .testimonial-card {
@@ -770,6 +829,10 @@ section {
     font-size: 2rem;
 }
 
+.site-footer p:last-child {
+    margin: 0;
+}
+
 .footer-links {
     display: flex;
     gap: 12px;
@@ -836,8 +899,10 @@ section {
     left: 50%;
     transform: translateX(-50%);
     width: auto;
-    min-width: 146px;
+    min-width: 176px;
     padding: 0 18px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     color: #fff9f2;
     background: linear-gradient(135deg, #ffb24e 0%, #ff8b2d 48%, #d5550f 100%);
     box-shadow: 0 16px 30px rgba(201, 74, 16, 0.24);
@@ -908,6 +973,12 @@ section {
     box-shadow: 0 26px 60px rgba(61, 41, 24, 0.22);
 }
 
+.cart-card,
+.ceo-card,
+.chat-panel {
+    backdrop-filter: blur(18px);
+}
+
 .cart-header {
     display: flex;
     align-items: start;
@@ -955,6 +1026,7 @@ section {
 .cart-total {
     margin: 0;
     color: var(--muted);
+    font-weight: 600;
 }
 
 .cart-item-actions {
@@ -1081,6 +1153,7 @@ section {
 .ceo-metric-card span,
 .ceo-growth-card span {
     color: var(--muted);
+    font-size: 0.9rem;
 }
 
 .ceo-metric-card strong,
@@ -1131,6 +1204,7 @@ section {
     margin-top: 4px;
     font-size: 0.88rem;
     color: var(--muted);
+    line-height: 1.55;
 }
 
 .chat-close {
@@ -1156,6 +1230,7 @@ section {
     border-radius: 18px;
     line-height: 1.6;
     font-size: 0.95rem;
+    box-shadow: var(--shadow-soft);
 }
 
 .bot-message {
@@ -1250,6 +1325,19 @@ section {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .products-grid-expanded {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .candle-scene,
+    .hero-photo {
+        min-height: 430px;
+    }
+
+    .hero-photo {
+        object-position: center 38%;
+    }
+
     .about-highlights {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -1296,8 +1384,21 @@ section {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .products-grid-expanded {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .hero-section {
         padding: 44px 40px;
+    }
+
+    .candle-scene,
+    .hero-photo {
+        min-height: 520px;
+    }
+
+    .hero-photo {
+        object-position: center 42%;
     }
 
     .ceo-metrics-grid,
