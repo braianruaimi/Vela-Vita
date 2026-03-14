@@ -35,17 +35,23 @@ const metricsElements = {
 };
 
 const whatsappBaseUrl = "https://wa.me/5492215047962?text=";
-const apiEndpoints = {
-    health: "/api/health",
-    metrics: "/api/metrics",
-    view: "/api/metrics/view",
-    whatsappClick: "/api/metrics/whatsapp-click",
-    formStart: "/api/metrics/form-start",
-    resetMetrics: "/api/metrics/reset",
-    reservations: "/api/reservations"
-};
 const metricsStorageKey = "velaVitaMetrics";
 const ceoAccessKey = "1234";
+const supabaseSettings = window.VELA_VITA_SUPABASE ?? {};
+const canUseSupabase = Boolean(
+    supabaseSettings.enabled &&
+    supabaseSettings.url &&
+    supabaseSettings.anonKey &&
+    window.supabase?.createClient
+);
+
+const supabaseClient = canUseSupabase
+    ? window.supabase.createClient(supabaseSettings.url, supabaseSettings.anonKey)
+    : null;
+
+const metricsTable = supabaseSettings.metricsTable || "site_metrics";
+const reservationsTable = supabaseSettings.reservationsTable || "reservations";
+
 const defaultMetrics = {
     views: 0,
     whatsappClicks: 0,
@@ -58,7 +64,6 @@ const defaultMetrics = {
 let formStarted = false;
 let ceoUnlocked = false;
 let deferredInstallPrompt = null;
-let backendAvailable = false;
 
 const loadMetrics = () => {
     try {
@@ -79,27 +84,9 @@ const loadMetrics = () => {
 
 let metrics = loadMetrics();
 
-const apiRequest = async (url, options = {}) => {
-    const requestOptions = {
-        method: "GET",
-        headers: {},
-        ...options
-    };
-
-    if (requestOptions.body) {
-        requestOptions.headers = {
-            "Content-Type": "application/json",
-            ...requestOptions.headers
-        };
-    }
-
-    const response = await window.fetch(url, requestOptions);
-
-    if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    return response.json();
+const saveMetrics = () => {
+    metrics.lastUpdatedAt = new Date().toISOString();
+    window.localStorage.setItem(metricsStorageKey, JSON.stringify(metrics));
 };
 
 const syncMetrics = (nextMetrics) => {
@@ -111,59 +98,188 @@ const syncMetrics = (nextMetrics) => {
     renderMetrics();
 };
 
-const saveMetrics = () => {
-    metrics.lastUpdatedAt = new Date().toISOString();
-    window.localStorage.setItem(metricsStorageKey, JSON.stringify(metrics));
-};
-
 const incrementMetric = (key) => {
     metrics[key] += 1;
     saveMetrics();
     renderMetrics();
 };
 
-const incrementMetricRemote = async (metricKey) => {
-    const endpointMap = {
-        views: apiEndpoints.view,
-        whatsappClicks: apiEndpoints.whatsappClick,
-        formStarts: apiEndpoints.formStart
-    };
+const normalizeMetricsRow = (row) => ({
+    views: Number(row?.views ?? 0),
+    whatsappClicks: Number(row?.whatsapp_clicks ?? 0),
+    formSubmissions: Number(row?.form_submissions ?? 0),
+    formStarts: Number(row?.form_starts ?? 0),
+    createdAt: row?.created_at ?? defaultMetrics.createdAt,
+    lastUpdatedAt: row?.last_updated_at ?? defaultMetrics.lastUpdatedAt
+});
 
-    if (!backendAvailable || !endpointMap[metricKey]) {
-        incrementMetric(metricKey);
+const normalizeRpcMetricsResponse = (data) => normalizeMetricsRow(Array.isArray(data) ? data[0] : data);
+
+const createMetricsRowPayload = () => ({
+    id: 1,
+    views: 0,
+    whatsapp_clicks: 0,
+    form_submissions: 0,
+    form_starts: 0,
+    created_at: new Date().toISOString(),
+    last_updated_at: new Date().toISOString()
+});
+
+const ensureSupabaseMetricsRow = async () => {
+    if (!supabaseClient) {
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from(metricsTable)
+        .select("id")
+        .eq("id", 1)
+        .maybeSingle();
+
+    if (error) {
+        throw error;
+    }
+
+    if (!data) {
+        const { error: insertError } = await supabaseClient
+            .from(metricsTable)
+            .insert(createMetricsRowPayload());
+
+        if (insertError) {
+            throw insertError;
+        }
+    }
+};
+
+const pullSupabaseMetrics = async () => {
+    if (!supabaseClient) {
+        return null;
+    }
+
+    await ensureSupabaseMetricsRow();
+
+    const { data, error } = await supabaseClient
+        .from(metricsTable)
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return normalizeMetricsRow(data);
+};
+
+const refreshMetrics = async () => {
+    if (!supabaseClient) {
+        renderMetrics();
         return;
     }
 
     try {
-        const nextMetrics = await apiRequest(endpointMap[metricKey], {
-            method: "POST",
-            keepalive: metricKey === "whatsappClicks"
+        const nextMetrics = await pullSupabaseMetrics();
+        if (nextMetrics) {
+            syncMetrics(nextMetrics);
+        }
+    } catch {
+        renderMetrics();
+    }
+};
+
+const incrementSupabaseMetric = async (metricKey) => {
+    if (!supabaseClient) {
+        incrementMetric(metricKey);
+        return;
+    }
+
+    const metricMap = {
+        views: "views",
+        whatsappClicks: "whatsapp_clicks",
+        formSubmissions: "form_submissions",
+        formStarts: "form_starts"
+    };
+
+    try {
+        const { data, error } = await supabaseClient.rpc("increment_site_metric", {
+            metric_name: metricMap[metricKey]
         });
-        syncMetrics(nextMetrics);
+
+        if (error) {
+            throw error;
+        }
+
+        if (data) {
+            syncMetrics(normalizeRpcMetricsResponse(data));
+            return;
+        }
+
+        const nextMetrics = await pullSupabaseMetrics();
+        if (nextMetrics) {
+            syncMetrics(nextMetrics);
+            return;
+        }
     } catch {
         incrementMetric(metricKey);
     }
 };
 
-const refreshMetrics = async () => {
-    if (!backendAvailable) {
+const resetSupabaseMetrics = async () => {
+    if (!supabaseClient) {
+        metrics = {
+            ...defaultMetrics,
+            createdAt: new Date().toISOString(),
+            lastUpdatedAt: new Date().toISOString()
+        };
+        saveMetrics();
         renderMetrics();
         return;
     }
 
-    try {
-        const nextMetrics = await apiRequest(apiEndpoints.metrics);
-        syncMetrics(nextMetrics);
-    } catch {
-        renderMetrics();
+    const payload = createMetricsRowPayload();
+    await ensureSupabaseMetricsRow();
+    const { data, error } = await supabaseClient
+        .from(metricsTable)
+        .update(payload)
+        .eq("id", 1)
+        .select("*")
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    syncMetrics(normalizeMetricsRow(data));
+};
+
+const saveReservationToSupabase = async (payload) => {
+    if (!supabaseClient) {
+        return;
+    }
+
+    const normalizedPayload = {
+        nombre: String(payload.nombre || "").trim(),
+        apellido: String(payload.apellido || "").trim(),
+        email: String(payload.email || "").trim(),
+        telefono: String(payload.telefono || "").trim(),
+        evento: String(payload.evento || "").trim(),
+        cantidad: Number(payload.cantidad || 0),
+        notas: String(payload.notas || "").trim()
+    };
+
+    const { error } = await supabaseClient
+        .from(reservationsTable)
+        .insert(normalizedPayload);
+
+    if (error) {
+        throw error;
     }
 };
 
 const getActiveDays = () => {
     const createdAt = new Date(metrics.createdAt).getTime();
     const now = Date.now();
-    const diffInDays = Math.max(1, Math.ceil((now - createdAt) / (1000 * 60 * 60 * 24)));
-    return diffInDays;
+    return Math.max(1, Math.ceil((now - createdAt) / (1000 * 60 * 60 * 24)));
 };
 
 const formatRate = (value, total) => {
@@ -204,17 +320,6 @@ const buildReservationMessage = (formData) => {
     ];
 
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
-};
-
-const checkBackendAvailability = async () => {
-    try {
-        const result = await apiRequest(apiEndpoints.health, {
-            cache: "no-store"
-        });
-        backendAvailable = Boolean(result.ok);
-    } catch {
-        backendAvailable = false;
-    }
 };
 
 const openCeoPanel = () => {
@@ -310,7 +415,7 @@ productButtons.forEach((button) => {
 
 whatsappLinks.forEach((link) => {
     link.addEventListener("click", () => {
-        void incrementMetricRemote("whatsappClicks");
+        void incrementSupabaseMetric("whatsappClicks");
     });
 });
 
@@ -321,7 +426,7 @@ formInputs.forEach((input) => {
         }
 
         formStarted = true;
-        void incrementMetricRemote("formStarts");
+        void incrementSupabaseMetric("formStarts");
     });
 });
 
@@ -329,33 +434,24 @@ form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
-    let whatsappReservationUrl = buildReservationMessage(formData);
+    const whatsappReservationUrl = buildReservationMessage(formData);
 
     try {
-        if (backendAvailable) {
-            const result = await apiRequest(apiEndpoints.reservations, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
-
-            whatsappReservationUrl = result.whatsappUrl;
-            syncMetrics(result.metrics);
-        } else {
-            incrementMetric("formSubmissions");
-        }
-
-        successMessage?.removeAttribute("hidden");
-        form.reset();
-        formStarted = false;
-
-        if (eventSelect) {
-            eventSelect.selectedIndex = 0;
-        }
-
-        window.open(whatsappReservationUrl, "_blank", "noopener,noreferrer");
+        await saveReservationToSupabase(payload);
+        await incrementSupabaseMetric("formSubmissions");
     } catch {
-        window.alert("No se pudo enviar la reserva en este momento.");
+        incrementMetric("formSubmissions");
     }
+
+    successMessage?.removeAttribute("hidden");
+    form.reset();
+    formStarted = false;
+
+    if (eventSelect) {
+        eventSelect.selectedIndex = 0;
+    }
+
+    window.open(whatsappReservationUrl, "_blank", "noopener,noreferrer");
 });
 
 const openChat = () => {
@@ -428,24 +524,7 @@ ceoReset?.addEventListener("click", async () => {
     }
 
     try {
-        if (backendAvailable) {
-            const result = await apiRequest(apiEndpoints.resetMetrics, {
-                method: "POST",
-                body: JSON.stringify({
-                    password: confirmationPassword
-                })
-            });
-            syncMetrics(result.metrics);
-        } else {
-            metrics = {
-                ...defaultMetrics,
-                createdAt: new Date().toISOString(),
-                lastUpdatedAt: new Date().toISOString()
-            };
-            saveMetrics();
-            renderMetrics();
-        }
-
+        await resetSupabaseMetrics();
         window.alert("Metricas reiniciadas.");
     } catch {
         window.alert("No se pudieron limpiar las metricas.");
@@ -518,6 +597,6 @@ if ("serviceWorker" in navigator) {
 }
 
 window.addEventListener("load", async () => {
-    await checkBackendAvailability();
-    await incrementMetricRemote("views");
+    await refreshMetrics();
+    await incrementSupabaseMetric("views");
 });

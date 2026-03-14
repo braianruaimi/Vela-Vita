@@ -1,6 +1,6 @@
 # Vela-Vita
 
-Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript, con backend local en Node.js para reservas y metricas.
+Landing page de una marca de velas decorativas y aromaticas, creada como una single-page web app responsive en HTML, CSS y JavaScript, con integracion opcional a Supabase para reservas y metricas.
 
 ## Demo
 
@@ -23,7 +23,7 @@ Incluye:
 - Boton flotante de WhatsApp
 - Chatbot flotante con respuestas basicas
 - Panel CEO con metricas
-- Backend local para reservas y metricas
+- Integracion opcional con Supabase para reservas y metricas
 - Despliegue automatico con GitHub Pages
 
 ## Tecnologias
@@ -31,8 +31,7 @@ Incluye:
 - HTML5
 - CSS3
 - JavaScript
-- Node.js
-- Express
+- Supabase
 - GitHub Actions
 - GitHub Pages
 
@@ -43,9 +42,6 @@ Vela-Vita/
 |- .github/
 |  \- workflows/
 |     \- deploy-pages.yml
-|- data/
-|  |- metrics.json
-|  \- reservations.json
 |- css/
 |  \- styles.css
 |- images/
@@ -54,12 +50,13 @@ Vela-Vita/
 |  |- vela-decorativa.svg
 |  \- vela-eventos.svg
 |- js/
-|  \- app.js
+|  |- app.js
+|  \- supabase-config.js
 |- index.html
 |- manifest.webmanifest
-|- package.json
-|- server.js
 |- service-worker.js
+|- supabase/
+|  \- schema.sql
 \- README.md
 ```
 
@@ -82,6 +79,12 @@ Vela-Vita/
 - La logica del asistente esta en js/app.js.
 - Las respuestas se pueden ampliar modificando el arreglo botResponses.
 
+### Supabase
+
+- La configuracion publica se completa en js/supabase-config.js.
+- Si enabled queda en false, la web sigue funcionando con fallback local para metricas y reservas por WhatsApp.
+- Para activar Supabase debes completar url y anonKey.
+
 ## Uso local
 
 ### Solo frontend
@@ -90,42 +93,32 @@ Puedes abrir index.html directamente en el navegador o usar un servidor local si
 
 Ejemplo con VS Code Live Server o cualquier servidor estatico.
 
-### Frontend + backend
+## Configuracion de Supabase
 
-Para usar reservas y metricas reales compartidas entre dispositivos locales, ejecuta el backend:
+1. Crea un proyecto en Supabase.
+2. Abre el SQL editor y ejecuta el contenido de supabase/schema.sql.
+3. Copia tu Project URL y tu anon public key.
+4. Completa js/supabase-config.js:
 
-```bash
-npm install
-npm run dev
+```javascript
+window.VELA_VITA_SUPABASE = {
+	enabled: true,
+	url: "https://TU-PROYECTO.supabase.co",
+	anonKey: "TU_ANON_KEY",
+	metricsTable: "site_metrics",
+	reservationsTable: "reservations"
+};
 ```
 
-Luego abre:
+5. Publica nuevamente la web.
 
-http://localhost:3000
+Con eso quedaran persistidas en Supabase:
 
-## Backend local
-
-El backend sirve la web y expone endpoints REST simples para reservas y metricas.
-
-Endpoints principales:
-
-- GET /api/health
-- GET /api/metrics
-- POST /api/metrics/view
-- POST /api/metrics/whatsapp-click
-- POST /api/metrics/form-start
-- POST /api/reservations
-- POST /api/metrics/reset
-
-Persistencia local:
-
-- data/metrics.json
-- data/reservations.json
-
-Variables opcionales:
-
-- CEO_PANEL_PASSWORD
-- WHATSAPP_NUMBER
+- Views
+- Clicks a WhatsApp
+- Formularios iniciados
+- Formularios enviados
+- Reservas
 
 ## Despliegue
 
@@ -143,8 +136,9 @@ Publicacion:
 
 Importante:
 
-- GitHub Pages no ejecuta el backend Node.js.
-- El backend esta pensado para uso local o para desplegarse luego en otro hosting como Render, Railway, Fly.io o VPS.
+- GitHub Pages funciona bien con Supabase porque no necesita ejecutar backend propio.
+- La clave 1234 del panel CEO sigue siendo una barrera visual local en el frontend, no una seguridad real de servidor.
+- Si quieres un panel CEO realmente seguro, el siguiente paso correcto es usar Supabase Auth y politicas mas cerradas, o una Edge Function.
 
 ## Contacto configurado
 
@@ -155,5 +149,6 @@ Importante:
 
 - Reemplazar ilustraciones SVG por fotos reales del producto
 - Agregar testimonios reales
-- Conectar el formulario a un backend o servicio de email
+- Activar Supabase con tus credenciales reales
+- Agregar autenticacion real al panel CEO
 - Configurar un dominio propio
