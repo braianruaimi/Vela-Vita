@@ -1,12 +1,12 @@
 # Vela-Vita
 
-Sitio web responsive de Vela-Vita, una marca de velas artesanales orientada a regalos, decoracion y eventos. La app esta construida con HTML, CSS y JavaScript, se publica en GitHub Pages y puede usar Firebase Firestore de forma opcional para metricas y reservas.
+Sitio web responsive de Vela-Vita, una marca de velas artesanales orientada a regalos, decoracion y eventos. La app esta construida con HTML, CSS y JavaScript, se publica en GitHub Pages con dominio personalizado y puede usar Firebase Firestore de forma opcional para metricas y reservas.
 
 ## Demo
 
 Sitio publicado:
 
-https://braianruaimi.github.io/Vela-Vita/
+https://velavita.site/
 
 ## Estado actual
 
@@ -154,11 +154,12 @@ window.VELA_VITA_FIREBASE = {
 
 ## Publicacion
 
-El despliegue se hace con GitHub Pages mediante GitHub Actions.
+El despliegue se hace con GitHub Pages mediante GitHub Actions y dominio personalizado.
 
 - Workflow: .github/workflows/deploy-pages.yml
 - Rama de publicacion: main
 - Cada push a main dispara una nueva publicacion
+- Dominio principal: https://velavita.site/
 
 ## Contacto configurado
 
