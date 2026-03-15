@@ -483,6 +483,7 @@ section {
 }
 
 .about-section,
+.story-section,
 .reservation-section,
 .final-cta-section,
 .site-footer {
@@ -498,6 +499,49 @@ section {
     display: grid;
     gap: 16px;
     margin-top: 24px;
+}
+
+.story-section {
+    background: linear-gradient(180deg, rgba(255, 249, 242, 0.92), rgba(255, 238, 217, 0.82));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.story-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.story-copy-card,
+.story-value-card {
+    padding: 22px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 247, 236, 0.92);
+    border: 1px solid rgba(201, 117, 34, 0.12);
+    box-shadow: var(--shadow-soft);
+}
+
+.story-copy-card {
+    display: grid;
+    gap: 14px;
+}
+
+.story-copy-card p,
+.story-value-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.story-values {
+    display: grid;
+    gap: 14px;
+}
+
+.story-value-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.55rem;
 }
 
 .highlight-card {
@@ -1550,6 +1594,11 @@ section {
 
     .about-highlights {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .story-grid {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        align-items: start;
     }
 
     .form-grid {
