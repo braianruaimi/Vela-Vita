@@ -45,7 +45,6 @@ Vela-Vita/
 |     \- deploy-pages.yml
 |- css/
 |  \- styles.css
-|- data/
 |- firebase/
 |  \- firestore.rules
 |- images/
@@ -60,7 +59,6 @@ Vela-Vita/
 |- js/
 |  |- app.js
 |  \- firebase-config.js
-|- supabase/
 |- index.html
 |- manifest.webmanifest
 |- README.md
