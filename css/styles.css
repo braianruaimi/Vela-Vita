@@ -1097,15 +1097,19 @@ section {
 
 .horoscope-modal {
     position: fixed;
-    left: 16px;
-    right: 16px;
-    bottom: 132px;
+    inset: 0;
     z-index: 45;
     display: grid;
+    align-items: end;
+    justify-items: center;
+    padding: 20px 16px 132px;
+    background: rgba(47, 31, 22, 0.24);
+    backdrop-filter: blur(10px);
 }
 
 .horoscope-modal-card {
     position: relative;
+    width: min(380px, 100%);
     max-width: 380px;
     justify-self: center;
     display: grid;
@@ -1165,14 +1169,18 @@ section {
 
 .horoscope-close {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
+    top: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 999px;
     background: rgba(255, 250, 243, 0.95);
     color: var(--accent-deep);
     font-size: 1.3rem;
+    touch-action: manipulation;
 }
 
 .ceo-panel {
@@ -1627,9 +1635,8 @@ section {
     }
 
     .horoscope-modal {
-        left: auto;
-        right: 20px;
-        bottom: 164px;
+        justify-items: end;
+        padding: 20px 20px 164px;
     }
 
     .horoscope-modal-card {

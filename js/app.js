@@ -732,6 +732,24 @@ const closeHoroscopeModal = () => {
     markHoroscopeModalAsSeen();
 };
 
+horoscopeModal?.addEventListener("click", (event) => {
+    if (event.target === horoscopeModal) {
+        closeHoroscopeModal();
+    }
+});
+
+horoscopeModal?.addEventListener("pointerdown", (event) => {
+    if (event.target === horoscopeModal) {
+        closeHoroscopeModal();
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && horoscopeModal && !horoscopeModal.hidden) {
+        closeHoroscopeModal();
+    }
+});
+
 chatToggle?.addEventListener("click", () => {
     if (chatPanel?.hidden) {
         openChat();
@@ -743,6 +761,7 @@ chatToggle?.addEventListener("click", () => {
 
 chatClose?.addEventListener("click", closeChat);
 horoscopeClose?.addEventListener("click", closeHoroscopeModal);
+horoscopeClose?.addEventListener("pointerdown", closeHoroscopeModal);
 horoscopeCta?.addEventListener("click", () => {
     void incrementFirebaseMetric("horoscopeClicks");
     closeHoroscopeModal();
