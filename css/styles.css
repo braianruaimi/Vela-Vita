@@ -1074,6 +1074,15 @@ section {
     backdrop-filter: blur(18px);
 }
 
+.horoscope-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid rgba(201, 117, 34, 0.14);
+    box-shadow: var(--shadow-soft);
+}
+
 .horoscope-title-row {
     display: grid;
     grid-template-columns: auto 1fr;

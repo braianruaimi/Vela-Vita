@@ -1,4 +1,4 @@
-const CACHE_NAME = "vela-vita-v5";
+const CACHE_NAME = "vela-vita-v6";
 const APP_SHELL = [
     "./",
     "./index.html",
@@ -8,6 +8,7 @@ const APP_SHELL = [
     "./manifest.webmanifest",
     "./images/app-icon.svg",
     "./images/beige.jpeg",
+    "./images/Gemini_Generated_Image_og3c3aog3c3aog3c.png",
     "./images/ramo%20lila.jpeg",
     "./images/Ramo%20rojo.jpeg",
     "./images/Ramo%20rosa.jpeg",

@@ -45,6 +45,7 @@ const metricsElements = {
     formSubmissions: document.getElementById("metric-forms"),
     formStarts: document.getElementById("metric-form-starts"),
     horoscopeClicks: document.getElementById("metric-horoscope-clicks"),
+    horoscopeOpens: document.getElementById("metric-horoscope-opens"),
     whatsappRate: document.getElementById("metric-whatsapp-rate"),
     formRate: document.getElementById("metric-form-rate"),
     dailyViews: document.getElementById("metric-daily-views"),
@@ -79,6 +80,7 @@ const defaultMetrics = {
     formSubmissions: 0,
     formStarts: 0,
     horoscopeClicks: 0,
+    horoscopeOpens: 0,
     createdAt: new Date().toISOString(),
     lastUpdatedAt: new Date().toISOString()
 };
@@ -146,6 +148,7 @@ const normalizeMetricsDoc = (data) => ({
     formSubmissions: Number(data?.formSubmissions ?? 0),
     formStarts: Number(data?.formStarts ?? 0),
     horoscopeClicks: Number(data?.horoscopeClicks ?? 0),
+    horoscopeOpens: Number(data?.horoscopeOpens ?? 0),
     createdAt: normalizeTimestamp(data?.createdAt ?? defaultMetrics.createdAt),
     lastUpdatedAt: normalizeTimestamp(data?.lastUpdatedAt ?? defaultMetrics.lastUpdatedAt)
 });
@@ -168,6 +171,7 @@ const ensureFirebaseMetricsDoc = async () => {
             formSubmissions: 0,
             formStarts: 0,
             horoscopeClicks: 0,
+            horoscopeOpens: 0,
             createdAt: now,
             lastUpdatedAt: now
         });
@@ -222,6 +226,7 @@ const incrementFirebaseMetric = async (metricKey) => {
                 formSubmissions: currentDoc.formSubmissions,
                 formStarts: currentDoc.formStarts,
                 horoscopeClicks: currentDoc.horoscopeClicks,
+                horoscopeOpens: currentDoc.horoscopeOpens,
                 createdAt: snapshot.exists ? snapshot.data().createdAt : now,
                 lastUpdatedAt: now
             };
@@ -256,6 +261,7 @@ const resetFirebaseMetrics = async () => {
         formSubmissions: 0,
         formStarts: 0,
         horoscopeClicks: 0,
+        horoscopeOpens: 0,
         createdAt: now,
         lastUpdatedAt: now
     });
@@ -266,6 +272,7 @@ const resetFirebaseMetrics = async () => {
         formSubmissions: 0,
         formStarts: 0,
         horoscopeClicks: 0,
+        horoscopeOpens: 0,
         createdAt: now.toDate().toISOString(),
         lastUpdatedAt: now.toDate().toISOString()
     });
@@ -312,6 +319,7 @@ const renderMetrics = () => {
         metricsElements.formSubmissions.textContent = String(metrics.formSubmissions);
         metricsElements.formStarts.textContent = String(metrics.formStarts);
         metricsElements.horoscopeClicks.textContent = String(metrics.horoscopeClicks);
+        metricsElements.horoscopeOpens.textContent = String(metrics.horoscopeOpens);
         metricsElements.whatsappRate.textContent = formatRate(metrics.whatsappClicks, metrics.views);
         metricsElements.formRate.textContent = formatRate(metrics.formSubmissions, metrics.views);
         metricsElements.dailyViews.textContent = String(dailyViews);
@@ -700,6 +708,7 @@ const openHoroscopeModal = () => {
     }
 
     horoscopeModal.hidden = false;
+    void incrementFirebaseMetric("horoscopeOpens");
     markHoroscopeModalAsSeen();
 };
 
@@ -709,6 +718,7 @@ const showHoroscopeModalDirectly = () => {
     }
 
     horoscopeModal.hidden = false;
+    void incrementFirebaseMetric("horoscopeOpens");
     markHoroscopeModalAsSeen();
     horoscopeModal.scrollIntoView({ behavior: "smooth", block: "center" });
 };
