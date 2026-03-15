@@ -16,6 +16,10 @@ const chatMessages = document.getElementById("chat-messages");
 const installAppButton = document.getElementById("install-app-button");
 const floatingCartButton = document.getElementById("floating-cart-button");
 const floatingCartCount = document.getElementById("floating-cart-count");
+const heroHoroscopeTrigger = document.getElementById("hero-horoscope-trigger");
+const horoscopeModal = document.getElementById("horoscope-modal");
+const horoscopeClose = document.getElementById("horoscope-close");
+const horoscopeCta = document.getElementById("horoscope-cta");
 const cartPanel = document.getElementById("cart-panel");
 const cartClose = document.getElementById("cart-close");
 const cartItems = document.getElementById("cart-items");
@@ -40,6 +44,7 @@ const metricsElements = {
     whatsappClicks: document.getElementById("metric-whatsapp"),
     formSubmissions: document.getElementById("metric-forms"),
     formStarts: document.getElementById("metric-form-starts"),
+    horoscopeClicks: document.getElementById("metric-horoscope-clicks"),
     whatsappRate: document.getElementById("metric-whatsapp-rate"),
     formRate: document.getElementById("metric-form-rate"),
     dailyViews: document.getElementById("metric-daily-views"),
@@ -49,6 +54,7 @@ const metricsElements = {
 const whatsappBaseUrl = "https://wa.me/5492215047962?text=";
 const metricsStorageKey = "velaVitaMetrics";
 const ceoAccessKey = "1234";
+const horoscopeModalStorageKey = "velaVitaHoroscopeModalSeen";
 const firebaseSettings = window.VELA_VITA_FIREBASE ?? {};
 const canUseFirebase = Boolean(
     firebaseSettings.enabled &&
@@ -72,6 +78,7 @@ const defaultMetrics = {
     whatsappClicks: 0,
     formSubmissions: 0,
     formStarts: 0,
+    horoscopeClicks: 0,
     createdAt: new Date().toISOString(),
     lastUpdatedAt: new Date().toISOString()
 };
@@ -80,6 +87,7 @@ let formStarted = false;
 let ceoUnlocked = false;
 let deferredInstallPrompt = null;
 let cart = [];
+let horoscopeModalTimeout = null;
 
 const loadMetrics = () => {
     try {
@@ -137,6 +145,7 @@ const normalizeMetricsDoc = (data) => ({
     whatsappClicks: Number(data?.whatsappClicks ?? 0),
     formSubmissions: Number(data?.formSubmissions ?? 0),
     formStarts: Number(data?.formStarts ?? 0),
+    horoscopeClicks: Number(data?.horoscopeClicks ?? 0),
     createdAt: normalizeTimestamp(data?.createdAt ?? defaultMetrics.createdAt),
     lastUpdatedAt: normalizeTimestamp(data?.lastUpdatedAt ?? defaultMetrics.lastUpdatedAt)
 });
@@ -158,6 +167,7 @@ const ensureFirebaseMetricsDoc = async () => {
             whatsappClicks: 0,
             formSubmissions: 0,
             formStarts: 0,
+            horoscopeClicks: 0,
             createdAt: now,
             lastUpdatedAt: now
         });
@@ -211,6 +221,7 @@ const incrementFirebaseMetric = async (metricKey) => {
                 whatsappClicks: currentDoc.whatsappClicks,
                 formSubmissions: currentDoc.formSubmissions,
                 formStarts: currentDoc.formStarts,
+                horoscopeClicks: currentDoc.horoscopeClicks,
                 createdAt: snapshot.exists ? snapshot.data().createdAt : now,
                 lastUpdatedAt: now
             };
@@ -244,6 +255,7 @@ const resetFirebaseMetrics = async () => {
         whatsappClicks: 0,
         formSubmissions: 0,
         formStarts: 0,
+        horoscopeClicks: 0,
         createdAt: now,
         lastUpdatedAt: now
     });
@@ -253,6 +265,7 @@ const resetFirebaseMetrics = async () => {
         whatsappClicks: 0,
         formSubmissions: 0,
         formStarts: 0,
+        horoscopeClicks: 0,
         createdAt: now.toDate().toISOString(),
         lastUpdatedAt: now.toDate().toISOString()
     });
@@ -298,6 +311,7 @@ const renderMetrics = () => {
         metricsElements.whatsappClicks.textContent = String(metrics.whatsappClicks);
         metricsElements.formSubmissions.textContent = String(metrics.formSubmissions);
         metricsElements.formStarts.textContent = String(metrics.formStarts);
+        metricsElements.horoscopeClicks.textContent = String(metrics.horoscopeClicks);
         metricsElements.whatsappRate.textContent = formatRate(metrics.whatsappClicks, metrics.views);
         metricsElements.formRate.textContent = formatRate(metrics.formSubmissions, metrics.views);
         metricsElements.dailyViews.textContent = String(dailyViews);
@@ -664,6 +678,50 @@ const closeChat = () => {
     chatToggle.setAttribute("aria-expanded", "false");
 };
 
+const canShowHoroscopeModal = () => {
+    try {
+        return window.sessionStorage.getItem(horoscopeModalStorageKey) !== "true";
+    } catch {
+        return true;
+    }
+};
+
+const markHoroscopeModalAsSeen = () => {
+    try {
+        window.sessionStorage.setItem(horoscopeModalStorageKey, "true");
+    } catch {
+        // Ignore storage access failures and allow the modal to remain ephemeral.
+    }
+};
+
+const openHoroscopeModal = () => {
+    if (!horoscopeModal || !canShowHoroscopeModal()) {
+        return;
+    }
+
+    horoscopeModal.hidden = false;
+    markHoroscopeModalAsSeen();
+};
+
+const showHoroscopeModalDirectly = () => {
+    if (!horoscopeModal) {
+        return;
+    }
+
+    horoscopeModal.hidden = false;
+    markHoroscopeModalAsSeen();
+    horoscopeModal.scrollIntoView({ behavior: "smooth", block: "center" });
+};
+
+const closeHoroscopeModal = () => {
+    if (!horoscopeModal) {
+        return;
+    }
+
+    horoscopeModal.hidden = true;
+    markHoroscopeModalAsSeen();
+};
+
 chatToggle?.addEventListener("click", () => {
     if (chatPanel?.hidden) {
         openChat();
@@ -674,6 +732,12 @@ chatToggle?.addEventListener("click", () => {
 });
 
 chatClose?.addEventListener("click", closeChat);
+horoscopeClose?.addEventListener("click", closeHoroscopeModal);
+horoscopeCta?.addEventListener("click", () => {
+    void incrementFirebaseMetric("horoscopeClicks");
+    closeHoroscopeModal();
+});
+heroHoroscopeTrigger?.addEventListener("click", showHoroscopeModalDirectly);
 
 ceoAccessButton?.addEventListener("click", openCeoPanel);
 ceoClose?.addEventListener("click", closeCeoPanel);
@@ -785,6 +849,10 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && cartPanel && !cartPanel.hidden) {
         closeCartPanel();
     }
+
+    if (event.key === "Escape" && horoscopeModal && !horoscopeModal.hidden) {
+        closeHoroscopeModal();
+    }
 });
 
 window.addEventListener("beforeinstallprompt", (event) => {
@@ -811,4 +879,10 @@ window.addEventListener("load", async () => {
     await incrementFirebaseMetric("views");
     setupTestimonialsCarousel();
     renderCart();
+
+    if (canShowHoroscopeModal()) {
+        horoscopeModalTimeout = window.setTimeout(() => {
+            openHoroscopeModal();
+        }, 15000);
+    }
 });

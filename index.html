@@ -38,6 +38,7 @@
                 <div class="hero-actions">
                     <a class="primary-button" href="#reserva">Solicitar pedido</a>
                     <a class="secondary-button" href="#productos">Descubrir coleccion</a>
+                    <button class="secondary-button horoscope-trigger-button" id="hero-horoscope-trigger" type="button">Quiero mi Vela-Vita</button>
                 </div>
             </div>
             <div class="hero-visual reveal-up delay-1" aria-hidden="true">
@@ -415,6 +416,21 @@
         <span class="whatsapp-icon"></span>
     </a>
 
+    <section class="horoscope-modal" id="horoscope-modal" hidden>
+        <div class="horoscope-modal-card">
+            <button class="horoscope-close" id="horoscope-close" type="button" aria-label="Cerrar recomendacion astral">×</button>
+            <p class="section-kicker">Edicion astral</p>
+            <div class="horoscope-title-row">
+                <span class="horoscope-symbol" aria-hidden="true">✦</span>
+                <div>
+                    <h2>Vela-Vita con el signo de tu horoscopo</h2>
+                    <p>Creadas para acompanar tu energia del mes con una propuesta delicada, simbolica y pensada para regalarte o regalar con intencion.</p>
+                </div>
+            </div>
+            <a class="primary-button horoscope-button" id="horoscope-cta" data-whatsapp-link href="https://wa.me/5492215047962?text=Hola,%20quiero%20mi%20Vela-Vita%20con%20el%20signo%20de%20mi%20horoscopo." target="_blank" rel="noreferrer">Quiero mi Vela-Vita</a>
+        </div>
+    </section>
+
     <section class="cart-panel" id="cart-panel" hidden>
         <div class="cart-card">
             <div class="cart-header">
@@ -495,6 +511,10 @@
                     <article class="ceo-metric-card">
                         <span>Formularios iniciados</span>
                         <strong id="metric-form-starts">0</strong>
+                    </article>
+                    <article class="ceo-metric-card ceo-metric-card-highlight">
+                        <span>Clicks Vela Astral</span>
+                        <strong id="metric-horoscope-clicks">0</strong>
                     </article>
                 </div>
 
