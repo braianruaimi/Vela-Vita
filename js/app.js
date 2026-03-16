@@ -344,17 +344,46 @@ const renderMetrics = () => {
     }
 };
 
+const openWhatsAppMessage = (url) => {
+    const popup = window.open(url, "_blank", "noopener,noreferrer");
+
+    // Fallback for browsers that block popups after async work.
+    if (!popup) {
+        window.location.href = url;
+    }
+};
+
 const buildReservationMessage = (formData) => {
+    const nombre = String(formData.get("nombre") || "").trim();
+    const apellido = String(formData.get("apellido") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const telefono = String(formData.get("telefono") || "").trim();
+    const evento = String(formData.get("evento") || "").trim();
+    const cantidad = String(formData.get("cantidad") || "").trim();
+    const notas = String(formData.get("notas") || "").trim();
+    const fechaSolicitud = new Date().toLocaleString("es-AR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
     const lines = [
         "Hola, quiero solicitar una propuesta para velas Vela-Vita.",
         "",
-        `Nombre: ${formData.get("nombre")}`,
-        `Apellido: ${formData.get("apellido")}`,
-        `Email: ${formData.get("email")}`,
-        `Telefono: ${formData.get("telefono")}`,
-        `Tipo de evento: ${formData.get("evento")}`,
-        `Cantidad aproximada de velas: ${formData.get("cantidad")}`,
-        `Notas: ${formData.get("notas") || "Sin notas adicionales."}`
+        "Datos del cliente:",
+        `Nombre: ${nombre || "No informado"}`,
+        `Apellido: ${apellido || "No informado"}`,
+        `Email: ${email || "No informado"}`,
+        `Telefono: ${telefono || "No informado"}`,
+        "",
+        "Detalle del pedido:",
+        `Tipo de evento: ${evento || "No informado"}`,
+        `Cantidad aproximada de velas: ${cantidad || "No informado"}`,
+        `Notas: ${notas || "Sin notas adicionales."}`,
+        "",
+        `Fecha de solicitud: ${fechaSolicitud}`
     ];
 
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
@@ -526,7 +555,6 @@ const showInstallButton = () => {
 };
 
 renderMetrics();
-renderQuickChatPrompts();
 
 const chatIntentCatalog = [
     {
@@ -641,6 +669,8 @@ const renderQuickChatPrompts = () => {
         chatQuickPrompts.appendChild(button);
     });
 };
+
+renderQuickChatPrompts();
 
 const extractConversationDetails = (normalizedInput) => {
     const quantityMatch = normalizedInput.match(/\b(\d{1,4})\b/);
@@ -886,6 +916,9 @@ form?.addEventListener("submit", async (event) => {
     const payload = Object.fromEntries(formData.entries());
     const whatsappReservationUrl = buildReservationMessage(formData);
 
+    // Open WhatsApp while still in direct user gesture context.
+    openWhatsAppMessage(whatsappReservationUrl);
+
     try {
         await saveReservationToFirebase(payload);
         await incrementFirebaseMetric("formSubmissions");
@@ -900,8 +933,6 @@ form?.addEventListener("submit", async (event) => {
     if (eventSelect) {
         eventSelect.selectedIndex = 0;
     }
-
-    window.open(whatsappReservationUrl, "_blank", "noopener,noreferrer");
 });
 
 const openChat = () => {
