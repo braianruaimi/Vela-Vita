@@ -679,6 +679,128 @@ section {
     gap: 20px;
 }
 
+.bouquet-carousel {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: 14px;
+    padding: 10px 0 4px;
+}
+
+.bouquet-heading {
+    margin-bottom: 0;
+}
+
+.bouquet-carousel-shell {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 10px;
+}
+
+.bouquet-viewport {
+    overflow: hidden;
+}
+
+.bouquet-track {
+    display: flex;
+    transition: transform 280ms ease;
+    will-change: transform;
+}
+
+.bouquet-slide {
+    min-width: 100%;
+}
+
+.bouquet-zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.bouquet-zoom:focus-visible {
+    outline: 2px solid rgba(177, 75, 18, 0.55);
+    outline-offset: -2px;
+}
+
+.bouquet-nav {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 74, 16, 0.2);
+    background: rgba(255, 244, 226, 0.94);
+    color: #a84412;
+    font-size: 1.2rem;
+    line-height: 1;
+    box-shadow: var(--shadow-soft);
+    transition: transform var(--transition), background var(--transition);
+}
+
+.bouquet-nav:hover,
+.bouquet-nav:focus-visible {
+    transform: translateY(-1px);
+    background: rgba(255, 233, 201, 0.98);
+}
+
+.bouquet-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.bouquet-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(177, 75, 18, 0.25);
+}
+
+.bouquet-dot.is-active {
+    background: rgba(177, 75, 18, 0.8);
+}
+
+.bouquet-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 95;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(39, 22, 14, 0.74);
+}
+
+.bouquet-lightbox-card {
+    position: relative;
+    width: min(92vw, 920px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 224, 186, 0.35);
+    box-shadow: 0 22px 52px rgba(0, 0, 0, 0.36);
+    background: rgba(255, 246, 234, 0.98);
+}
+
+.bouquet-lightbox-image {
+    width: 100%;
+    max-height: 86vh;
+    object-fit: contain;
+    background: radial-gradient(circle at top, #ffe9c8, #ffd9a2);
+}
+
+.bouquet-lightbox-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 74, 16, 0.22);
+    background: rgba(255, 250, 243, 0.92);
+    color: #8f3e12;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
 .section-copy {
     max-width: 680px;
     margin: 12px 0 0;
@@ -1591,6 +1713,16 @@ section {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .bouquet-carousel-shell {
+        grid-template-columns: 48px minmax(0, 1fr) 48px;
+        gap: 14px;
+    }
+
+    .bouquet-nav {
+        width: 48px;
+        height: 48px;
+    }
+
     .candle-scene,
     .hero-photo {
         min-height: 430px;
@@ -1696,6 +1828,11 @@ section {
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
+    }
+
+    .reveal-up {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     *,

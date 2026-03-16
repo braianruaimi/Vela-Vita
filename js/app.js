@@ -27,6 +27,22 @@ const cartEmpty = document.getElementById("cart-empty");
 const cartTotalCount = document.getElementById("cart-total-count");
 const cartClear = document.getElementById("cart-clear");
 const cartSend = document.getElementById("cart-send");
+const specialTrack = document.getElementById("special-track");
+const specialPrev = document.getElementById("special-prev");
+const specialNext = document.getElementById("special-next");
+const specialDots = document.getElementById("special-dots");
+const bouquetLineTrack = document.getElementById("bouquet-line-track");
+const bouquetLinePrev = document.getElementById("bouquet-line-prev");
+const bouquetLineNext = document.getElementById("bouquet-line-next");
+const bouquetLineDots = document.getElementById("bouquet-line-dots");
+const gourmetTrack = document.getElementById("gourmet-track");
+const gourmetPrev = document.getElementById("gourmet-prev");
+const gourmetNext = document.getElementById("gourmet-next");
+const gourmetDots = document.getElementById("gourmet-dots");
+const bouquetZoomButtons = Array.from(document.querySelectorAll("[data-bouquet-zoom]"));
+const bouquetLightbox = document.getElementById("bouquet-lightbox");
+const bouquetLightboxImage = document.getElementById("bouquet-lightbox-image");
+const bouquetLightboxClose = document.getElementById("bouquet-lightbox-close");
 
 const ceoAccessButton = document.getElementById("ceo-access-button");
 const ceoPanel = document.getElementById("ceo-panel");
@@ -610,6 +626,96 @@ const setupTestimonialsCarousel = () => {
     }, 1000);
 };
 
+const setupProductCarousel = (trackElement, prevButton, nextButton, dotsElement) => {
+    if (!trackElement || !dotsElement) {
+        return;
+    }
+
+    const slides = Array.from(trackElement.querySelectorAll(".bouquet-slide"));
+    const viewportElement = trackElement.parentElement;
+
+    if (!slides.length) {
+        return;
+    }
+
+    let activeIndex = 0;
+    const dots = slides.map((_slide, index) => {
+        const dot = document.createElement("span");
+        dot.className = `bouquet-dot${index === 0 ? " is-active" : ""}`;
+        dotsElement.appendChild(dot);
+        return dot;
+    });
+
+    const render = () => {
+        trackElement.style.transform = `translateX(-${activeIndex * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle("is-active", index === activeIndex);
+        });
+    };
+
+    prevButton?.addEventListener("click", () => {
+        activeIndex = (activeIndex - 1 + slides.length) % slides.length;
+        render();
+    });
+
+    nextButton?.addEventListener("click", () => {
+        activeIndex = (activeIndex + 1) % slides.length;
+        render();
+    });
+
+    if (viewportElement) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeThreshold = 45;
+
+        viewportElement.addEventListener("touchstart", (event) => {
+            touchStartX = event.changedTouches[0]?.clientX ?? 0;
+            touchEndX = touchStartX;
+        }, { passive: true });
+
+        viewportElement.addEventListener("touchmove", (event) => {
+            touchEndX = event.changedTouches[0]?.clientX ?? touchEndX;
+        }, { passive: true });
+
+        viewportElement.addEventListener("touchend", () => {
+            const deltaX = touchEndX - touchStartX;
+
+            if (Math.abs(deltaX) < swipeThreshold) {
+                return;
+            }
+
+            if (deltaX < 0) {
+                activeIndex = (activeIndex + 1) % slides.length;
+            } else {
+                activeIndex = (activeIndex - 1 + slides.length) % slides.length;
+            }
+
+            render();
+        });
+    }
+
+    render();
+};
+
+const openBouquetLightbox = (imageSrc, imageAlt) => {
+    if (!bouquetLightbox || !bouquetLightboxImage) {
+        return;
+    }
+
+    bouquetLightboxImage.src = imageSrc;
+    bouquetLightboxImage.alt = imageAlt || "Vista ampliada de Vela bouquet";
+    bouquetLightbox.hidden = false;
+};
+
+const closeBouquetLightbox = () => {
+    if (!bouquetLightbox || !bouquetLightboxImage) {
+        return;
+    }
+
+    bouquetLightbox.hidden = true;
+    bouquetLightboxImage.src = "";
+};
+
 productButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const productName = button.getAttribute("data-producto");
@@ -762,6 +868,32 @@ chatToggle?.addEventListener("click", () => {
 chatClose?.addEventListener("click", closeChat);
 horoscopeClose?.addEventListener("click", closeHoroscopeModal);
 horoscopeClose?.addEventListener("pointerdown", closeHoroscopeModal);
+bouquetLightboxClose?.addEventListener("click", closeBouquetLightbox);
+bouquetZoomButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const imageSrc = button.getAttribute("data-image");
+        const imageAlt = button.getAttribute("data-alt");
+
+        if (!imageSrc) {
+            return;
+        }
+
+        openBouquetLightbox(imageSrc, imageAlt);
+    });
+});
+
+bouquetLightbox?.addEventListener("click", (event) => {
+    if (event.target === bouquetLightbox) {
+        closeBouquetLightbox();
+    }
+});
+
+bouquetLightbox?.addEventListener("pointerdown", (event) => {
+    if (event.target === bouquetLightbox) {
+        closeBouquetLightbox();
+    }
+});
+
 horoscopeCta?.addEventListener("click", () => {
     void incrementFirebaseMetric("horoscopeClicks");
     closeHoroscopeModal();
@@ -882,6 +1014,10 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && horoscopeModal && !horoscopeModal.hidden) {
         closeHoroscopeModal();
     }
+
+    if (event.key === "Escape" && bouquetLightbox && !bouquetLightbox.hidden) {
+        closeBouquetLightbox();
+    }
 });
 
 window.addEventListener("beforeinstallprompt", (event) => {
@@ -907,6 +1043,9 @@ window.addEventListener("load", async () => {
     await refreshMetrics();
     await incrementFirebaseMetric("views");
     setupTestimonialsCarousel();
+    setupProductCarousel(specialTrack, specialPrev, specialNext, specialDots);
+    setupProductCarousel(bouquetLineTrack, bouquetLinePrev, bouquetLineNext, bouquetLineDots);
+    setupProductCarousel(gourmetTrack, gourmetPrev, gourmetNext, gourmetDots);
     renderCart();
 
     if (canShowHoroscopeModal()) {
