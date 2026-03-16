@@ -13,6 +13,7 @@ const chatPanel = document.getElementById("chat-panel");
 const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 const chatMessages = document.getElementById("chat-messages");
+const chatQuickPrompts = document.getElementById("chat-quick-prompts");
 const installAppButton = document.getElementById("install-app-button");
 const floatingCartButton = document.getElementById("floating-cart-button");
 const floatingCartCount = document.getElementById("floating-cart-count");
@@ -525,6 +526,7 @@ const showInstallButton = () => {
 };
 
 renderMetrics();
+renderQuickChatPrompts();
 
 const chatIntentCatalog = [
     {
@@ -580,6 +582,12 @@ const chatIntentCatalog = [
 ];
 
 const defaultResponse = "Puedo ayudarte con precios, recomendaciones por tipo de evento, souvenirs, decoracion, regalos, entregas y pedidos personalizados. Cuentame que necesitas y te respondo puntual.";
+const quickChatPrompts = [
+    "Quiero opciones para casamientos",
+    "Busco velas para cumpleanos",
+    "Tienen disenos personalizados?",
+    "Necesito souvenirs para un evento"
+];
 const chatConversationState = {
     lastIntentId: null,
     lastOccasion: null,
@@ -601,6 +609,37 @@ const appendMessage = (text, type) => {
     message.textContent = text;
     chatMessages.appendChild(message);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+};
+
+const handleChatMessage = (userText) => {
+    appendMessage(userText, "user");
+
+    if (chatInput) {
+        chatInput.value = "";
+    }
+
+    window.setTimeout(() => {
+        appendMessage(getBotReply(userText), "bot");
+    }, 350);
+};
+
+const renderQuickChatPrompts = () => {
+    if (!chatQuickPrompts) {
+        return;
+    }
+
+    chatQuickPrompts.innerHTML = "";
+
+    quickChatPrompts.forEach((promptText) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chat-quick-prompt";
+        button.textContent = promptText;
+        button.addEventListener("click", () => {
+            handleChatMessage(promptText);
+        });
+        chatQuickPrompts.appendChild(button);
+    });
 };
 
 const extractConversationDetails = (normalizedInput) => {
@@ -1082,12 +1121,7 @@ chatForm?.addEventListener("submit", (event) => {
         return;
     }
 
-    appendMessage(userText, "user");
-    chatInput.value = "";
-
-    window.setTimeout(() => {
-        appendMessage(getBotReply(userText), "bot");
-    }, 350);
+    handleChatMessage(userText);
 });
 
 document.addEventListener("keydown", (event) => {

@@ -1673,6 +1673,31 @@ section {
     padding: 0 18px 18px;
 }
 
+.chat-quick-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 18px 12px;
+}
+
+.chat-quick-prompt {
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 117, 34, 0.24);
+    background: rgba(255, 244, 225, 0.9);
+    color: #9a3e0f;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: transform var(--transition), background var(--transition);
+}
+
+.chat-quick-prompt:hover,
+.chat-quick-prompt:focus-visible {
+    transform: translateY(-1px);
+    background: rgba(255, 230, 195, 0.95);
+}
+
 .social-icon,
 .whatsapp-icon,
 .chatbot-icon {
