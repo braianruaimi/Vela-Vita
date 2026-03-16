@@ -526,58 +526,65 @@ const showInstallButton = () => {
 
 renderMetrics();
 
-const botResponses = [
+const chatIntentCatalog = [
     {
-        keywords: ["precio", "precios", "costo", "costos", "cotizacion"],
-        answer: "Los valores dependen del modelo, la cantidad y el tipo de pedido. Puedes completar el formulario o escribirnos por WhatsApp para recibir una propuesta personalizada."
+        id: "precio",
+        keywords: ["precio", "precios", "costo", "costos", "cotizacion", "valor"],
+        answer: "Los valores cambian segun modelo, cantidad y tipo de pedido. Si me compartes la ocasion y una cantidad aproximada, te oriento con una propuesta mas precisa."
     },
     {
+        id: "cumpleanos",
         keywords: ["cumpleanos", "cumple", "cumpleanero"],
-        answer: "Si es para un cumpleanos, podemos prepararte velas delicadas y cancheras para decorar, regalar o sumar a la mesa principal. Es una opcion linda y especial para que el festejo tenga mas personalidad."
+        answer: "Para cumpleanos recomendamos piezas con presencia visual para mesa principal, souvenirs o regalos. Podemos combinar estilos delicados y aromas suaves segun la tematica."
     },
     {
-        keywords: ["casamiento", "casamiento", "boda", "novios"],
-        answer: "Si es para un casamiento, podemos ayudarte con una propuesta elegante para souvenirs, ambientacion o centros de mesa. La idea es que cada detalle acompane el estilo de la celebracion."
+        id: "casamiento",
+        keywords: ["casamiento", "boda", "novios"],
+        answer: "Para casamientos solemos armar opciones elegantes para souvenirs, centros de mesa y ambientacion. La propuesta se ajusta a colores, estilo y cantidad de invitados."
     },
     {
-        keywords: ["bautismo", "comunion", "baby shower"],
-        answer: "Si es para una celebracion especial como bautismo o baby shower, podemos armar piezas delicadas y personalizadas para souvenirs o decoracion con una estetica suave y cuidada."
+        id: "celebracion",
+        keywords: ["bautismo", "comunion", "baby shower", "evento", "celebracion", "celebraciones"],
+        answer: "Para celebraciones especiales podemos preparar velas personalizadas con una estetica armoniosa para decoracion, recuerdos y regalos."
     },
     {
+        id: "souvenirs",
         keywords: ["souvenir", "souvenirs", "recuerdo", "recuerdos"],
-        answer: "Si buscas souvenirs, podemos preparar velas delicadas y personalizadas para que tus invitados se lleven un recuerdo lindo, util y con mucha identidad."
+        answer: "Si buscas souvenirs, te podemos recomendar formatos delicados y practicos para invitados, cuidando presentacion y coherencia visual del evento."
     },
     {
-        keywords: ["decoracion", "deco", "ambientacion", "hogar"],
-        answer: "Si las quieres para decoracion, podemos recomendarte piezas que aporten calidez, estilo y una presencia delicada en cualquier espacio."
+        id: "decoracion",
+        keywords: ["decoracion", "deco", "ambientacion", "hogar", "centro", "mesa", "mesas", "mesa dulce"],
+        answer: "Si es para decoracion o centros de mesa, podemos sugerirte modelos con buen impacto visual y una combinacion de aromas suave para no saturar el ambiente."
     },
     {
-        keywords: ["centro de mesa", "centros de mesa", "mesa dulce", "mesas"],
-        answer: "Si las quieres para centros de mesa o mesas dulces, podemos ayudarte a elegir modelos que vistan la presentacion del evento de forma armoniosa y elegante."
-    },
-    {
+        id: "regalo",
         keywords: ["regalo", "regalos", "obsequio", "detalle"],
-        answer: "Si buscas un regalo, nuestras velas son una opcion delicada, elegante y con mucha personalidad. Podemos orientarte segun la ocasion para que elijas una pieza especial."
+        answer: "Para regalo, una muy buena opcion es elegir velas bouquet o gourmet segun el estilo de la persona. Si me dices para quien es, te propongo una seleccion concreta."
     },
     {
-        keywords: ["evento", "eventos", "celebracion", "celebraciones"],
-        answer: "Si es para un evento, podemos ayudarte con velas para decoracion, souvenirs, centros de mesa o regalos. Si me dices la ocasion, te recomiendo una opcion mas puntual."
+        id: "pedido",
+        keywords: ["reserva", "reservar", "pedido", "personalizadas", "personalizado", "encargo"],
+        answer: "Puedes iniciar tu pedido desde el formulario de esta pagina o por WhatsApp. Con ocasion, cantidad y fecha aproximada ya te armamos propuesta."
     },
     {
-        keywords: ["reserva", "reservar", "pedido", "personalizadas"],
-        answer: "Puedes solicitar tu pedido desde el formulario de esta pagina. Indicanos tipo de evento, cantidad estimada y detalles para preparar una propuesta personalizada."
+        id: "entrega",
+        keywords: ["entrega", "envio", "zona", "retirar", "retiro"],
+        answer: "La entrega depende de la zona y del volumen del pedido. Tambien podemos coordinar retiro segun disponibilidad."
     },
     {
-        keywords: ["entrega", "envio", "zona", "retirar"],
-        answer: "La disponibilidad de entrega depende de la zona y del volumen del pedido. Tambien podemos coordinar retiro segun cada propuesta."
-    },
-    {
-        keywords: ["producto", "productos", "vela", "velas", "aromatica", "decorativa"],
-        answer: "Contamos con piezas decorativas, aromaticas y colecciones pensadas para eventos, regalos y ambientaciones especiales. Si buscas algo puntual, cuentanos tu idea y te orientamos con una recomendacion acorde a tu necesidad."
+        id: "productos",
+        keywords: ["producto", "productos", "vela", "velas", "aromatica", "decorativa", "bouquet", "gourmet"],
+        answer: "Tenemos lineas bouquet, gourmet, souvenirs y modelos especiales para eventos, regalos y ambientaciones. Si quieres, te recomiendo una opcion segun tu ocasion."
     }
 ];
 
-const defaultResponse = "Puedo ayudarte con velas para cumpleanos, casamientos, souvenirs, decoracion, centros de mesa, regalos y pedidos personalizados. Si quieres, cuentame para que ocasion estas buscando y te recomiendo una propuesta ideal.";
+const defaultResponse = "Puedo ayudarte con precios, recomendaciones por tipo de evento, souvenirs, decoracion, regalos, entregas y pedidos personalizados. Cuentame que necesitas y te respondo puntual.";
+const chatConversationState = {
+    lastIntentId: null,
+    lastOccasion: null,
+    lastQuantity: null
+};
 
 const normalizeChatText = (value) => value
     .toLowerCase()
@@ -596,10 +603,95 @@ const appendMessage = (text, type) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 };
 
+const extractConversationDetails = (normalizedInput) => {
+    const quantityMatch = normalizedInput.match(/\b(\d{1,4})\b/);
+    const occasionTerms = [
+        "cumpleanos",
+        "casamiento",
+        "boda",
+        "bautismo",
+        "comunion",
+        "baby shower",
+        "evento",
+        "regalo",
+        "hogar"
+    ];
+
+    const occasionMatch = occasionTerms.find((term) => normalizedInput.includes(term));
+
+    return {
+        quantity: quantityMatch ? Number(quantityMatch[1]) : null,
+        occasion: occasionMatch ?? null
+    };
+};
+
+const getIntentScore = (normalizedInput, intent) => {
+    return intent.keywords.reduce((score, keyword) => {
+        const normalizedKeyword = normalizeChatText(keyword);
+
+        if (!normalizedInput.includes(normalizedKeyword)) {
+            return score;
+        }
+
+        if (normalizedKeyword.includes(" ")) {
+            return score + 2;
+        }
+
+        return score + 1;
+    }, 0);
+};
+
 const getBotReply = (input) => {
     const normalizedInput = normalizeChatText(input);
-    const match = botResponses.find(({ keywords }) => keywords.some((keyword) => normalizedInput.includes(normalizeChatText(keyword))));
-    return match ? match.answer : defaultResponse;
+    const { quantity, occasion } = extractConversationDetails(normalizedInput);
+    const scoredIntents = chatIntentCatalog
+        .map((intent) => ({ intent, score: getIntentScore(normalizedInput, intent) }))
+        .filter(({ score }) => score > 0)
+        .sort((a, b) => b.score - a.score);
+
+    let selectedIntents = scoredIntents.slice(0, 2);
+
+    if (!selectedIntents.length && chatConversationState.lastIntentId) {
+        const previousIntent = chatIntentCatalog.find((intent) => intent.id === chatConversationState.lastIntentId);
+
+        if (previousIntent) {
+            selectedIntents = [{ intent: previousIntent, score: 1 }];
+        }
+    }
+
+    if (quantity) {
+        chatConversationState.lastQuantity = quantity;
+    }
+
+    if (occasion) {
+        chatConversationState.lastOccasion = occasion;
+    }
+
+    if (selectedIntents.length) {
+        chatConversationState.lastIntentId = selectedIntents[0].intent.id;
+    }
+
+    const detailLine = [];
+
+    if (chatConversationState.lastOccasion) {
+        detailLine.push(`ocasion: ${chatConversationState.lastOccasion}`);
+    }
+
+    if (chatConversationState.lastQuantity) {
+        detailLine.push(`cantidad estimada: ${chatConversationState.lastQuantity}`);
+    }
+
+    if (!selectedIntents.length) {
+        return `${defaultResponse} ${detailLine.length ? `Tambien tome nota de ${detailLine.join(" | ")}.` : ""}`.trim();
+    }
+
+    const primaryAnswer = selectedIntents[0].intent.answer;
+    const secondaryAnswer = selectedIntents[1] ? ` ${selectedIntents[1].intent.answer}` : "";
+    const contextPrompt = detailLine.length
+        ? ` Si quieres, te armo una recomendacion basada en ${detailLine.join(" y ")}.`
+        : " Si me dices ocasion y cantidad estimada, te doy una recomendacion mas puntual.";
+
+    return `${primaryAnswer}${secondaryAnswer}${contextPrompt}`;
 };
 
 const setupTestimonialsCarousel = () => {
