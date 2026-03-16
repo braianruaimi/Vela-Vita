@@ -68,7 +68,7 @@ const metricsElements = {
     activeDays: document.getElementById("metric-active-days")
 };
 
-const whatsappBaseUrl = "https://wa.me/5492215047962?text=";
+const whatsappBaseUrl = "https://wa.me/5492215965021?text=";
 const metricsStorageKey = "velaVitaMetrics";
 const ceoAccessKey = "1234";
 const horoscopeModalStorageKey = "velaVitaHoroscopeModalSeen";

@@ -163,7 +163,7 @@ El despliegue se hace con GitHub Pages mediante GitHub Actions y dominio persona
 
 ## Contacto configurado
 
-- WhatsApp: 2215047962
+- WhatsApp: 2215965021
 - Instagram: https://www.instagram.com/vela__vita?utm_source=qr&igsh=NDNndmRha3pibHZo
 
 ## Notas
