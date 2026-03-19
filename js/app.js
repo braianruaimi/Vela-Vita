@@ -40,6 +40,10 @@ const gourmetTrack = document.getElementById("gourmet-track");
 const gourmetPrev = document.getElementById("gourmet-prev");
 const gourmetNext = document.getElementById("gourmet-next");
 const gourmetDots = document.getElementById("gourmet-dots");
+const souvenirTrack = document.getElementById("souvenirs-track");
+const souvenirPrev = document.getElementById("souvenirs-prev");
+const souvenirNext = document.getElementById("souvenirs-next");
+const souvenirDots = document.getElementById("souvenirs-dots");
 const bouquetZoomButtons = Array.from(document.querySelectorAll("[data-bouquet-zoom]"));
 const bouquetLightbox = document.getElementById("bouquet-lightbox");
 const bouquetLightboxImage = document.getElementById("bouquet-lightbox-image");
@@ -565,7 +569,7 @@ const chatIntentCatalog = [
     {
         id: "cumpleanos",
         keywords: ["cumpleanos", "cumple", "cumpleanero"],
-        answer: "Para cumpleanos recomendamos piezas con presencia visual para mesa principal, souvenirs o regalos. Podemos combinar estilos delicados y aromas suaves segun la tematica."
+        answer: "Para cumpleaños recomendamos piezas con presencia visual para mesa principal, souvenirs o regalos. Podemos combinar estilos delicados y aromas suaves segun la tematica."
     },
     {
         id: "casamiento",
@@ -612,8 +616,8 @@ const chatIntentCatalog = [
 const defaultResponse = "Puedo ayudarte con precios, recomendaciones por tipo de evento, souvenirs, decoracion, regalos, entregas y pedidos personalizados. Cuentame que necesitas y te respondo puntual.";
 const quickChatPrompts = [
     "Quiero opciones para casamientos",
-    "Busco velas para cumpleanos",
-    "Tienen disenos personalizados?",
+    "Busco velas para cumpleaños",
+    "Tienen diseños personalizados?",
     "Necesito souvenirs para un evento"
 ];
 const chatConversationState = {
@@ -1203,6 +1207,7 @@ window.addEventListener("load", async () => {
     setupProductCarousel(specialTrack, specialPrev, specialNext, specialDots);
     setupProductCarousel(bouquetLineTrack, bouquetLinePrev, bouquetLineNext, bouquetLineDots);
     setupProductCarousel(gourmetTrack, gourmetPrev, gourmetNext, gourmetDots);
+    setupProductCarousel(souvenirTrack, souvenirPrev, souvenirNext, souvenirDots);
     renderCart();
 
     if (canShowHoroscopeModal()) {
