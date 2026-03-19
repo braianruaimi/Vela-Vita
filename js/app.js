@@ -566,6 +566,30 @@ const showInstallButton = () => {
     installAppButton.hidden = false;
 };
 
+const updateBanner = document.getElementById("update-banner");
+const updateButton = document.getElementById("update-button");
+
+const showUpdateBanner = () => {
+    if (updateBanner) {
+        updateBanner.hidden = false;
+    }
+};
+
+const hideUpdateBanner = () => {
+    if (updateBanner) {
+        updateBanner.hidden = true;
+    }
+};
+
+if (updateButton) {
+    updateButton.addEventListener("click", () => {
+        if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: "SKIP_WAITING" });
+            window.location.reload();
+        }
+    });
+}
+
 renderMetrics();
 
 const chatIntentCatalog = [
@@ -1202,7 +1226,22 @@ window.addEventListener("appinstalled", () => {
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("service-worker.js").catch(() => {
+        navigator.serviceWorker.register("service-worker.js").then((registration) => {
+            // Detectar actualizaciones del service worker
+            registration.addEventListener("updatefound", () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener("statechange", () => {
+                    if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                        showUpdateBanner();
+                    }
+                });
+            });
+            
+            // Verificar actualizaciones cada 5 minutos
+            setInterval(() => {
+                registration.update();
+            }, 5 * 60 * 1000);
+        }).catch(() => {
             hideInstallButton();
         });
     });
