@@ -1,4 +1,4 @@
-const CACHE_NAME = "vela-vita-v8";
+const CACHE_NAME = "vela-vita-v10";
 const APP_SHELL = [
     "./",
     "./index.html",
