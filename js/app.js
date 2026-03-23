@@ -48,10 +48,10 @@ const kidsTrack = document.getElementById("kids-track");
 const kidsPrev = document.getElementById("kids-prev");
 const kidsNext = document.getElementById("kids-next");
 const kidsDots = document.getElementById("kids-dots");
-const terriosTrack = document.getElementById("terrios-track");
-const terriosPrev = document.getElementById("terrios-prev");
-const terriosNext = document.getElementById("terrios-next");
-const terriosDots = document.getElementById("terrios-dots");
+const terrariosTrack = document.getElementById("terrarios-track");
+const terrariosPrev = document.getElementById("terrarios-prev");
+const terrariosNext = document.getElementById("terrarios-next");
+const terrariosDots = document.getElementById("terrarios-dots");
 const bouquetZoomButtons = Array.from(document.querySelectorAll("[data-bouquet-zoom]"));
 const bouquetLightbox = document.getElementById("bouquet-lightbox");
 const bouquetLightboxImage = document.getElementById("bouquet-lightbox-image");
@@ -1256,7 +1256,7 @@ window.addEventListener("load", async () => {
     setupProductCarousel(gourmetTrack, gourmetPrev, gourmetNext, gourmetDots);
     setupProductCarousel(souvenirTrack, souvenirPrev, souvenirNext, souvenirDots);
     setupProductCarousel(kidsTrack, kidsPrev, kidsNext, kidsDots);
-    setupProductCarousel(terriosTrack, terriosPrev, terriosNext, terriosDots);
+    setupProductCarousel(terrariosTrack, terrariosPrev, terrariosNext, terrariosDots);
     renderCart();
 
     if (canShowHoroscopeModal()) {
