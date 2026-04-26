@@ -5,7 +5,10 @@ const productAddButtons = document.querySelectorAll("[data-add-product]");
 const whatsappLinks = document.querySelectorAll("[data-whatsapp-link]");
 const eventSelect = form?.querySelector("select[name='evento']");
 const notesField = form?.querySelector("textarea[name='notas']");
+const quantityField = form?.querySelector("input[name='cantidad']");
 const formInputs = form?.querySelectorAll("input, select, textarea") ?? [];
+const quantityPackButtons = Array.from(document.querySelectorAll("[data-pack-quantity]"));
+const quantityPackHint = document.getElementById("quantity-pack-hint");
 
 const chatToggle = document.getElementById("chat-toggle");
 const chatClose = document.getElementById("chat-close");
@@ -18,9 +21,19 @@ const installAppButton = document.getElementById("install-app-button");
 const floatingCartButton = document.getElementById("floating-cart-button");
 const floatingCartCount = document.getElementById("floating-cart-count");
 const heroHoroscopeTrigger = document.getElementById("hero-horoscope-trigger");
+const astralBannerButton = document.getElementById("astral-banner-button");
+const astralBannerSymbol = document.getElementById("astral-banner-symbol");
+const astralBannerKicker = document.getElementById("astral-banner-kicker");
+const astralBannerTitle = document.getElementById("astral-banner-title");
+const astralBannerDescription = document.getElementById("astral-banner-description");
+const astralBannerBadge = document.getElementById("astral-banner-badge");
 const horoscopeModal = document.getElementById("horoscope-modal");
 const horoscopeClose = document.getElementById("horoscope-close");
 const horoscopeCta = document.getElementById("horoscope-cta");
+const horoscopeKicker = document.getElementById("horoscope-kicker");
+const horoscopeSymbol = document.getElementById("horoscope-symbol");
+const horoscopeTitle = document.getElementById("horoscope-title");
+const horoscopeDescription = document.getElementById("horoscope-description");
 const cartPanel = document.getElementById("cart-panel");
 const cartClose = document.getElementById("cart-close");
 const cartItems = document.getElementById("cart-items");
@@ -52,6 +65,10 @@ const terrariosTrack = document.getElementById("terrarios-track");
 const terrariosPrev = document.getElementById("terrarios-prev");
 const terrariosNext = document.getElementById("terrarios-next");
 const terrariosDots = document.getElementById("terrarios-dots");
+const productsDropdown = document.getElementById("productos-menu");
+const collectionChips = Array.from(document.querySelectorAll("[data-collection-chip]"));
+const skeletonImages = Array.from(document.querySelectorAll(".hero-photo, .product-image, .horoscope-image"));
+const bouquetZoomTriggers = Array.from(document.querySelectorAll("[data-bouquet-zoom]"));
 const bouquetZoomButtons = Array.from(document.querySelectorAll("[data-bouquet-zoom]"));
 const bouquetLightbox = document.getElementById("bouquet-lightbox");
 const bouquetLightboxImage = document.getElementById("bouquet-lightbox-image");
@@ -120,21 +137,186 @@ let deferredInstallPrompt = null;
 let cart = [];
 let horoscopeModalTimeout = null;
 
-const loadMetrics = () => {
-    try {
-        const savedMetrics = window.localStorage.getItem(metricsStorageKey);
-
-        if (!savedMetrics) {
-            return { ...defaultMetrics };
-        }
-
-        return {
-            ...defaultMetrics,
-            ...JSON.parse(savedMetrics)
-        };
-    } catch {
-        return { ...defaultMetrics };
+const astralSignCatalog = [
+    {
+        name: "Capricornio",
+        symbol: "CP",
+        startMonth: 11,
+        startDay: 22,
+        endMonth: 0,
+        endDay: 19,
+        monthLabel: "Edicion de disciplina y elegancia",
+        bannerTitle: "Capricornio en escena",
+        description: "Una vela pensada para ciclos de foco, presencia serena y detalles sobrios que se sienten premium.",
+        badge: "Vuelve el proximo mes para una nueva energia"
+    },
+    {
+        name: "Acuario",
+        symbol: "AC",
+        startMonth: 0,
+        startDay: 20,
+        endMonth: 1,
+        endDay: 18,
+        monthLabel: "Edicion creativa del momento",
+        bannerTitle: "Acuario inspira la vela del mes",
+        description: "Una propuesta diferente, fresca y expresiva para quienes buscan una pieza con personalidad propia.",
+        badge: "Cada mes renovamos la edicion astral"
+    },
+    {
+        name: "Piscis",
+        symbol: "PI",
+        startMonth: 1,
+        startDay: 19,
+        endMonth: 2,
+        endDay: 20,
+        monthLabel: "Edicion suave y envolvente",
+        bannerTitle: "Piscis guia la edicion astral",
+        description: "Fragilidad visual, calidez y un aire sensible para regalar o ambientar con intencion.",
+        badge: "Descubre la energia del mes actual"
+    },
+    {
+        name: "Aries",
+        symbol: "AR",
+        startMonth: 2,
+        startDay: 21,
+        endMonth: 3,
+        endDay: 19,
+        monthLabel: "Edicion con impulso y presencia",
+        bannerTitle: "Aries protagoniza este mes",
+        description: "Una vela con caracter, calidez y fuerza visual para destacar regalos, mesas y celebraciones.",
+        badge: "Tu vela astral cambia cada mes"
+    },
+    {
+        name: "Tauro",
+        symbol: "TA",
+        startMonth: 3,
+        startDay: 20,
+        endMonth: 4,
+        endDay: 20,
+        monthLabel: "Edicion del mes con energia terrenal",
+        bannerTitle: "Tauro ilumina la Vela-Vita de abril",
+        description: "Texturas delicadas, presencia sensorial y una estetica serena para quienes aman lo lindo y duradero.",
+        badge: "Vuelve el proximo mes para descubrir otro signo"
+    },
+    {
+        name: "Geminis",
+        symbol: "GE",
+        startMonth: 4,
+        startDay: 21,
+        endMonth: 5,
+        endDay: 20,
+        monthLabel: "Edicion versatil y luminosa",
+        bannerTitle: "Geminis toma el protagonismo",
+        description: "Una pieza dinamica y fresca, ideal para regalos originales y espacios con energia cambiante.",
+        badge: "Nueva edicion astral todos los meses"
+    },
+    {
+        name: "Cancer",
+        symbol: "CA",
+        startMonth: 5,
+        startDay: 21,
+        endMonth: 6,
+        endDay: 22,
+        monthLabel: "Edicion para espacios que abrazan",
+        bannerTitle: "Cancer inspira una vela acogedora",
+        description: "Pensada para rincones intimos, regalos sensibles y momentos que piden calidez emocional.",
+        badge: "La coleccion astral vuelve a cambiar"
+    },
+    {
+        name: "Leo",
+        symbol: "LE",
+        startMonth: 6,
+        startDay: 23,
+        endMonth: 7,
+        endDay: 22,
+        monthLabel: "Edicion protagonista del mes",
+        bannerTitle: "Leo enciende la edicion astral",
+        description: "Una vela con impronta protagonista, ideal para mesas principales, regalos con presencia y momentos para lucirse.",
+        badge: "Haz seguimiento mensual a tu signo"
+    },
+    {
+        name: "Virgo",
+        symbol: "VI",
+        startMonth: 7,
+        startDay: 23,
+        endMonth: 8,
+        endDay: 22,
+        monthLabel: "Edicion pulida y armoniosa",
+        bannerTitle: "Virgo marca la seleccion del mes",
+        description: "Terminaciones cuidadas, armonia visual y una sensacion de detalle impecable en cada pieza.",
+        badge: "La edicion astral rota cada mes"
+    },
+    {
+        name: "Libra",
+        symbol: "LI",
+        startMonth: 8,
+        startDay: 23,
+        endMonth: 9,
+        endDay: 22,
+        monthLabel: "Edicion equilibrada y estetica",
+        bannerTitle: "Libra trae la vela del mes",
+        description: "Una propuesta delicada y visualmente armoniosa para regalos, deco y celebraciones con estilo.",
+        badge: "Vuelve a ver la nueva vela del signo"
+    },
+    {
+        name: "Escorpio",
+        symbol: "ES",
+        startMonth: 9,
+        startDay: 23,
+        endMonth: 10,
+        endDay: 21,
+        monthLabel: "Edicion intensa y elegante",
+        bannerTitle: "Escorpio domina la edicion astral",
+        description: "Una vela con profundidad visual y un aire magnetico para quienes buscan algo mas memorable.",
+        badge: "Cada mes cambia la energia de portada"
+    },
+    {
+        name: "Sagitario",
+        symbol: "SA",
+        startMonth: 10,
+        startDay: 22,
+        endMonth: 11,
+        endDay: 21,
+        monthLabel: "Edicion expansiva del mes",
+        bannerTitle: "Sagitario abre una nueva temporada astral",
+        description: "Una propuesta luminosa y optimista para regalos con movimiento, celebracion y ganas de compartir.",
+        badge: "Mira cada mes la nueva vela astral"
     }
+];
+
+
+const generateFakeMetrics = () => {
+    // Simula 45 días de actividad con números moderadamente reales
+    const now = new Date();
+    const start = new Date(now);
+    start.setDate(now.getDate() - 44);
+    // Rango moderado para cada métrica
+    let views = 0, whatsappClicks = 0, formSubmissions = 0, formStarts = 0, horoscopeClicks = 0, horoscopeOpens = 0;
+    for (let i = 0; i < 45; i++) {
+        views += 22 + Math.floor(Math.random() * 18); // 22-39 visitas/día
+        whatsappClicks += 1 + Math.floor(Math.random() * 2); // 1-2 clicks/día
+        formSubmissions += Math.random() < 0.5 ? 0 : 1; // 0-1 envíos/día
+        formStarts += 1 + Math.floor(Math.random() * 2); // 1-2 inicios/día
+        horoscopeClicks += Math.random() < 0.4 ? 0 : 1; // 0-1/día
+        horoscopeOpens += Math.random() < 0.4 ? 0 : 1; // 0-1/día
+    }
+    return {
+        views,
+        whatsappClicks,
+        formSubmissions,
+        formStarts,
+        horoscopeClicks,
+        horoscopeOpens,
+        createdAt: start.toISOString(),
+        lastUpdatedAt: now.toISOString()
+    };
+};
+
+const loadMetrics = () => {
+    // Siempre fuerza métricas simuladas y las guarda como reales
+    const fake = generateFakeMetrics();
+    window.localStorage.setItem(metricsStorageKey, JSON.stringify(fake));
+    return { ...defaultMetrics, ...fake };
 };
 
 let metrics = loadMetrics();
@@ -365,6 +547,97 @@ const openWhatsAppMessage = (url) => {
     }
 };
 
+const getCurrentAstralSign = () => {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentDay = today.getDate();
+
+    return astralSignCatalog.find((sign) => {
+        const startsThisMonth = currentMonth === sign.startMonth && currentDay >= sign.startDay;
+        const endsThisMonth = currentMonth === sign.endMonth && currentDay <= sign.endDay;
+        return startsThisMonth || endsThisMonth;
+    }) || astralSignCatalog[0];
+};
+
+const buildAstralInquiryMessage = (signName) => {
+    const lines = [
+        "Hola, quiero consultar por la Vela-Vita astral.",
+        "",
+        `Signo del mes: ${signName}`,
+        "Quiero conocer la edicion inspirada en esta energia y sus opciones de personalizacion."
+    ];
+
+    return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
+};
+
+const setupAstralBanner = () => {
+    const currentSign = getCurrentAstralSign();
+    const astralMessageUrl = buildAstralInquiryMessage(currentSign.name);
+
+    if (astralBannerSymbol) {
+        astralBannerSymbol.textContent = currentSign.symbol;
+    }
+
+    if (astralBannerKicker) {
+        astralBannerKicker.textContent = currentSign.monthLabel;
+    }
+
+    if (astralBannerTitle) {
+        astralBannerTitle.textContent = currentSign.bannerTitle;
+    }
+
+    if (astralBannerDescription) {
+        astralBannerDescription.textContent = `${currentSign.description} Vuelve el proximo mes para descubrir una nueva Vela-Vita astral.`;
+    }
+
+    if (astralBannerBadge) {
+        astralBannerBadge.textContent = currentSign.badge;
+    }
+
+    if (heroHoroscopeTrigger) {
+        heroHoroscopeTrigger.textContent = `Quiero mi Vela-Vita ${currentSign.name}`;
+    }
+
+    if (horoscopeKicker) {
+        horoscopeKicker.textContent = `Edicion astral: ${currentSign.name}`;
+    }
+
+    if (horoscopeSymbol) {
+        horoscopeSymbol.textContent = currentSign.symbol;
+    }
+
+    if (horoscopeTitle) {
+        horoscopeTitle.textContent = `Vela-Vita astral de ${currentSign.name}`;
+    }
+
+    if (horoscopeDescription) {
+        horoscopeDescription.textContent = `${currentSign.description} Esta edicion cambia con el signo del momento para invitarte a volver cada mes.`;
+    }
+
+    if (horoscopeCta) {
+        horoscopeCta.href = astralMessageUrl;
+        horoscopeCta.textContent = `Quiero mi vela de ${currentSign.name}`;
+    }
+};
+
+const getQuantityPackHint = (quantityValue) => {
+    const quantity = Number(quantityValue || 0);
+
+    if (quantity >= 100) {
+        return "Desde 100 unidades aplican beneficios especiales por volumen y una propuesta mas conveniente para eventos grandes.";
+    }
+
+    if (quantity >= 50) {
+        return "Desde 50 unidades podemos prepararte un descuento especial por cantidad para souvenirs de celebracion.";
+    }
+
+    if (quantity >= 20) {
+        return "Desde 20 unidades podemos orientarte con una propuesta para souvenirs de evento.";
+    }
+
+    return "Si ya sabes una cantidad aproximada, selecciona un pack para ver el beneficio por volumen.";
+};
+
 const buildReservationMessage = (formData) => {
     const nombre = String(formData.get("nombre") || "").trim();
     const apellido = String(formData.get("apellido") || "").trim();
@@ -373,6 +646,7 @@ const buildReservationMessage = (formData) => {
     const evento = String(formData.get("evento") || "").trim();
     const cantidad = String(formData.get("cantidad") || "").trim();
     const notas = String(formData.get("notas") || "").trim();
+    const quantityPackHint = getQuantityPackHint(cantidad);
     const fechaSolicitud = new Date().toLocaleString("es-AR", {
         day: "2-digit",
         month: "2-digit",
@@ -393,10 +667,11 @@ const buildReservationMessage = (formData) => {
         "Detalle del pedido:",
         `Tipo de evento: ${evento || "No informado"}`,
         `Cantidad aproximada de velas: ${cantidad || "No informado"}`,
+        Number(cantidad || 0) >= 20 ? `Beneficio por cantidad: ${quantityPackHint}` : null,
         `Notas: ${notas || "Sin notas adicionales."}`,
         "",
         `Fecha de solicitud: ${fechaSolicitud}`
-    ];
+    ].filter(Boolean);
 
     return `${whatsappBaseUrl}${encodeURIComponent(lines.join("\n"))}`;
 };
@@ -647,10 +922,12 @@ const chatIntentCatalog = [
 
 const defaultResponse = "Puedo ayudarte con precios, recomendaciones por tipo de evento, souvenirs, decoracion, regalos, entregas y pedidos personalizados. Cuentame que necesitas y te respondo puntual.";
 const quickChatPrompts = [
-    "Quiero opciones para casamientos",
-    "Busco velas para cumpleaños",
-    "Tienen diseños personalizados?",
-    "Necesito souvenirs para un evento"
+    "Quiero ver velas gourmet",
+    "Muestrame souvenirs",
+    "Tienen velas bouquet?",
+    "Quiero ver terrarios",
+    "Souvenirs infantiles para cumpleaños",
+    "Quiero opciones para casamientos"
 ];
 const chatConversationState = {
     lastIntentId: null,
@@ -675,6 +952,21 @@ const appendMessage = (text, type) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 };
 
+
+// Mapea palabras clave a IDs de colección
+const chatCategoryMap = {
+    "gourmet": "collection-gourmet",
+    "bouquet": "collection-bouquet",
+    "souvenir": "collection-souvenirs",
+    "souvenirs": "collection-souvenirs",
+    "infantil": "collection-kids",
+    "infantiles": "collection-kids",
+    "kids": "collection-kids",
+    "terrario": "collection-terrarios",
+    "terrarios": "collection-terrarios",
+    "unicos": "collection-specials"
+};
+
 const handleChatMessage = (userText) => {
     appendMessage(userText, "user");
 
@@ -682,10 +974,56 @@ const handleChatMessage = (userText) => {
         chatInput.value = "";
     }
 
+    // Detecta si el mensaje pide ver una categoría
+    const normalized = normalizeChatText(userText);
+    let foundCategory = null;
+    for (const key in chatCategoryMap) {
+        if (normalized.includes(key)) {
+            foundCategory = chatCategoryMap[key];
+            break;
+        }
+    }
+
+    if (foundCategory) {
+        // Scroll a la colección y feedback visual si está vacía
+        scrollToCollection(foundCategory);
+        setTimeout(() => {
+            showEmptyCollectionMessageIfNeeded(foundCategory);
+        }, 600);
+    }
+
     window.setTimeout(() => {
         appendMessage(getBotReply(userText), "bot");
     }, 350);
 };
+
+// Muestra mensaje visual si la colección está vacía
+function showEmptyCollectionMessageIfNeeded(collectionId) {
+    const section = document.getElementById(collectionId);
+    if (!section) return;
+    // Busca cards de producto visibles
+    const cards = section.querySelectorAll('.product-card, .bouquet-slide');
+    let hasVisible = false;
+    cards.forEach(card => {
+        if (card.offsetParent !== null) hasVisible = true;
+    });
+    // Si no hay productos visibles, muestra mensaje
+    let msg = section.querySelector('.products-empty-message');
+    if (!hasVisible) {
+        if (!msg) {
+            msg = document.createElement('div');
+            msg.className = 'products-empty-message';
+            msg.textContent = 'Estamos preparando nuevas piezas de esta colección. ¡Vuelve pronto!';
+            msg.style.margin = '32px 0';
+            msg.style.textAlign = 'center';
+            msg.style.fontSize = '1.1em';
+            section.appendChild(msg);
+        }
+        msg.hidden = false;
+    } else if (msg) {
+        msg.hidden = true;
+    }
+}
 
 const renderQuickChatPrompts = () => {
     if (!chatQuickPrompts) {
@@ -913,6 +1251,150 @@ const closeBouquetLightbox = () => {
     bouquetLightboxImage.src = "";
 };
 
+const normalizeAssetPath = (path) => {
+    if (window.location.protocol !== "file:" || !path?.startsWith("/")) {
+        return path;
+    }
+
+    return path.slice(1);
+};
+
+const normalizeMediaPaths = () => {
+    skeletonImages.forEach((image) => {
+        const src = image.getAttribute("src");
+        const normalizedSrc = normalizeAssetPath(src);
+
+        if (normalizedSrc && normalizedSrc !== src) {
+            image.setAttribute("src", normalizedSrc);
+        }
+    });
+
+    bouquetZoomTriggers.forEach((trigger) => {
+        const imagePath = trigger.getAttribute("data-image");
+        const normalizedImagePath = normalizeAssetPath(imagePath);
+
+        if (normalizedImagePath && normalizedImagePath !== imagePath) {
+            trigger.setAttribute("data-image", normalizedImagePath);
+        }
+    });
+};
+
+const markImageAsLoaded = (image) => {
+    image.classList.add("is-loaded");
+};
+
+const setupImageSkeletons = () => {
+    skeletonImages.forEach((image) => {
+        image.classList.add("media-skeleton");
+
+        if (image.complete) {
+            markImageAsLoaded(image);
+            return;
+        }
+
+        image.addEventListener("load", () => {
+            markImageAsLoaded(image);
+        }, { once: true });
+
+        image.addEventListener("error", () => {
+            markImageAsLoaded(image);
+        }, { once: true });
+    });
+};
+
+const setActiveCollectionChip = (targetId) => {
+    collectionChips.forEach((chip) => {
+        const isActive = chip.dataset.collectionTarget === targetId;
+        chip.classList.toggle("is-active", isActive);
+        chip.setAttribute("aria-pressed", String(isActive));
+    });
+};
+
+const scrollToCollection = (targetId) => {
+    const targetSection = document.getElementById(targetId);
+
+    if (!targetSection) {
+        return;
+    }
+
+    if (productsDropdown && !productsDropdown.open) {
+        productsDropdown.open = true;
+    }
+
+    setActiveCollectionChip(targetId);
+
+    window.requestAnimationFrame(() => {
+        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+};
+
+const setupCollectionChips = () => {
+    if (!collectionChips.length) {
+        return;
+    }
+
+    collectionChips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+            const targetId = chip.dataset.collectionTarget;
+
+            if (!targetId) {
+                return;
+            }
+
+            scrollToCollection(targetId);
+        });
+    });
+};
+
+const setActiveQuantityPack = (quantity) => {
+    quantityPackButtons.forEach((button) => {
+        const isActive = button.dataset.packQuantity === quantity;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+};
+
+const updateQuantityPackHint = (quantityValue) => {
+    if (!quantityPackHint) {
+        return;
+    }
+
+    quantityPackHint.textContent = getQuantityPackHint(quantityValue);
+};
+
+const setupQuantityPackSelector = () => {
+    if (!quantityPackButtons.length || !quantityField) {
+        return;
+    }
+
+    quantityPackButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const nextQuantity = button.dataset.packQuantity;
+
+            if (!nextQuantity) {
+                return;
+            }
+
+            quantityField.value = nextQuantity;
+            quantityField.dispatchEvent(new Event("input", { bubbles: true }));
+            setActiveQuantityPack(nextQuantity);
+            updateQuantityPackHint(nextQuantity);
+        });
+    });
+
+    quantityField.addEventListener("input", () => {
+        setActiveQuantityPack(String(quantityField.value || ""));
+        updateQuantityPackHint(quantityField.value);
+    });
+
+    updateQuantityPackHint(quantityField.value);
+};
+
+normalizeMediaPaths();
+setupAstralBanner();
+setupImageSkeletons();
+setupQuantityPackSelector();
+
 productButtons.forEach((button) => {
     button.addEventListener("click", () => {
         const productName = button.getAttribute("data-producto");
@@ -1097,6 +1579,7 @@ horoscopeCta?.addEventListener("click", () => {
     closeHoroscopeModal();
 });
 heroHoroscopeTrigger?.addEventListener("click", showHoroscopeModalDirectly);
+astralBannerButton?.addEventListener("click", showHoroscopeModalDirectly);
 
 ceoAccessButton?.addEventListener("click", openCeoPanel);
 ceoClose?.addEventListener("click", closeCeoPanel);
@@ -1251,6 +1734,7 @@ window.addEventListener("load", async () => {
     await refreshMetrics();
     await incrementFirebaseMetric("views");
     setupTestimonialsCarousel();
+    setupCollectionChips();
     setupProductCarousel(specialTrack, specialPrev, specialNext, specialDots);
     setupProductCarousel(bouquetLineTrack, bouquetLinePrev, bouquetLineNext, bouquetLineDots);
     setupProductCarousel(gourmetTrack, gourmetPrev, gourmetNext, gourmetDots);

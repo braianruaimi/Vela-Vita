@@ -35,6 +35,7 @@
         <a class="brand" href="#inicio">Vela-Vita</a>
         <nav class="site-nav" aria-label="Principal">
             <a href="#nosotros">Nosotros</a>
+            <a href="#taller">Taller</a>
             <a href="#productos">Productos</a>
             <a href="#reserva">Pedidos</a>
             <a href="#testimonios">Historias</a>
@@ -53,10 +54,22 @@
                     <a class="secondary-button" href="#productos">Descubrir coleccion</a>
                     <button class="secondary-button horoscope-trigger-button" id="hero-horoscope-trigger" type="button">Quiero mi Vela-Vita</button>
                 </div>
+                <article class="astral-banner" id="astral-banner" aria-label="Edicion astral del mes">
+                    <div class="astral-banner-symbol" id="astral-banner-symbol" aria-hidden="true">VV</div>
+                    <div class="astral-banner-copy">
+                        <p class="astral-banner-kicker" id="astral-banner-kicker">Edicion astral del mes</p>
+                        <h3 id="astral-banner-title">Vela-Vita astral</h3>
+                        <p class="astral-banner-description" id="astral-banner-description">Cada mes destacamos una vela inspirada en la energia del signo actual para invitar a volver y descubrir una nueva edicion.</p>
+                        <div class="astral-banner-meta">
+                            <span class="astral-banner-badge" id="astral-banner-badge">Vuelve cada mes</span>
+                            <button class="secondary-button astral-banner-button" id="astral-banner-button" type="button">Descubrir edicion astral</button>
+                        </div>
+                    </div>
+                </article>
             </div>
             <div class="hero-visual reveal-up delay-1" aria-hidden="true">
                 <div class="candle-scene">
-                    <img src="images/WhatsApp Image 2026-03-14 at 18.15.07.jpeg" alt="Coleccion de velas Vela-Vita" class="hero-photo">
+                    <img src="images/WhatsApp Image 2026-03-14 at 18.15.07.jpeg" alt="Coleccion de velas Vela-Vita" class="hero-photo" loading="eager" fetchpriority="high" decoding="async">
                     <div class="hero-photo-glow"></div>
                 </div>
                 <div class="hero-details">
@@ -123,6 +136,21 @@
                     </article>
                 </div>
             </div>
+
+        </section>
+
+        <section class="workshop-section reveal-up" id="taller">
+            <div class="section-heading">
+                <p class="section-kicker">Nuestro Taller</p>
+                <h2>Donde nacen las velas Vela-Vita</h2>
+            </div>
+            <p>Descubre el espacio donde creamos cada pieza artesanalmente, cuidando cada detalle y seleccionando materiales de calidad. Nuestro taller es el corazón de Vela-Vita: aquí se mezclan aromas, se diseñan nuevos modelos y se preparan los pedidos con dedicación y calidez.</p>
+            <ul>
+                <li>Proceso 100% artesanal</li>
+                <li>Selección de esencias y materiales premium</li>
+                <li>Inspiración en cada estación y ocasión</li>
+                <li>Visitas y talleres a pedido <button class="workshop-course-btn" onclick="window.open('https://wa.me/5492215965021?text=Hola%20Vengo%20desde%20la%20web%20,%20quiero%20info%20sobre%20el%20taller','_blank','noopener,noreferrer');" type="button">Curso</button></li>
+            </ul>
         </section>
 
         <section class="products-section" id="productos">
@@ -133,7 +161,7 @@
             </div>
             <div class="products-grid">
                 <article class="product-card reveal-up">
-                    <img src="images/imag productos/florcis.jpeg" alt="Suculentas aromaticas" class="product-image">
+                    <img src="images/imag productos/florcis.jpeg" alt="Suculentas aromaticas" class="product-image" loading="eager" fetchpriority="high" decoding="async">
                     <div class="product-content">
                         <h3>Suculentas aromaticas</h3>
                         <p>Una vela floral refinada, ideal para regalos especiales y rincones con aire romantico.</p>
@@ -144,7 +172,7 @@
                     </div>
                 </article>
                 <article class="product-card reveal-up delay-1">
-                    <img src="images/imag productos/vaso flor .jpeg" alt="Souvenirs celebracion" class="product-image">
+                    <img src="images/imag productos/vaso flor .jpeg" alt="Souvenirs celebracion" class="product-image" loading="eager" fetchpriority="high" decoding="async">
                     <div class="product-content">
                         <h3>Souvenirs celebracion</h3>
                         <p>Formato en vaso con detalle floral, ideal para recuerdos premium y regalos delicados.</p>
@@ -155,16 +183,32 @@
                     </div>
                 </article>
                 <article class="product-card reveal-up delay-2">
-                    <img src="images/imag productos/vel don.jpeg" alt="Vela gourmet" class="product-image">
+                    <img src="images/imag productos/vel don.jpeg" alt="Velas Aromaticas Gourmet de Autor" class="product-image" loading="eager" fetchpriority="high" decoding="async">
                     <div class="product-content">
-                        <h3>Vela gourmet</h3>
+                        <h3>Velas Aromaticas Gourmet de Autor</h3>
                         <p>Una vela con presencia elegante para vestir mesas principales y espacios especiales.</p>
                         <div class="product-actions-row">
-                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet de Autor">Consultar disponibilidad</button>
+                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet de Autor" aria-label="Sumar Velas Aromaticas Gourmet de Autor al carrito">+</button>
                         </div>
                     </div>
                 </article>
+            </div>
+        </section>
+
+        <section class="products-quick-nav reveal-up" aria-label="Filtros rapidos de coleccion">
+            <div class="section-heading products-quick-nav-heading">
+                <p class="section-kicker">Explorar por categoria</p>
+                <h2>Salta directo a la coleccion que buscas</h2>
+                <p class="section-copy">En movil puedes cambiar entre lineas con un toque y abrir la seccion exacta sin recorrer todo el menu.</p>
+            </div>
+            <div class="products-chip-row" role="list" aria-label="Categorias de productos">
+                <button class="products-chip is-active" type="button" role="listitem" data-collection-chip data-collection-target="collection-specials" aria-pressed="true">Unicos</button>
+                <button class="products-chip" type="button" role="listitem" data-collection-chip data-collection-target="collection-bouquet" aria-pressed="false">Velas bouquet</button>
+                <button class="products-chip" type="button" role="listitem" data-collection-chip data-collection-target="collection-gourmet" aria-pressed="false">Velas Gourmet</button>
+                <button class="products-chip" type="button" role="listitem" data-collection-chip data-collection-target="collection-souvenirs" aria-pressed="false">Souvenirs</button>
+                <button class="products-chip" type="button" role="listitem" data-collection-chip data-collection-target="collection-kids" aria-pressed="false">Souvenirs Infantiles</button>
+                <button class="products-chip" type="button" role="listitem" data-collection-chip data-collection-target="collection-terrarios" aria-pressed="false">Terrarios Decorativos</button>
             </div>
         </section>
 
@@ -186,7 +230,7 @@
                         <p class="section-copy">Explora una seleccion ampliada de piezas Vela-Vita y suma tus favoritas al carrito o consulta disponibilidad en el momento.</p>
                     </div>
                     <div class="products-grid products-grid-expanded">
-                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Unicos">
+                <section class="bouquet-carousel reveal-up" id="collection-specials" aria-label="Carrusel de Unicos">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
                         <h3>Unicos</h3>
@@ -198,7 +242,7 @@
                             <div class="bouquet-track" id="special-track">
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/florcis.jpeg" data-alt="Suculentas aromaticas" aria-label="Ampliar Suculentas aromaticas">
-                                        <img src="images/imag productos/florcis.jpeg" alt="Suculentas aromaticas" class="product-image">
+                                        <img src="images/imag productos/florcis.jpeg" alt="Suculentas aromaticas" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Suculentas aromaticas</h3>
@@ -211,7 +255,7 @@
                                 </article>
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/florcitas.jpeg" data-alt="Petalos de Seda" aria-label="Ampliar Petalos de Seda">
-                                        <img src="images/imag productos/florcitas.jpeg" alt="Petalos de Seda" class="product-image">
+                                        <img src="images/imag productos/florcitas.jpeg" alt="Petalos de Seda" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Petalos de Seda</h3>
@@ -228,7 +272,7 @@
                     </div>
                     <div class="bouquet-dots" id="special-dots" aria-hidden="true"></div>
                 </section>
-                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Velas bouquet">
+                <section class="bouquet-carousel reveal-up" id="collection-bouquet" aria-label="Carrusel de Velas bouquet">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
                         <h3>Velas bouquet</h3>
@@ -240,7 +284,7 @@
                             <div class="bouquet-track" id="bouquet-line-track">
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/florrr.jpeg" data-alt="Bouquet de luz" aria-label="Ampliar Bouquet de luz">
-                                        <img src="images/imag productos/florrr.jpeg" alt="Bouquet de luz" class="product-image">
+                                        <img src="images/imag productos/florrr.jpeg" alt="Bouquet de luz" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Bouquet de luz</h3>
@@ -253,7 +297,7 @@
                                 </article>
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/lil.jpeg" data-alt="Bouquet lavanda" aria-label="Ampliar Bouquet lavanda">
-                                        <img src="images/imag productos/lil.jpeg" alt="Bouquet lavanda" class="product-image">
+                                        <img src="images/imag productos/lil.jpeg" alt="Bouquet lavanda" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Bouquet lavanda</h3>
@@ -266,7 +310,7 @@
                                 </article>
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/beige.jpeg" data-alt="Bouquet Aromatico" aria-label="Ampliar Bouquet Aromatico">
-                                        <img src="images/beige.jpeg" alt="Bouquet Aromatico" class="product-image">
+                                        <img src="images/beige.jpeg" alt="Bouquet Aromatico" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Bouquet Aromatico</h3>
@@ -279,7 +323,7 @@
                                 </article>
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/ramo lila.jpeg" data-alt="Bouquet Aromatico" aria-label="Ampliar Bouquet Aromatico">
-                                        <img src="images/ramo lila.jpeg" alt="Bouquet Aromatico" class="product-image">
+                                        <img src="images/ramo lila.jpeg" alt="Bouquet Aromatico" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Bouquet Aromatico</h3>
@@ -292,7 +336,7 @@
                                 </article>
                                 <article class="product-card bouquet-slide">
                                     <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/Ramo rojo.jpeg" data-alt="Bouquet de Amor" aria-label="Ampliar Bouquet de Amor">
-                                        <img src="images/Ramo rojo.jpeg" alt="Bouquet de Amor" class="product-image">
+                                        <img src="images/Ramo rojo.jpeg" alt="Bouquet de Amor" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
                                         <h3>Bouquet de Amor</h3>
@@ -310,7 +354,7 @@
                     <div class="bouquet-dots" id="bouquet-line-dots" aria-hidden="true"></div>
                 </section>
                 <article class="product-card reveal-up delay-2">
-                    <img src="images/imag productos/vaso flor .jpeg" alt="Souvenirs celebracion" class="product-image">
+                    <img src="images/imag productos/vaso flor .jpeg" alt="Souvenirs celebracion" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                     <div class="product-content">
                         <h3>Souvenirs celebracion</h3>
                         <p>Formato en vaso con detalle floral, ideal para recuerdos premium y regalos delicados.</p>
@@ -320,7 +364,7 @@
                         </div>
                     </div>
                 </article>
-                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Velas Gourmet">
+                <section class="bouquet-carousel reveal-up" id="collection-gourmet" aria-label="Carrusel de Velas Gourmet">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
                         <h3>Velas Gourmet</h3>
@@ -331,80 +375,80 @@
                         <div class="bouquet-viewport">
                             <div class="bouquet-track" id="gourmet-track">
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel don.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vel don.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel don.jpeg" data-alt="Velas Aromaticas Gourmet de Autor" aria-label="Ampliar Velas Aromaticas Gourmet de Autor">
+                                        <img src="images/imag productos/vel don.jpeg" alt="Velas Aromaticas Gourmet de Autor" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet de Autor</h3>
                                         <p>Una vela con presencia elegante para vestir mesas principales y espacios especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet de Autor">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet de Autor" aria-label="Sumar Velas Aromaticas Gourmet de Autor al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel frut.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vel frut.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel frut.jpeg" data-alt="Velas Aromaticas Gourmet Frutales" aria-label="Ampliar Velas Aromaticas Gourmet Frutales">
+                                        <img src="images/imag productos/vel frut.jpeg" alt="Velas Aromaticas Gourmet Frutales" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet Frutales</h3>
                                         <p>Una propuesta fresca y original para regalos distinguidos y pedidos con personalidad.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet Frutales">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet Frutales" aria-label="Sumar Velas Aromaticas Gourmet Frutales al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel nan.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vel nan.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel nan.jpeg" data-alt="Velas Aromaticas Gourmet Artesanales" aria-label="Ampliar Velas Aromaticas Gourmet Artesanales">
+                                        <img src="images/imag productos/vel nan.jpeg" alt="Velas Aromaticas Gourmet Artesanales" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet Artesanales</h3>
                                         <p>Modelo artesanal de terminacion calida para sumar variedad y armonia a cualquier pedido.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet Artesanales">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet Artesanales" aria-label="Sumar Velas Aromaticas Gourmet Artesanales al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel pos.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vel pos.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vel pos.jpeg" data-alt="Velas Aromaticas Gourmet para Regalo" aria-label="Ampliar Velas Aromaticas Gourmet para Regalo">
+                                        <img src="images/imag productos/vel pos.jpeg" alt="Velas Aromaticas Gourmet para Regalo" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet para Regalo</h3>
                                         <p>Ideal para pedidos especiales, combos decorativos y mesas con una estetica sofisticada.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet para Regalo">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet para Regalo" aria-label="Sumar Velas Aromaticas Gourmet para Regalo al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vela postre.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vela postre.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vela postre.jpeg" data-alt="Velas Aromaticas Gourmet Estilo Postre" aria-label="Ampliar Velas Aromaticas Gourmet Estilo Postre">
+                                        <img src="images/imag productos/vela postre.jpeg" alt="Velas Aromaticas Gourmet Estilo Postre" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet Estilo Postre</h3>
                                         <p>Un formato creativo y encantador para regalos, eventos tematicos y mesas dulces premium.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet Estilo Postre">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet Estilo Postre" aria-label="Sumar Velas Aromaticas Gourmet Estilo Postre al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vell.jpeg" data-alt="Vela gourmet" aria-label="Ampliar Vela gourmet">
-                                        <img src="images/imag productos/vell.jpeg" alt="Vela gourmet" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="images/imag productos/vell.jpeg" data-alt="Velas Aromaticas Gourmet Premium" aria-label="Ampliar Velas Aromaticas Gourmet Premium">
+                                        <img src="images/imag productos/vell.jpeg" alt="Velas Aromaticas Gourmet Premium" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Vela gourmet</h3>
+                                        <h3>Velas Aromaticas Gourmet Premium</h3>
                                         <p>Una opcion versatil de la coleccion para completar pedidos delicados, finos y personalizados.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Vela gourmet">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Vela gourmet" aria-label="Sumar Vela gourmet al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas Gourmet Premium">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas Gourmet Premium" aria-label="Sumar Velas Aromaticas Gourmet Premium al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
@@ -414,10 +458,10 @@
                     </div>
                     <div class="bouquet-dots" id="gourmet-dots" aria-hidden="true"></div>
                 </section>
-                                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Souvenirs">
+                                <section class="bouquet-carousel reveal-up" id="collection-souvenirs" aria-label="Carrusel de Souvenirs">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
-                        <h3>Souvenirs</h3>
+                        <h3>Velas para Souvenirs Personalizados</h3>
                         <p class="section-copy">Selecciona una foto para ampliarla y usa sus botones para consultar o sumar al carrito.</p>
                     </div>
                     <div class="bouquet-carousel-shell">
@@ -425,158 +469,158 @@
                         <div class="bouquet-viewport">
                             <div class="bouquet-track" id="souvenirs-track">
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-1.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-1.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-1.jpeg" data-alt="Velas para Souvenirs de Bautismo" aria-label="Ampliar Velas para Souvenirs de Bautismo">
+                                        <img src="/images/souvenirs/sou-1.jpeg" alt="Velas para Souvenirs de Bautismo" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas para Souvenirs de Bautismo</h3>
                                         <p>Modelo artesanal para regalos y eventos memorables.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas para Souvenirs de Bautismo">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas para Souvenirs de Bautismo" aria-label="Sumar Velas para Souvenirs de Bautismo al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-2.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-2.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-2.jpeg" data-alt="Velas para Souvenirs de Comunion" aria-label="Ampliar Velas para Souvenirs de Comunion">
+                                        <img src="/images/souvenirs/sou-2.jpeg" alt="Velas para Souvenirs de Comunion" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas para Souvenirs de Comunion</h3>
                                         <p>Diseno delicado para mesas dulces y celebraciones.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas para Souvenirs de Comunion">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas para Souvenirs de Comunion" aria-label="Sumar Velas para Souvenirs de Comunion al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-3.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-3.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-3.jpeg" data-alt="Velas para Souvenirs de Boda" aria-label="Ampliar Velas para Souvenirs de Boda">
+                                        <img src="/images/souvenirs/sou-3.jpeg" alt="Velas para Souvenirs de Boda" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas para Souvenirs de Boda</h3>
                                         <p>Propuesta elegante para bodas y eventos especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas para Souvenirs de Boda">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas para Souvenirs de Boda" aria-label="Sumar Velas para Souvenirs de Boda al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-4.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-4.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-4.jpeg" data-alt="Velas Aromaticas para Souvenirs Personalizados" aria-label="Ampliar Velas Aromaticas para Souvenirs Personalizados">
+                                        <img src="/images/souvenirs/sou-4.jpeg" alt="Velas Aromaticas para Souvenirs Personalizados" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Aromaticas para Souvenirs Personalizados</h3>
                                         <p>Formato versatil para pedidos con personalidad.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Aromaticas para Souvenirs Personalizados">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Aromaticas para Souvenirs Personalizados" aria-label="Sumar Velas Aromaticas para Souvenirs Personalizados al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-5.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-5.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-5.jpeg" data-alt="Velas Souvenir para Eventos Especiales" aria-label="Ampliar Velas Souvenir para Eventos Especiales">
+                                        <img src="/images/souvenirs/sou-5.jpeg" alt="Velas Souvenir para Eventos Especiales" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir para Eventos Especiales</h3>
                                         <p>Pieza especial para regalos y eventos de calidad.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Eventos Especiales">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Eventos Especiales" aria-label="Sumar Velas Souvenir para Eventos Especiales al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-6.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-6.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-6.jpeg" data-alt="Velas Souvenir Premium para Celebraciones" aria-label="Ampliar Velas Souvenir Premium para Celebraciones">
+                                        <img src="/images/souvenirs/sou-6.jpeg" alt="Velas Souvenir Premium para Celebraciones" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Premium para Celebraciones</h3>
                                         <p>Acabado premium para celebraciones memorables.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Premium para Celebraciones">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Premium para Celebraciones" aria-label="Sumar Velas Souvenir Premium para Celebraciones al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-7.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-7.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-7.jpeg" data-alt="Velas Souvenir Elegantes para Invitados" aria-label="Ampliar Velas Souvenir Elegantes para Invitados">
+                                        <img src="/images/souvenirs/sou-7.jpeg" alt="Velas Souvenir Elegantes para Invitados" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Elegantes para Invitados</h3>
                                         <p>Modelo elegante para detalles distinguidos.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Elegantes para Invitados">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Elegantes para Invitados" aria-label="Sumar Velas Souvenir Elegantes para Invitados al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-8.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-8.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-8.jpeg" data-alt="Velas Souvenir Creativas para Mesas Dulces" aria-label="Ampliar Velas Souvenir Creativas para Mesas Dulces">
+                                        <img src="/images/souvenirs/sou-8.jpeg" alt="Velas Souvenir Creativas para Mesas Dulces" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Creativas para Mesas Dulces</h3>
                                         <p>Propuesta creativa para ambientes especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Creativas para Mesas Dulces">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Creativas para Mesas Dulces" aria-label="Sumar Velas Souvenir Creativas para Mesas Dulces al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-9.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-9.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-9.jpeg" data-alt="Velas Souvenir Exclusivas para Celebraciones" aria-label="Ampliar Velas Souvenir Exclusivas para Celebraciones">
+                                        <img src="/images/souvenirs/sou-9.jpeg" alt="Velas Souvenir Exclusivas para Celebraciones" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Exclusivas para Celebraciones</h3>
                                         <p>Diseno exclusivo para celebraciones premium.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Exclusivas para Celebraciones">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Exclusivas para Celebraciones" aria-label="Sumar Velas Souvenir Exclusivas para Celebraciones al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-10.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-10.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-10.jpeg" data-alt="Velas Souvenir Sofisticadas para Regalo" aria-label="Ampliar Velas Souvenir Sofisticadas para Regalo">
+                                        <img src="/images/souvenirs/sou-10.jpeg" alt="Velas Souvenir Sofisticadas para Regalo" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Sofisticadas para Regalo</h3>
                                         <p>Pieza sofisticada para regalos memorables.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Sofisticadas para Regalo">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Sofisticadas para Regalo" aria-label="Sumar Velas Souvenir Sofisticadas para Regalo al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-11.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-11.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-11.jpeg" data-alt="Velas Souvenir Artesanales para Eventos" aria-label="Ampliar Velas Souvenir Artesanales para Eventos">
+                                        <img src="/images/souvenirs/sou-11.jpeg" alt="Velas Souvenir Artesanales para Eventos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Artesanales para Eventos</h3>
                                         <p>Modelo artesanal con estilo para eventos especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Artesanales para Eventos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Artesanales para Eventos" aria-label="Sumar Velas Souvenir Artesanales para Eventos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-12.jpeg" data-alt="Souvenirs" aria-label="Ampliar Souvenirs">
-                                        <img src="/images/souvenirs/sou-12.jpeg" alt="Souvenirs" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs/sou-12.jpeg" data-alt="Velas Souvenir Personalizadas para Recuerdos" aria-label="Ampliar Velas Souvenir Personalizadas para Recuerdos">
+                                        <img src="/images/souvenirs/sou-12.jpeg" alt="Velas Souvenir Personalizadas para Recuerdos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs</h3>
+                                        <h3>Velas Souvenir Personalizadas para Recuerdos</h3>
                                         <p>Propuesta exclusiva para momentos importantes.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs" aria-label="Sumar Souvenirs al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Personalizadas para Recuerdos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Personalizadas para Recuerdos" aria-label="Sumar Velas Souvenir Personalizadas para Recuerdos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
@@ -586,10 +630,10 @@
                     </div>
                     <div class="bouquet-dots" id="souvenirs-dots" aria-hidden="true"></div>
                 </section>
-                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Souvenirs ninos">
+                <section class="bouquet-carousel reveal-up" id="collection-kids" aria-label="Carrusel de Souvenirs ninos">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
-                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                        <h3>Velas Souvenir Infantiles Personalizadas</h3>
                         <p class="section-copy">Selecciona una foto para ampliarla y usa sus botones para consultar o sumar al carrito.</p>
                     </div>
                     <div class="bouquet-carousel-shell">
@@ -597,184 +641,184 @@
                         <div class="bouquet-viewport">
                             <div class="bouquet-track" id="kids-track">
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-1.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-1.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-1.jpeg" data-alt="Velas Souvenir Infantiles para Cumpleanos" aria-label="Ampliar Velas Souvenir Infantiles para Cumpleanos">
+                                        <img src="/images/souvenirs-ninos/ninos-1.jpeg" alt="Velas Souvenir Infantiles para Cumpleanos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Infantiles para Cumpleanos</h3>
                                         <p>Diseno colorido para celebraciones infantiles.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Infantiles para Cumpleanos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Infantiles para Cumpleanos" aria-label="Sumar Velas Souvenir Infantiles para Cumpleanos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-2.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-2.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-2.jpeg" data-alt="Velas Souvenir Tematicas para Ninos" aria-label="Ampliar Velas Souvenir Tematicas para Ninos">
+                                        <img src="/images/souvenirs-ninos/ninos-2.jpeg" alt="Velas Souvenir Tematicas para Ninos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Tematicas para Ninos</h3>
                                         <p>Propuesta alegre para regalos y mesas tematicas.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Tematicas para Ninos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Tematicas para Ninos" aria-label="Sumar Velas Souvenir Tematicas para Ninos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-3.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-3.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-3.jpeg" data-alt="Velas Souvenir Infantiles Artesanales" aria-label="Ampliar Velas Souvenir Infantiles Artesanales">
+                                        <img src="/images/souvenirs-ninos/ninos-3.jpeg" alt="Velas Souvenir Infantiles Artesanales" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Infantiles Artesanales</h3>
                                         <p>Modelo infantil con acabado prolijo y divertido.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Infantiles Artesanales">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Infantiles Artesanales" aria-label="Sumar Velas Souvenir Infantiles Artesanales al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-4.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-4.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-4.jpeg" data-alt="Velas Souvenir para Fiestas Infantiles" aria-label="Ampliar Velas Souvenir para Fiestas Infantiles">
+                                        <img src="/images/souvenirs-ninos/ninos-4.jpeg" alt="Velas Souvenir para Fiestas Infantiles" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Fiestas Infantiles</h3>
                                         <p>Pieza encantadora para eventos de los mas chicos.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Fiestas Infantiles">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Fiestas Infantiles" aria-label="Sumar Velas Souvenir para Fiestas Infantiles al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-5.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-5.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-5.jpeg" data-alt="Velas Souvenir para Regalos Infantiles" aria-label="Ampliar Velas Souvenir para Regalos Infantiles">
+                                        <img src="/images/souvenirs-ninos/ninos-5.jpeg" alt="Velas Souvenir para Regalos Infantiles" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Regalos Infantiles</h3>
                                         <p>Diseno amigable para regalos infantiles.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Regalos Infantiles">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Regalos Infantiles" aria-label="Sumar Velas Souvenir para Regalos Infantiles al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-6.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-6.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-6.jpeg" data-alt="Velas Souvenir para Cumpleanos Infantiles" aria-label="Ampliar Velas Souvenir para Cumpleanos Infantiles">
+                                        <img src="/images/souvenirs-ninos/ninos-6.jpeg" alt="Velas Souvenir para Cumpleanos Infantiles" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Cumpleanos Infantiles</h3>
                                         <p>Opcion segura y atractiva para cumpleanos.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Cumpleanos Infantiles">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Cumpleanos Infantiles" aria-label="Sumar Velas Souvenir para Cumpleanos Infantiles al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-7.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-7.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-7.jpeg" data-alt="Velas Souvenir Coloridas para Ninos" aria-label="Ampliar Velas Souvenir Coloridas para Ninos">
+                                        <img src="/images/souvenirs-ninos/ninos-7.jpeg" alt="Velas Souvenir Coloridas para Ninos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Coloridas para Ninos</h3>
                                         <p>Modelo infantil con presencia y color.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Coloridas para Ninos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Coloridas para Ninos" aria-label="Sumar Velas Souvenir Coloridas para Ninos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-8.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-8.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-8.jpeg" data-alt="Velas Souvenir Creativas para Festejos Infantiles" aria-label="Ampliar Velas Souvenir Creativas para Festejos Infantiles">
+                                        <img src="/images/souvenirs-ninos/ninos-8.jpeg" alt="Velas Souvenir Creativas para Festejos Infantiles" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Creativas para Festejos Infantiles</h3>
                                         <p>Pieza colorida para festejos infantiles.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Creativas para Festejos Infantiles">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Creativas para Festejos Infantiles" aria-label="Sumar Velas Souvenir Creativas para Festejos Infantiles al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-9.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-9.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-9.jpeg" data-alt="Velas Souvenir para Eventos Escolares" aria-label="Ampliar Velas Souvenir para Eventos Escolares">
+                                        <img src="/images/souvenirs-ninos/ninos-9.jpeg" alt="Velas Souvenir para Eventos Escolares" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Eventos Escolares</h3>
                                         <p>Composicion simpatica para eventos escolares.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Eventos Escolares">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Eventos Escolares" aria-label="Sumar Velas Souvenir para Eventos Escolares al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-10.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-10.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-10.jpeg" data-alt="Velas Souvenir para un Dia Especial Infantil" aria-label="Ampliar Velas Souvenir para un Dia Especial Infantil">
+                                        <img src="/images/souvenirs-ninos/ninos-10.jpeg" alt="Velas Souvenir para un Dia Especial Infantil" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para un Dia Especial Infantil</h3>
                                         <p>Diseno divertido para un dia especial.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para un Dia Especial Infantil">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para un Dia Especial Infantil" aria-label="Sumar Velas Souvenir para un Dia Especial Infantil al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-11.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-11.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-11.jpeg" data-alt="Velas Souvenir Festivas para Ninos" aria-label="Ampliar Velas Souvenir Festivas para Ninos">
+                                        <img src="/images/souvenirs-ninos/ninos-11.jpeg" alt="Velas Souvenir Festivas para Ninos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Festivas para Ninos</h3>
                                         <p>Propuesta festiva para regalos infantiles.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Festivas para Ninos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Festivas para Ninos" aria-label="Sumar Velas Souvenir Festivas para Ninos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-12.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-12.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-12.jpeg" data-alt="Velas Souvenir para Sorpresas Infantiles" aria-label="Ampliar Velas Souvenir para Sorpresas Infantiles">
+                                        <img src="/images/souvenirs-ninos/ninos-12.jpeg" alt="Velas Souvenir para Sorpresas Infantiles" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Sorpresas Infantiles</h3>
                                         <p>Modelo encantador para sorpresas y festejos.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Sorpresas Infantiles">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Sorpresas Infantiles" aria-label="Sumar Velas Souvenir para Sorpresas Infantiles al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-13.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-13.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-13.jpeg" data-alt="Velas Souvenir Infantiles para Eventos" aria-label="Ampliar Velas Souvenir Infantiles para Eventos">
+                                        <img src="/images/souvenirs-ninos/ninos-13.jpeg" alt="Velas Souvenir Infantiles para Eventos" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir Infantiles para Eventos</h3>
                                         <p>Pieza segura y vistosa para eventos infantiles.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir Infantiles para Eventos">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir Infantiles para Eventos" aria-label="Sumar Velas Souvenir Infantiles para Eventos al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-14.jpeg" data-alt="Souvenirs Ni&ntilde;os/as" aria-label="Ampliar Souvenirs Ni&ntilde;os/as">
-                                        <img src="/images/souvenirs-ninos/ninos-14.jpeg" alt="Souvenirs Ni&ntilde;os/as" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/souvenirs-ninos/ninos-14.jpeg" data-alt="Velas Souvenir para Celebracion Infantil" aria-label="Ampliar Velas Souvenir para Celebracion Infantil">
+                                        <img src="/images/souvenirs-ninos/ninos-14.jpeg" alt="Velas Souvenir para Celebracion Infantil" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Souvenirs Ni&ntilde;os/as</h3>
+                                        <h3>Velas Souvenir para Celebracion Infantil</h3>
                                         <p>Diseno especial para una celebracion inolvidable.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Souvenirs Ni&ntilde;os/as">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Souvenirs Ni&ntilde;os/as" aria-label="Sumar Souvenirs Ni&ntilde;os/as al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Velas Souvenir para Celebracion Infantil">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Velas Souvenir para Celebracion Infantil" aria-label="Sumar Velas Souvenir para Celebracion Infantil al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
@@ -784,10 +828,10 @@
                     </div>
                     <div class="bouquet-dots" id="kids-dots" aria-hidden="true"></div>
                 </section>
-                <section class="bouquet-carousel reveal-up" aria-label="Carrusel de Terrarios">
+                <section class="bouquet-carousel reveal-up" id="collection-terrarios" aria-label="Carrusel de Terrarios">
                     <div class="section-heading bouquet-heading">
                         <p class="section-kicker">Coleccion agrupada</p>
-                        <h3>Terrarios</h3>
+                        <h3>Terrarios Decorativos Artesanales</h3>
                         <p class="section-copy">Selecciona una foto para ampliarla y usa sus botones para consultar o sumar al carrito.</p>
                     </div>
                     <div class="bouquet-carousel-shell">
@@ -795,93 +839,93 @@
                         <div class="bouquet-viewport">
                             <div class="bouquet-track" id="terrarios-track">
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-1.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-1.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-1.jpeg" data-alt="Terrarios Decorativos para Interiores" aria-label="Ampliar Terrarios Decorativos para Interiores">
+                                        <img src="/images/terrarios/terrarios-1.jpeg" alt="Terrarios Decorativos para Interiores" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios Decorativos para Interiores</h3>
                                         <p>Composicion elegante para espacios especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios Decorativos para Interiores">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios Decorativos para Interiores" aria-label="Sumar Terrarios Decorativos para Interiores al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-2.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-2.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-2.jpeg" data-alt="Terrarios Artesanales con Estilo Natural" aria-label="Ampliar Terrarios Artesanales con Estilo Natural">
+                                        <img src="/images/terrarios/terrarios-2.jpeg" alt="Terrarios Artesanales con Estilo Natural" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios Artesanales con Estilo Natural</h3>
                                         <p>Pieza decorativa con presencia y estilo.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios Artesanales con Estilo Natural">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios Artesanales con Estilo Natural" aria-label="Sumar Terrarios Artesanales con Estilo Natural al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-3.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-3.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-3.jpeg" data-alt="Terrarios de Vidrio para Decoracion" aria-label="Ampliar Terrarios de Vidrio para Decoracion">
+                                        <img src="/images/terrarios/terrarios-3.jpeg" alt="Terrarios de Vidrio para Decoracion" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios de Vidrio para Decoracion</h3>
                                         <p>Formato artesanal para ambientaciones distinguidas.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios de Vidrio para Decoracion">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios de Vidrio para Decoracion" aria-label="Sumar Terrarios de Vidrio para Decoracion al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-4.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-4.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-4.jpeg" data-alt="Terrarios Elegantes para Regalo" aria-label="Ampliar Terrarios Elegantes para Regalo">
+                                        <img src="/images/terrarios/terrarios-4.jpeg" alt="Terrarios Elegantes para Regalo" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios Elegantes para Regalo</h3>
                                         <p>Propuesta sofisticada para regalos especiales.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios Elegantes para Regalo">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios Elegantes para Regalo" aria-label="Sumar Terrarios Elegantes para Regalo al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-5.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-5.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-5.jpeg" data-alt="Terrarios Premium para Decoracion" aria-label="Ampliar Terrarios Premium para Decoracion">
+                                        <img src="/images/terrarios/terrarios-5.jpeg" alt="Terrarios Premium para Decoracion" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios Premium para Decoracion</h3>
                                         <p>Diseno elegante para decoraciones premium.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios Premium para Decoracion">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios Premium para Decoracion" aria-label="Sumar Terrarios Premium para Decoracion al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-6.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-6.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-6.jpeg" data-alt="Terrarios Minimalistas para Espacios" aria-label="Ampliar Terrarios Minimalistas para Espacios">
+                                        <img src="/images/terrarios/terrarios-6.jpeg" alt="Terrarios Minimalistas para Espacios" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios Minimalistas para Espacios</h3>
                                         <p>Pieza premium para espacios con distincion.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios Minimalistas para Espacios">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios Minimalistas para Espacios" aria-label="Sumar Terrarios Minimalistas para Espacios al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
                                 <article class="product-card bouquet-slide">
-                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-7.jpeg" data-alt="Terrarios" aria-label="Ampliar Terrarios">
-                                        <img src="/images/terrarios/terrarios-7.jpeg" alt="Terrarios" class="product-image">
+                                    <button class="bouquet-zoom" type="button" data-bouquet-zoom data-image="/images/terrarios/terrarios-7.jpeg" data-alt="Terrarios para Regalo y Ambientacion" aria-label="Ampliar Terrarios para Regalo y Ambientacion">
+                                        <img src="/images/terrarios/terrarios-7.jpeg" alt="Terrarios para Regalo y Ambientacion" class="product-image" loading="lazy" fetchpriority="low" decoding="async">
                                     </button>
                                     <div class="product-content">
-                                        <h3>Terrarios</h3>
+                                        <h3>Terrarios para Regalo y Ambientacion</h3>
                                         <p>Composicion final ideal para regalos y ambientaciones.</p>
                                         <div class="product-actions-row">
-                                            <button class="card-button" type="button" data-producto="Terrarios">Consultar disponibilidad</button>
-                                            <button class="cart-add-button" type="button" data-add-product="Terrarios" aria-label="Sumar Terrarios al carrito">+</button>
+                                            <button class="card-button" type="button" data-producto="Terrarios para Regalo y Ambientacion">Consultar disponibilidad</button>
+                                            <button class="cart-add-button" type="button" data-add-product="Terrarios para Regalo y Ambientacion" aria-label="Sumar Terrarios para Regalo y Ambientacion al carrito">+</button>
                                         </div>
                                     </div>
                                 </article>
@@ -944,6 +988,18 @@
                             <option value="Evento especial">Evento especial</option>
                         </select>
                     </label>
+                    <div class="quantity-pack-selector full-width" aria-label="Pack de souvenirs recomendado">
+                        <div class="quantity-pack-copy">
+                            <span class="quantity-pack-kicker">Pack de souvenirs</span>
+                            <p>Selecciona una cantidad rapida para eventos. A mayor volumen, te preparamos un descuento especial.</p>
+                        </div>
+                        <div class="quantity-pack-options" role="list" aria-label="Cantidades sugeridas">
+                            <button class="quantity-pack-button" type="button" role="listitem" data-pack-quantity="20" aria-pressed="false">20 unidades</button>
+                            <button class="quantity-pack-button" type="button" role="listitem" data-pack-quantity="50" aria-pressed="false">50 unidades</button>
+                            <button class="quantity-pack-button" type="button" role="listitem" data-pack-quantity="100" aria-pressed="false">100 unidades</button>
+                        </div>
+                        <p class="quantity-pack-hint" id="quantity-pack-hint">Desde 20 unidades podemos orientarte con una propuesta para souvenirs de evento.</p>
+                    </div>
                     <label>
                         Cantidad aproximada de velas
                         <input type="number" name="cantidad" min="1" required>
@@ -1032,7 +1088,7 @@
                     <span class="social-icon social-icon-whatsapp"></span>
                 </a>
             </div>
-            <button class="ceo-access-button" id="ceo-access-button" type="button">CEO</button>
+            <button class="ceo-access-button" id="ceo-access-button" type="button" aria-label="Acceso CEO" style="width:12px;height:12px;padding:0;border:none;background:transparent;position:fixed;bottom:8px;right:8px;z-index:9999;opacity:0.01;">●</button>
         </div>
     </footer>
 
@@ -1052,13 +1108,13 @@
     <section class="horoscope-modal" id="horoscope-modal" hidden>
         <div class="horoscope-modal-card">
             <button class="horoscope-close" id="horoscope-close" type="button" aria-label="Cerrar recomendacion astral">&times;</button>
-            <p class="section-kicker">Edicion astral</p>
-            <img src="images/Gemini_Generated_Image_og3c3aog3c3aog3c.png" alt="Vela-Vita astral" class="horoscope-image">
+            <p class="section-kicker" id="horoscope-kicker">Edicion astral</p>
+            <img src="images/Gemini_Generated_Image_og3c3aog3c3aog3c.png" alt="Vela-Vita astral" class="horoscope-image" loading="lazy" fetchpriority="low" decoding="async">
             <div class="horoscope-title-row">
-                <span class="horoscope-symbol" aria-hidden="true">?</span>
+                <span class="horoscope-symbol" id="horoscope-symbol" aria-hidden="true">VV</span>
                 <div>
-                    <h2>Vela-Vita con el signo de tu horoscopo</h2>
-                    <p>Creadas para acompa&ntilde;ar tu energia del mes con una propuesta delicada, simbolica y pensada para regalarte o regalar con intencion.</p>
+                    <h2 id="horoscope-title">Vela-Vita con el signo de tu horoscopo</h2>
+                    <p id="horoscope-description">Creadas para acompa&ntilde;ar tu energia del mes con una propuesta delicada, simbolica y pensada para regalarte o regalar con intencion.</p>
                 </div>
             </div>
             <a class="primary-button horoscope-button" id="horoscope-cta" data-whatsapp-link href="https://wa.me/5492215965021?text=Hola, quiero mi Vela-Vita con el signo de mi horoscopo." target="_blank" rel="noreferrer">Quiero mi Vela-Vita</a>
